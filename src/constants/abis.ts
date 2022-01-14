@@ -75,11 +75,11 @@ export enum ABI {
 export const ABIs: { [K in ABI]: ContractInterface } = {
 	[ABI.Base]: TOKEN_BASE_ABI,
 	[ABI.EIP721]: EIP721_BASIC_ABI,
-	[ABI.EIP1155]: EIP1155_BASIC_ABI,
+	[ABI.EIP1155]: EIP1155_BASIC_ABI
 };
 
 export const uriMethods: { [K in ABI]: 'tokenURI' | 'uri' | '' } = {
 	[ABI.Base]: '',
 	[ABI.EIP721]: 'tokenURI',
-	[ABI.EIP1155]: 'uri',
+	[ABI.EIP1155]: 'uri'
 };

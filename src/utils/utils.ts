@@ -19,15 +19,15 @@ export function formatExplorerLink(type: ExplorerType, data: ExplorerData) {
 	switch (type) {
 		case ExplorerType.Account: {
 			const [chainId, address] = data;
-			return `https://${CHAIN_INFO[chainId].explorer}/address/${address}`;
+			return `${CHAIN_INFO[chainId].explorer}/address/${address}`;
 		}
 		case ExplorerType.Transaction: {
 			const [chainId, hash] = data;
-			return `https://${CHAIN_INFO[chainId].explorer}/tx/${hash}`;
+			return `${CHAIN_INFO[chainId].explorer}/tx/${hash}`;
 		}
 		case ExplorerType.Block: {
 			const [chainId, block] = data;
-			return `https://${CHAIN_INFO[chainId].explorer}/block/${block}`;
+			return `${CHAIN_INFO[chainId].explorer}/block/${block}`;
 		}
 	}
 }
