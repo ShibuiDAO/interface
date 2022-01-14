@@ -1,4 +1,3 @@
-import Assets from 'components/Account/Assets';
 import Offset from 'components/Navbar/Offset';
 import useConnectionActive from 'hooks/useConnectionActive';
 import React from 'react';
