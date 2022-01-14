@@ -1,4 +1,4 @@
-import { SupportedChainId } from 'constants/chains';
+import { CHAIN_INFO, SupportedChainId } from 'constants/chains';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export function noop() {}
@@ -7,32 +7,27 @@ export function shortenHex(hex: string, length = 4) {
 	return `${hex.substring(0, length + 2)}…${hex.substring(hex.length - length)}`;
 }
 
-const ETHERSCAN_DOMAINS: Record<number, string> = {
-	[SupportedChainId.BOBA]: ''
-	// [SupportedChainId.AvalancheMainnet]: 'snowtrace.io'
-};
-
-export enum EtherscanType {
+export enum ExplorerType {
 	Account,
 	Transaction,
 	Block
 }
 
-export type EtherscanData = [chainId: number, address: string];
+export type ExplorerData = [chainId: SupportedChainId, address: string];
 
-export function formatEtherscanLink(type: EtherscanType, data: EtherscanData) {
+export function formatExplorerLink(type: ExplorerType, data: ExplorerData) {
 	switch (type) {
-		case EtherscanType.Account: {
+		case ExplorerType.Account: {
 			const [chainId, address] = data;
-			return `https://${ETHERSCAN_DOMAINS[chainId]}/address/${address}`;
+			return `https://${CHAIN_INFO[chainId].explorer}/address/${address}`;
 		}
-		case EtherscanType.Transaction: {
+		case ExplorerType.Transaction: {
 			const [chainId, hash] = data;
-			return `https://${ETHERSCAN_DOMAINS[chainId]}/tx/${hash}`;
+			return `https://${CHAIN_INFO[chainId].explorer}/tx/${hash}`;
 		}
-		case EtherscanType.Block: {
+		case ExplorerType.Block: {
 			const [chainId, block] = data;
-			return `https://${ETHERSCAN_DOMAINS[chainId]}/block/${block}`;
+			return `https://${CHAIN_INFO[chainId].explorer}/block/${block}`;
 		}
 	}
 }

@@ -2,7 +2,8 @@
  * List of all the networks supported by the Uniswap Interface
  */
 export enum SupportedChainId {
-	BOBA = 288
+	BOBA = 288,
+	BOBA_RINKEBY = 28
 }
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(SupportedChainId).filter(
@@ -13,7 +14,7 @@ export const L1_CHAIN_IDS = [] as const;
 
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number];
 
-export const L2_CHAIN_IDS = [SupportedChainId.BOBA] as const;
+export const L2_CHAIN_IDS = [SupportedChainId.BOBA, SupportedChainId.BOBA_RINKEBY] as const;
 
 export type SupportedL2ChainId = typeof L2_CHAIN_IDS[number];
 
@@ -63,6 +64,16 @@ export const CHAIN_INFO: ChainInfoMap = {
 		addNetworkInfo: {
 			nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
 			rpcUrl: 'https://mainnet.boba.network'
+		}
+	},
+	[SupportedChainId.BOBA_RINKEBY]: {
+		networkType: NetworkType.L2,
+		// blockWaitMsBeforeWarning: ms`25m`,
+		explorer: 'https://blockexplorer.rinkeby.boba.network/',
+		label: 'Boba L2 Rinkeby',
+		addNetworkInfo: {
+			nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+			rpcUrl: 'https://rinkeby.boba.network/'
 		}
 	}
 };

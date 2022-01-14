@@ -1,3 +1,5 @@
 export enum Subgraph {
-	BOBA_EIP721 = 'https://graph.mainnet.boba.network:8000/subgraphs/name/quantumlyy/eip721-subgraph-boba'
+	BOBA_MAINNET_EIP721 = 'https://graph.mainnet.boba.network:8000/subgraphs/name/tapioca/eip721-subgraph-boba',
+	BOBA_RINKEBY_EIP721 = 'https://graph.rinkeby.boba.network:8000/subgraphs/name/tapioca/eip721-subgraph-boba',
+	BOBA_RINKEBY_ERC721EXCHANGE = 'https://graph.rinkeby.boba.network:8000/subgraphs/name/tapioca/marketplace'
 }
