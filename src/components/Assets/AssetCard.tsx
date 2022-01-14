@@ -1,13 +1,16 @@
 import MultiSourceContentDisplay from 'components/MultiSourceContentDisplay';
+import { BigNumber, ethers } from 'ethers';
 import React from 'react';
 
 export interface AssetProps {
 	collection: string;
 	name?: string;
 	image?: string;
+
+	price?: BigInt;
 }
 
-const Asset: React.FC<AssetProps> = ({ collection, name, image }) => {
+const Asset: React.FC<AssetProps> = ({ collection, name, image, price }) => {
 	return (
 		<>
 			<div className="max-w-[16.4rem] min-w-[16.4rem]">
@@ -23,6 +26,7 @@ const Asset: React.FC<AssetProps> = ({ collection, name, image }) => {
 					<div className="px-6 py-2">
 						<div className="text-sm text-gray-400 truncate">{collection}</div>
 						{name && <div className="font-semibold truncate">{name}</div>}
+						{price && <div>{ethers.utils.formatEther(BigNumber.from(price))}Ξ</div>}
 					</div>
 				</div>
 			</div>

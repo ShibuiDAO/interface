@@ -5,6 +5,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMetadata, selectAssetMetadata } from 'state/reducers/assets';
+import { selectSellOrder } from 'state/reducers/orders';
 import AssetCard from './AssetCard';
 
 export interface ERC721AssetProps {
@@ -17,6 +18,7 @@ const ERC721Asset: React.FC<ERC721AssetProps> = ({ token }) => {
 	const [valid, setValid] = useState(true);
 
 	const metadata = useSelector(selectAssetMetadata(chainId || SupportedChainId.BOBA, token.contract.id, token.identifier));
+	const sellOrder = useSelector(selectSellOrder(token.contract.id, token.identifier));
 
 	useEffect(() => {
 		if (!token || !library || !chainId) {
@@ -45,7 +47,7 @@ const ERC721Asset: React.FC<ERC721AssetProps> = ({ token }) => {
 
 	if (!valid || !metadata) return null;
 
-	return <AssetCard collection={metadata.collection || ''} name={metadata.name} image={metadata.image_final} />;
+	return <AssetCard collection={metadata.collection || ''} name={metadata.name} image={metadata.image_final} price={sellOrder?.price} />;
 };
 
 export default ERC721Asset;

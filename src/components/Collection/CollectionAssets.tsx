@@ -1,17 +1,21 @@
 import { useQuery } from '@apollo/client';
 import type { Erc721Contract, Erc721Token } from '@subgraphs/eip721-matic';
+import { Account } from '@tapioca-market/erc721exchange-types';
 import type { EIP721Response, ERC721ExchangeResponse } from 'client';
 import { ChainSubgraphSets, generateEIP721ContractQuery, generateERC721ExchangeQuery } from 'client/queries';
 import ERC721Asset from 'components/Assets/ERC721Asset';
 import { SupportedChainId } from 'constants/chains';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { fillSellOrders } from 'state/reducers/orders';
 
 export interface CollectionAssetsProps {
 	address: string;
 }
 
 const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
+	const dispatch = useDispatch();
 	const { chainId } = useActiveWeb3React();
 	const chainIdNormalised: SupportedChainId = chainId || SupportedChainId.BOBA;
 
@@ -34,6 +38,8 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 
 	if ((!assetsData || !assetsData.erc721Contract) && !assetsLoading) return null;
 	if ((!exchangeData || !exchangeData.account) && !exchangeLoading) return null;
+
+	if (exchangeData?.account) dispatch(fillSellOrders((exchangeData?.account as Account).contractSellOrders));
 
 	return (
 		<>

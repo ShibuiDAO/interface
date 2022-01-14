@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SellOrder } from '@tapioca-market/erc721exchange-types';
+import { WritableDraft } from 'immer/dist/internal';
+import { RootState } from 'state';
 
 export interface SimpleSellOrder {
 	id: string;
@@ -18,23 +20,36 @@ const initialState: OrdersState = {
 	sellOrders: {}
 };
 
+const commitSellOrder = (state: WritableDraft<OrdersState>, order: SellOrder): WritableDraft<OrdersState> => {
+	state.sellOrders[`${order.contract.id}-${order.token}-SELL`] = {
+		id: order.id,
+		seller: { id: order.seller.id },
+		contract: { id: order.contract.id },
+		token: order.token,
+		expiration: order.expiration,
+		price: order.price
+	};
+	return state;
+};
+
 export const ordersSlice = createSlice({
 	name: 'orders',
 	initialState,
 	reducers: {
+		fillSellOrders: (state, action: PayloadAction<readonly SellOrder[]>) => {
+			for (const sellOrder of action.payload) {
+				state = commitSellOrder(state, sellOrder);
+			}
+		},
 		setSellOrder: (state, action: PayloadAction<SellOrder>) => {
-			state.sellOrders[`${action.payload.seller.id}-${action.payload.contract.id}-${action.payload.token}`] = {
-				id: action.payload.id,
-				seller: { id: action.payload.seller.id },
-				contract: { id: action.payload.contract.id },
-				token: action.payload.token,
-				expiration: action.payload.expiration,
-				price: action.payload.price
-			};
+			state = commitSellOrder(state, action.payload);
 		}
 	}
 });
 
-export const { setSellOrder } = ordersSlice.actions;
+export const { fillSellOrders, setSellOrder } = ordersSlice.actions;
+
+export const selectSellOrder = (contract: string, identifier: BigInt) => (state: RootState) =>
+	state.orders.sellOrders[`${contract}-${identifier}-SELL`];
 
 export default ordersSlice.reducer;
