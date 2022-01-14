@@ -29,6 +29,7 @@ const commitSellOrder = (state: WritableDraft<OrdersState>, order: SellOrder): W
 		expiration: order.expiration,
 		price: order.price
 	};
+
 	return state;
 };
 

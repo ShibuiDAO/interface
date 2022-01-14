@@ -4,6 +4,7 @@ import type { Query as ERC721ExchangeQuery } from '@tapioca-market/erc721exchang
 import { baseLink } from './links';
 
 export const client = new ApolloClient({
+	ssrMode: typeof window === 'undefined',
 	link: baseLink,
 	cache: new InMemoryCache(),
 	defaultOptions: {

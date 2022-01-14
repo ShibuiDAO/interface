@@ -2,13 +2,18 @@ import { gql } from '@apollo/client';
 import { SupportedChainId } from '../constants/chains';
 import { Subgraph } from './graphprotocol/subgraphs';
 
-export const generateEIP721ContractQuery = (chainId: SupportedChainId) => gql`
+export const generateEIP721ContractQuery = (
+	chainId: SupportedChainId,
+	paging_by = 999,
+	paging_from = 0,
+	paging_to: number = paging_from + paging_by
+) => gql`
 	query GetChainId${chainId}EIP721Assets($owner: String!) {
 		erc721Contract(id: $owner) {
 			id
 			symbol
 			name
-			tokens(first: 999) {
+			tokens(first: ${paging_by}, where: { identifier_gte: ${paging_from}, identifier_lt: ${paging_to} }) {
 				id
 				uri
 				identifier
@@ -20,11 +25,16 @@ export const generateEIP721ContractQuery = (chainId: SupportedChainId) => gql`
 	}
 `;
 
-export const generateERC721ExchangeQuery = (chainId: SupportedChainId) => gql`
+export const generateERC721ExchangeQuery = (
+	chainId: SupportedChainId,
+	paging_by = 999,
+	paging_from = 0,
+	paging_to: number = paging_from + paging_by
+) => gql`
 	query GetChainId${chainId}ContractListings($contract: String!) {
 		account(id: $contract) {
 			id
-			contractSellOrders {
+			contractSellOrders(first: ${paging_by}, where: { token_gte: ${paging_from}, token_lt: ${paging_to} }) {
 				id
 				seller {
 					id
