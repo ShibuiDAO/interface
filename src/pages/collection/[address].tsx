@@ -17,9 +17,8 @@ const CollectionDisplay: NextPage = () => {
 			<Offset />
 			{isConnected ? (
 				<>
-					<h1>Hello</h1>
 					<div className="container">
-						<div className="flex flex-wrap gap-8">
+						<div className="flex flex-wrap align-middle justify-center gap-8">
 							<CollectionAssets address={addressNormalised || ''} />
 						</div>
 					</div>

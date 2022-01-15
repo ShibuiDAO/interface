@@ -13,7 +13,7 @@ export interface ERC721AssetProps {
 }
 
 const ERC721Asset: React.FC<ERC721AssetProps> = ({ token }) => {
-	const { library, chainId } = useActiveWeb3React();
+	const { library, chainId, account } = useActiveWeb3React();
 	const dispatch = useDispatch();
 	const [valid, setValid] = useState(true);
 
@@ -31,6 +31,7 @@ const ERC721Asset: React.FC<ERC721AssetProps> = ({ token }) => {
 		dispatch(
 			fetchMetadata({
 				token: {
+					owner: token.owner.id,
 					identifier: token.identifier,
 					contract: {
 						id: token.contract.id,
@@ -47,7 +48,17 @@ const ERC721Asset: React.FC<ERC721AssetProps> = ({ token }) => {
 
 	if (!valid || !metadata) return null;
 
-	return <AssetCard collection={metadata.collection || ''} name={metadata.name} image={metadata.image_final} price={sellOrder?.price} />;
+	return (
+		<AssetCard
+			collection={metadata.collection || ''}
+			collectionAddress={metadata.contract || ''}
+			name={metadata.name}
+			image={metadata.image_final}
+			owner={metadata.owner}
+			user={account?.toLowerCase() || ''}
+			price={sellOrder?.price}
+		/>
+	);
 };
 
 export default ERC721Asset;

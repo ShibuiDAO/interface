@@ -17,6 +17,9 @@ export const generateEIP721ContractQuery = (
 				id
 				uri
 				identifier
+				owner {
+					id
+				}
 				contract {
 					id
 				}

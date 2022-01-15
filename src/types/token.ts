@@ -4,6 +4,7 @@ export interface TokenContract {
 }
 
 export interface Token {
+	owner: string;
 	identifier: BigInt;
 	contract: TokenContract;
 }

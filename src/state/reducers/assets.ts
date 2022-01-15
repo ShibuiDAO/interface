@@ -10,7 +10,7 @@ import { quirkURIQuirks } from 'utils/quirks/uri';
 import type { RootState } from '../index';
 
 interface AssetsState {
-	metadata: { [K: string]: BaseMetadata | undefined };
+	metadata: { [K: string]: ExpandedChainedMetadata | undefined };
 }
 
 const initialState: AssetsState = {
@@ -19,6 +19,10 @@ const initialState: AssetsState = {
 
 export interface ChainedMetadata extends BaseMetadata {
 	chainId: SupportedChainId;
+}
+
+export interface ExpandedChainedMetadata extends ChainedMetadata {
+	owner: string;
 }
 
 interface FetchMetadataParameters {
@@ -32,10 +36,10 @@ interface MetadataSetPayload {
 	chainId: SupportedChainId;
 	contract: string;
 	identifier: BigInt;
-	data: BaseMetadata;
+	data: ExpandedChainedMetadata;
 }
 
-export const fetchMetadata = createAsyncThunk<ChainedMetadata | undefined, FetchMetadataParameters>(
+export const fetchMetadata = createAsyncThunk<ExpandedChainedMetadata | undefined, FetchMetadataParameters>(
 	'fetch/metadata',
 	async ({ token, contractABI, chainId, provider }) => {
 		if (!chainId || !contractABI) return undefined;
@@ -58,6 +62,7 @@ export const fetchMetadata = createAsyncThunk<ChainedMetadata | undefined, Fetch
 		return metadata
 			? {
 					...metadata,
+					owner: token.owner,
 					name: metadata.name || token.identifier.toString(),
 					contract: token.contract.id,
 					identifier: token.identifier,
