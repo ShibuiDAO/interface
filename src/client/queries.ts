@@ -46,6 +46,21 @@ export const generateERC721ExchangeQuery = (
 				expiration
 				price
 			}
+			contractBuyOrders(first: ${paging_by}, where: { token_gte: ${paging_from}, token_lt: ${paging_to} }) {
+				id
+				buyer {
+					id
+				}
+				owner {
+					id
+				}
+				contract {
+					id
+				}
+				token
+				expiration
+				offer
+			}
 		}
 	}
 `;

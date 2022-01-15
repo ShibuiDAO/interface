@@ -8,7 +8,7 @@ import { SupportedChainId } from 'constants/chains';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { fillSellOrders } from 'state/reducers/orders';
+import { fillBuyOrders, fillSellOrders } from 'state/reducers/orders';
 
 export interface CollectionAssetsProps {
 	address: string;
@@ -39,7 +39,10 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 	if ((!assetsData || !assetsData.erc721Contract) && !assetsLoading) return null;
 	if ((!exchangeData || !exchangeData.account) && !exchangeLoading) return null;
 
-	if (exchangeData?.account) dispatch(fillSellOrders((exchangeData?.account as Account).contractSellOrders));
+	if (exchangeData?.account) {
+		dispatch(fillSellOrders((exchangeData?.account as Account).contractSellOrders));
+		dispatch(fillBuyOrders((exchangeData?.account as Account).contractBuyOrders));
+	}
 
 	return (
 		<>
