@@ -8,6 +8,7 @@ module.exports = {
 		},
 		extend: {
 			colors: {
+				...require('daisyui/colors'),
 				gray: {
 					50: '#fafafa',
 					300: '#d4d4d8',
@@ -30,5 +31,5 @@ module.exports = {
 	variants: {
 		extend: {}
 	},
-	plugins: []
+	plugins: [require('daisyui')]
 };
