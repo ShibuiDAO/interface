@@ -24,6 +24,7 @@ const DatePickerFormik: React.FC<DatePickerFormikProps> = ({ ...props }) => {
 				setFieldValue(field.name, val);
 			}}
 			popperContainer={({ children }) => createPortal(children, document.body)}
+			inline={true}
 		/>
 	);
 };
