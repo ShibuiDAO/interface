@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../index';
 
-interface UserState {
+export interface UserState {
 	connecting: boolean;
 	triedEager: boolean;
 }

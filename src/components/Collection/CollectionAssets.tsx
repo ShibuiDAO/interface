@@ -9,7 +9,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { fillBuyOrders, fillSellOrders } from 'state/reducers/orders';
-import { DEFAULT_CHAIN } from 'constants/misc';
+import { COLLECTION_REFRESH_INTERVAL, DEFAULT_CHAIN } from 'constants/misc';
 
 export interface CollectionAssetsProps {
 	address: string;
@@ -25,7 +25,8 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 	const { data: assetsData, loading: assetsLoading } = useQuery<EIP721Response<'erc721Contract'>>(generateEIP721ContractQuery(chainIdNormalised), {
 		variables: { contract: address },
 		context: { subgraph: EIP721Subgraph },
-		fetchPolicy: 'no-cache'
+		fetchPolicy: 'no-cache',
+		pollInterval: COLLECTION_REFRESH_INTERVAL
 	});
 
 	const { data: exchangeData, loading: exchangeLoading } = useQuery<ERC721ExchangeResponse<'account'>>(
@@ -33,7 +34,8 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 		{
 			variables: { contract: address },
 			context: { subgraph: ERC721ExchangeSubgraph },
-			fetchPolicy: 'no-cache'
+			fetchPolicy: 'no-cache',
+			pollInterval: COLLECTION_REFRESH_INTERVAL
 		}
 	);
 

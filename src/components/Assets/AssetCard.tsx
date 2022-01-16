@@ -1,12 +1,12 @@
 import MultiSourceContentDisplay from 'components/MultiSourceContentDisplay';
 import { SupportedChainId } from 'constants/chains';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
-// import { BigNumber, ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import Link from 'next/link';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectAssetMetadata } from 'state/reducers/assets';
-// import { selectSellOrder } from 'state/reducers/orders';
+import { selectSellOrder } from 'state/reducers/orders';
 
 export interface AssetProps {
 	chainId: SupportedChainId;
@@ -19,7 +19,7 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 	account = account?.toLowerCase() || '';
 
 	const metadata = useSelector(selectAssetMetadata(chainId, contract, identifier));
-	// const sellOrder = useSelector(selectSellOrder(contract, identifier));
+	const sellOrder = useSelector(selectSellOrder(contract, identifier));
 
 	if (!metadata) return null;
 
@@ -37,14 +37,12 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 					</Link>
 					<div className="text-lg font-semibold truncate">{metadata.name}</div>
 				</h2>
+				<div className="px-6 py-2">{sellOrder && <div>{ethers.utils.formatEther(BigNumber.from(sellOrder.price))}Ξ</div>}</div>
 				{metadata?.owner && account && metadata.owner === account && (
 					<div className="justify-end card-actions mt-2">
 						<button className="btn btn-primary">Sell</button>
 					</div>
 				)}
-				{/* <div className="px-6 py-2">
-						{price && <div>{ethers.utils.formatEther(BigNumber.from(price))}Ξ</div>}
-					</div> */}
 			</div>
 		</div>
 	);

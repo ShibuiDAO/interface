@@ -9,7 +9,7 @@ import { metadataAPI, metadataBase64 } from 'utils/metadata';
 import { quirkURIQuirks } from 'utils/quirks/uri';
 import type { RootState } from '../index';
 
-interface AssetsState {
+export interface AssetsState {
 	metadata: { [K: string]: ExpandedChainedMetadata | undefined };
 }
 
@@ -25,24 +25,24 @@ export interface ExpandedChainedMetadata extends ChainedMetadata {
 	owner: string;
 }
 
-interface FetchMetadataParameters {
+export interface FetchMetadataParameters {
 	token: Token;
 	chainId: number;
 	contractABI?: ABI;
 	provider: Provider;
 }
 
-interface MetadataSetPayload {
+export interface MetadataSetPayload {
 	chainId: SupportedChainId;
 	contract: string;
 	identifier: BigInt;
 	data: ExpandedChainedMetadata;
 }
 
-export const fetchMetadata = createAsyncThunk<ExpandedChainedMetadata | undefined, FetchMetadataParameters>(
+export const fetchMetadata = createAsyncThunk<ExpandedChainedMetadata, FetchMetadataParameters>(
 	'fetch/metadata',
-	async ({ token, contractABI, chainId, provider }) => {
-		if (!chainId || !contractABI) return undefined;
+	async ({ token, contractABI, chainId, provider }, { rejectWithValue }) => {
+		if (!chainId || !contractABI) return rejectWithValue('ChainId or contract not provided.');
 
 		const contract = new Contract(token.contract.id, ABIs[contractABI], provider);
 		const contractURI: string = await contract[uriMethods[contractABI]](token.identifier);
@@ -70,7 +70,7 @@ export const fetchMetadata = createAsyncThunk<ExpandedChainedMetadata | undefine
 					image_final: metadata.image || metadata.image_url || '',
 					chainId
 			  }
-			: undefined;
+			: rejectWithValue('No metadata present');
 	}
 );
 
@@ -84,7 +84,7 @@ export const assetsSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchMetadata.fulfilled, (state, action) => {
-			if (action.payload) state.metadata[`${action.payload.chainId}-${action.payload.contract}-${action.payload.identifier}`] = action.payload;
+			state.metadata[`${action.payload.chainId}-${action.payload.contract}-${action.payload.identifier}`] = action.payload;
 		});
 	}
 });
