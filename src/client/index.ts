@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import type { Query as EIP721Query } from '@subgraphs/eip721-matic';
-import type { Query as ERC721ExchangeQuery } from '@tapioca-market/erc721exchange-types';
+import type { Query as ERC721ExchangeQuery } from '@shibuidao/erc721exchange-types';
 import { baseLink } from './links';
 
 export const client = new ApolloClient({
