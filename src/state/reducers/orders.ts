@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BuyOrder, SellOrder } from '@tapioca-market/erc721exchange-types';
+import { BuyOrder, SellOrder } from '@shibuidao/erc721exchange-types';
 import { WritableDraft } from 'immer/dist/internal';
 import { RootState } from 'state';
 

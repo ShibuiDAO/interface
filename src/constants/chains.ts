@@ -1,9 +1,10 @@
-/**
- * List of all the networks supported by the Uniswap Interface
- */
 export enum SupportedChainId {
 	BOBA = 288,
 	BOBA_RINKEBY = 28
+}
+
+export enum PinnedChainId {
+	MAINNET = 1
 }
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(SupportedChainId).filter(

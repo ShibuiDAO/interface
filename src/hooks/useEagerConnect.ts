@@ -14,7 +14,7 @@ export default function useEagerConnect(): boolean {
 
 	useEffect(() => {
 		if (!triedSafe) {
-			gnosisSafe.isSafeApp().then((loadedInSafe) => {
+			void gnosisSafe.isSafeApp().then((loadedInSafe) => {
 				if (loadedInSafe) {
 					activate(gnosisSafe, undefined, true).catch(() => {
 						setTriedSafe(true);

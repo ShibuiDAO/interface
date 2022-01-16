@@ -8,8 +8,8 @@ export const generateEIP721ContractQuery = (
 	paging_from = 0,
 	paging_to: number = paging_from + paging_by
 ) => gql`
-	query GetChainId${chainId}EIP721Assets($owner: String!) {
-		erc721Contract(id: $owner) {
+	query GetChainId${chainId}EIP721Assets($contract: String!) {
+		erc721Contract(id: $contract) {
 			id
 			symbol
 			name

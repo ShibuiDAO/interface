@@ -1,8 +1,9 @@
 import Offset from 'components/Navbar/Offset';
 import useConnectionActive from 'hooks/useConnectionActive';
+import { NextPage } from 'next';
 import React from 'react';
 
-export default function Home() {
+const Index: NextPage = () => {
 	const isConnected = useConnectionActive();
 
 	return (
@@ -15,4 +16,6 @@ export default function Home() {
 			) : null}
 		</div>
 	);
-}
+};
+
+export default Index;
