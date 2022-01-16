@@ -1,5 +1,6 @@
 import { JsonRpcProvider, TransactionResponse } from '@ethersproject/providers';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { deepClone } from '@sapphire/utilities';
 import { BuyOrder, SellOrder } from '@shibuidao/erc721exchange-types';
 import { ABI, ABIs } from 'constants/abis';
 import { SupportedChainId } from 'constants/chains';
@@ -27,14 +28,35 @@ export interface SimpleBuyOrder {
 	offer: BigInt;
 }
 
+export enum OrderDirection {
+	BOOK,
+	EXECUTE
+}
+
+export interface OrderInitiate {
+	ordering: boolean;
+	contract: string;
+	identifier: string;
+	direction: OrderDirection;
+}
+
+export const defaultOrder: OrderInitiate = {
+	ordering: false,
+	contract: '',
+	identifier: '1',
+	direction: OrderDirection.BOOK
+};
+
 export interface OrdersState {
 	sellOrders: { [K: string]: SimpleSellOrder | undefined };
 	buyOrders: { [K: string]: SimpleBuyOrder | undefined };
+	currentOrder: OrderInitiate;
 }
 
 const initialState: OrdersState = {
 	sellOrders: {},
-	buyOrders: {}
+	buyOrders: {},
+	currentOrder: defaultOrder
 };
 
 const commitSellOrder = (state: WritableDraft<OrdersState>, order: SellOrder): WritableDraft<OrdersState> => {
@@ -101,6 +123,53 @@ export const createSellOrder = createAsyncThunk<any, CreateOrderSellParameters>(
 	}
 );
 
+export interface SellOrderExecutionData {
+	seller: string;
+	tokenContractAddress: string;
+	tokenId: BigNumberish;
+	expiration: BigNumberish;
+	price: BigNumberish;
+	recipient: string;
+}
+
+export interface ExecuteOrderSellParameters {
+	chainId: SupportedChainId;
+	library: JsonRpcProvider;
+
+	data: SellOrderExecutionData;
+}
+
+export const executeSellOrder = createAsyncThunk<any, ExecuteOrderSellParameters>(
+	'execute/order/sell',
+	async ({ chainId, library, data }, { rejectWithValue }) => {
+		const exchange = new Contract(ERC721_EXCHANGE[chainId], ABIs[ABI.ERC721_EXCHANGE], library.getSigner());
+		try {
+			const tx: TransactionResponse = await exchange.executeSellOrder(
+				data.seller,
+				data.tokenContractAddress,
+				data.tokenId,
+				data.expiration,
+				data.price,
+				data.recipient,
+				{ value: data.price }
+			);
+
+			try {
+				await tx.wait();
+			} catch (callException: any) {
+				if (callException.code === errors.CALL_EXCEPTION) {
+					return rejectWithValue(['Transaction execution failed', callException]);
+				}
+				throw callException;
+			}
+		} catch (transactionError) {
+			return rejectWithValue(['Method call failed', transactionError]);
+		}
+
+		return true;
+	}
+);
+
 export const ordersSlice = createSlice({
 	name: 'orders',
 	initialState,
@@ -128,11 +197,19 @@ export const ordersSlice = createSlice({
 		},
 		setBuyOrder: (state, action: PayloadAction<BuyOrder>) => {
 			state = commitBuyOrder(state, action.payload);
+		},
+
+		setCurrentOrder: (state, action: PayloadAction<OrderInitiate>) => {
+			state.currentOrder = action.payload;
+		},
+		clearOrder: (state) => {
+			state.currentOrder = deepClone(defaultOrder);
 		}
 	},
 	// TODO: Use case outputs
 	extraReducers: (builder) => {
 		builder.addCase(createSellOrder.pending, (_, action) => {
+			clearOrder();
 			console.log(action.payload);
 			console.log(action.meta.arg);
 		});
@@ -143,15 +220,30 @@ export const ordersSlice = createSlice({
 		builder.addCase(createSellOrder.fulfilled, (_, action) => {
 			console.log(action.payload);
 		});
+
+		builder.addCase(executeSellOrder.pending, (_, action) => {
+			// clearOrder();
+			console.log(action.payload);
+			console.log(action.meta.arg);
+		});
+		builder.addCase(executeSellOrder.rejected, (_, action) => {
+			console.log(action.payload);
+			console.log(action.meta.arg);
+		});
+		builder.addCase(executeSellOrder.fulfilled, (_, action) => {
+			console.log(action.payload);
+		});
 	}
 });
 
-export const { resetSellOrders, fillSellOrders, setSellOrder, resetBuyOrders, fillBuyOrders, setBuyOrder } = ordersSlice.actions;
+export const { resetSellOrders, fillSellOrders, setSellOrder, resetBuyOrders, fillBuyOrders, setBuyOrder, setCurrentOrder, clearOrder } =
+	ordersSlice.actions;
 
 export const selectSellOrder = (contract: string, identifier: BigInt) => (state: RootState) =>
 	state.orders.sellOrders[`${contract}-${identifier}-SELL`];
-
 export const selectBuyOrder = (contract: string, identifier: BigInt) => (state: RootState /* */) =>
 	state.orders.buyOrders[`${contract}-${identifier}-BUY`];
+
+export const selectOrderingStatus = (state: RootState) => state.orders.currentOrder;
 
 export default ordersSlice.reducer;

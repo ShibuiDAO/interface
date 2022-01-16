@@ -24,6 +24,7 @@
     "@headlessui/react": "^1.4.2",
     "@metamask/onboarding": "^1.0.1",
     "@reduxjs/toolkit": "^1.7.1",
+    "@sapphire/utilities": "^3.2.0",
     "@shibuidao/erc721exchange-types": "^1.0.1",
     "@subgraphs/eip721-matic": "^1.0.1",
     "@web3-react/core": "^6.1.9",

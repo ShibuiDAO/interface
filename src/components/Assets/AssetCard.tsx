@@ -1,12 +1,12 @@
 import MultiSourceContentDisplay from 'components/MultiSourceContentDisplay';
 import { SupportedChainId } from 'constants/chains';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import { BigNumber, ethers } from 'ethers';
+import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import Link from 'next/link';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectAssetMetadata } from 'state/reducers/assets';
-import { selectSellOrder } from 'state/reducers/orders';
+import { OrderDirection, selectSellOrder, setCurrentOrder } from 'state/reducers/orders';
 
 export interface AssetProps {
 	chainId: SupportedChainId;
@@ -18,6 +18,7 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 	let { account } = useActiveWeb3React();
 	account = account?.toLowerCase() || '';
 
+	const dispatch = useDispatch();
 	const metadata = useSelector(selectAssetMetadata(chainId, contract, identifier));
 	const sellOrder = useSelector(selectSellOrder(contract, identifier));
 
@@ -31,16 +32,25 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 			<div className="card-body p-4">
 				<h2 className="card-title mb-1">
 					<Link href={`/collection/${contract}`} passHref={true}>
-						<a href="/" className="text-base text-chain-boba truncate">
+						<a href="/" className="text-sm text-chain-boba truncate">
 							{metadata?.collection && metadata.collection}
 						</a>
 					</Link>
-					<div className="text-lg font-semibold truncate">{metadata.name}</div>
+					<div className="text-base font-semibold truncate">{metadata.name}</div>
 				</h2>
 				<div className="px-6 py-2">{sellOrder && <div>{ethers.utils.formatEther(BigNumber.from(sellOrder.price))}Ξ</div>}</div>
-				{metadata?.owner && account && metadata.owner === account && (
+				{sellOrder?.token !== identifier && metadata?.owner && account && metadata.owner === account && (
 					<div className="justify-end card-actions mt-2">
-						<button className="btn btn-primary">Sell</button>
+						<button
+							onClick={() =>
+								dispatch(
+									setCurrentOrder({ ordering: true, contract, identifier: identifier.toString(), direction: OrderDirection.BOOK })
+								)
+							}
+							className="btn btn-primary"
+						>
+							Sell
+						</button>
 					</div>
 				)}
 			</div>

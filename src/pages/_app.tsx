@@ -3,6 +3,7 @@ import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from '@ethersproject
 import { config, dom } from '@fortawesome/fontawesome-svg-core';
 import { Web3ReactProvider } from '@web3-react/core';
 import { client } from 'client';
+import Sell from 'components/Assets/Order/Sell';
 import Navbar from 'components/Navbar/Navbar';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
@@ -35,6 +36,7 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
 
 							<>
 								<Connect />
+								<Sell />
 
 								<header>
 									<Navbar />

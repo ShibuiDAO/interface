@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
-import { useField, useFormikContext } from 'formik';
+import { FieldInputProps, useField, useFormikContext } from 'formik';
 import React from 'react';
 
-export interface EthInputFormikProps {
+export interface EthInputFormikProps extends Pick<FieldInputProps<any>, 'value' | 'onChange'> {
 	name: string;
 	className?: string;
 }
@@ -16,7 +16,7 @@ const EthInputFormik: React.FC<EthInputFormikProps> = ({ ...props }) => {
 			{...props}
 			{...field}
 			onChange={(val) => {
-				setFieldValue(field.name, ethers.utils.parseEther(val.target.value));
+				setFieldValue(field.name, ethers.utils.parseEther(val.target.value).toString());
 			}}
 		/>
 	);

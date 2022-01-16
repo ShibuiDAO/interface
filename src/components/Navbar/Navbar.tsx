@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
 
 	return (
 		<>
-			<nav className="w-full fixed z-30">
+			<nav className="w-full fixed z-20">
 				<div className="border-b-2 dark:border-gray-800 dark:bg-gray-900 dark:text-white font-semibold">
 					<div className="w-full mx-auto px-8 py-2">
 						<div className="relative flex items-center justify-between h-12">
