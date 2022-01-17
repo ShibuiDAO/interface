@@ -1,7 +1,8 @@
 import DatePickerFormik from 'components/forms/DatePickerFormik';
 import EthInputFormik from 'components/forms/EthInputFormik';
+import FormFieldError from 'components/forms/FormFieldError';
 import FormFieldInfo from 'components/forms/FormFieldInfo';
-import { BigNumber, BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish, ethers } from 'ethers';
 import { Form, Formik } from 'formik';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
@@ -34,7 +35,7 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 		<>
 			<Formik
 				initialValues={{
-					price: '0',
+					price: '1',
 					expiration: new Date()
 				}}
 				validationSchema={SellFormSchema}
@@ -47,7 +48,7 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 								tokenContractAddress: contract,
 								tokenId: identifier,
 								expiration: BigNumber.from(values.expiration.getTime()),
-								price: BigNumber.from(values.price)
+								price: ethers.utils.parseEther(values.price)
 							}
 						})
 					)
@@ -57,17 +58,27 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 					<Form>
 						<>
 							<div className="pt-4">
-								<label htmlFor="price">Price</label>
-								<FormFieldInfo message="The price" />
-								<EthInputFormik name="price" onChange={props.handleChange} value={props.values.price} />
+								<label htmlFor="price" className="font-bold text-white text-lg mb-2">
+									Price
+								</label>
+								<FormFieldInfo message="The price in ETH" />
+								<EthInputFormik
+									name="price"
+									onChange={props.handleChange}
+									value={props.values.price}
+									className="block border-b border-dotted border-element-secondary w-full outline-none bg-black text-white"
+								/>
+								<FormFieldError message={props.errors.price} />
 							</div>
 							<div className="pt-4">
-								<label htmlFor="expiration">Expiration</label>
+								<label htmlFor="expiration" className="font-bold text-white text-lg">
+									Expiration
+								</label>
 								<FormFieldInfo message="The date when the SellOrder expires" />
-								<DatePickerFormik name="expiration" className="z-50" onChange={props.handleChange} value={props.values.expiration} />
+								<DatePickerFormik name="expiration" className="pt-4" onChange={props.handleChange} value={props.values.expiration} />
 							</div>
 							<div className="pt-4">
-								<button type="submit" className="text-white">
+								<button type="submit" className="btn bg-gray-200 hover:bg-gray-400 text-black">
 									List
 								</button>
 							</div>

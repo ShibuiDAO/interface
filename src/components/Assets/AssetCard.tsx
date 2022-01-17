@@ -24,6 +24,9 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 
 	if (!metadata) return null;
 
+	const ownerSellCondition = sellOrder?.token !== identifier && metadata?.owner && account && metadata.owner === account;
+	const userBuyCondition = sellOrder?.token === identifier && metadata?.owner && account && metadata.owner !== account;
+
 	return (
 		<div className="card card-bordered max-w-[14rem]">
 			<figure>
@@ -39,7 +42,7 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 					<div className="text-base font-semibold truncate">{metadata.name}</div>
 				</h2>
 				<div className="px-6 py-2">{sellOrder && <div>{ethers.utils.formatEther(BigNumber.from(sellOrder.price))}Ξ</div>}</div>
-				{sellOrder?.token !== identifier && metadata?.owner && account && metadata.owner === account && (
+				{ownerSellCondition && (
 					<div className="justify-end card-actions mt-2">
 						<button
 							onClick={() =>
@@ -50,6 +53,26 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 							className="btn btn-primary"
 						>
 							Sell
+						</button>
+					</div>
+				)}
+				{userBuyCondition && (
+					<div className="justify-end card-actions mt-2">
+						<button
+							onClick={() =>
+								dispatch(
+									setCurrentOrder({
+										ordering: true,
+										user: account!,
+										contract,
+										identifier: identifier.toString(),
+										direction: OrderDirection.EXECUTE
+									})
+								)
+							}
+							className="btn btn-primary"
+						>
+							Buy
 						</button>
 					</div>
 				)}

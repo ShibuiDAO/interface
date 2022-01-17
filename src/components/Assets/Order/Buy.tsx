@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearOrder, selectOrderingStatus } from 'state/reducers/orders';
 import SellForm from './SellForm';
 
-const Sell: React.FC = () => {
+const Buy: React.FC = () => {
 	const dispatch = useDispatch();
 	const order = useSelector(selectOrderingStatus);
 
@@ -48,7 +48,7 @@ const Sell: React.FC = () => {
 										<div className="flex items-start">
 											<div className="mt-0 text-left">
 												<Dialog.Title as="span" className="w-full text-lg leading-6 font-bold">
-													Sell NFT
+													Buy NFT
 													<button
 														type="button"
 														className="float-right"
@@ -74,4 +74,4 @@ const Sell: React.FC = () => {
 	);
 };
 
-export default Sell;
+export default Buy;

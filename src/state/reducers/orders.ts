@@ -35,6 +35,7 @@ export enum OrderDirection {
 
 export interface OrderInitiate {
 	ordering: boolean;
+	user?: string;
 	contract: string;
 	identifier: string;
 	direction: OrderDirection;
