@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAssetMetadata } from 'state/reducers/assets';
-import { OrderDirection, selectSellOrder, setCurrentOrder } from 'state/reducers/orders';
+import { executeSellOrder, OrderDirection, selectSellOrder, setCurrentOrder } from 'state/reducers/orders';
 
 export interface AssetProps {
 	chainId: SupportedChainId;
@@ -15,7 +15,7 @@ export interface AssetProps {
 }
 
 const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
-	let { account } = useActiveWeb3React();
+	let { account, library } = useActiveWeb3React();
 	account = account?.toLowerCase() || '';
 
 	const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 	if (!metadata) return null;
 
 	const ownerSellCondition = sellOrder?.token !== identifier && metadata?.owner && account && metadata.owner === account;
-	const userBuyCondition = sellOrder?.token === identifier && metadata?.owner && account && metadata.owner !== account;
+	const userBuyCondition = sellOrder && sellOrder.token === identifier && metadata?.owner && account && metadata.owner !== account;
 
 	return (
 		<div className="card card-bordered max-w-[14rem]">
@@ -56,17 +56,22 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 						</button>
 					</div>
 				)}
-				{userBuyCondition && (
+				{userBuyCondition && library && (
 					<div className="justify-end card-actions mt-2">
 						<button
 							onClick={() =>
 								dispatch(
-									setCurrentOrder({
-										ordering: true,
-										user: account!,
-										contract,
-										identifier: identifier.toString(),
-										direction: OrderDirection.EXECUTE
+									executeSellOrder({
+										chainId,
+										library: library!,
+										data: {
+											seller: sellOrder.seller.id,
+											tokenContractAddress: sellOrder.contract.id,
+											tokenId: BigNumber.from(sellOrder.token),
+											expiration: BigNumber.from(sellOrder.expiration),
+											price: BigNumber.from(sellOrder.price),
+											recipient: account!
+										}
 									})
 								)
 							}
