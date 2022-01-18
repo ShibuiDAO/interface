@@ -6,6 +6,7 @@ import { client } from 'client';
 import OrderDisplay from 'components/Assets/Order/OrderDisplay';
 import Navbar from 'components/Navbar/Navbar';
 import type { NextPage } from 'next';
+import PlausibleProvider from 'next-plausible';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -26,29 +27,31 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
 	return (
 		<>
 			<React.StrictMode>
-				<ApolloProvider client={client}>
-					<Provider store={store}>
-						<Web3ReactProvider getLibrary={getLibrary}>
-							<Head>
-								{/* This fixes big icons with next-seo since CSS is somehow overwritten*/}
-								<style>{dom.css()}</style>
-							</Head>
+				<PlausibleProvider domain="shibuinft.com">
+					<ApolloProvider client={client}>
+						<Provider store={store}>
+							<Web3ReactProvider getLibrary={getLibrary}>
+								<Head>
+									{/* This fixes big icons with next-seo since CSS is somehow overwritten*/}
+									<style>{dom.css()}</style>
+								</Head>
 
-							<>
-								<Connect />
-								<OrderDisplay />
+								<>
+									<Connect />
+									<OrderDisplay />
 
-								<header>
-									<Navbar />
-								</header>
+									<header>
+										<Navbar />
+									</header>
 
-								<main className="dark:bg-gray-900 dark:text-white min-h-screen">
-									<Component {...pageProps} />
-								</main>
-							</>
-						</Web3ReactProvider>
-					</Provider>
-				</ApolloProvider>
+									<main className="dark:bg-gray-900 dark:text-white min-h-screen">
+										<Component {...pageProps} />
+									</main>
+								</>
+							</Web3ReactProvider>
+						</Provider>
+					</ApolloProvider>
+				</PlausibleProvider>
 			</React.StrictMode>
 		</>
 	);
