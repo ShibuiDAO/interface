@@ -47,7 +47,12 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 						<button
 							onClick={() =>
 								dispatch(
-									setCurrentOrder({ ordering: true, contract, identifier: identifier.toString(), direction: OrderDirection.BOOK })
+									setCurrentOrder({
+										ordering: true,
+										contract,
+										identifier: identifier.toString(),
+										direction: OrderDirection.APPROVE
+									})
 								)
 							}
 							className="btn btn-primary"

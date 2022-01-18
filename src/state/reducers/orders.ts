@@ -1,4 +1,5 @@
-import { JsonRpcProvider, TransactionResponse } from '@ethersproject/providers';
+import type { Provider } from '@ethersproject/providers';
+import { JsonRpcProvider, StaticJsonRpcProvider, TransactionResponse } from '@ethersproject/providers';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { deepClone } from '@sapphire/utilities';
 import { BuyOrder, SellOrder } from '@shibuidao/erc721exchange-types';
@@ -29,12 +30,14 @@ export interface SimpleBuyOrder {
 }
 
 export enum OrderDirection {
+	APPROVE,
 	BOOK,
 	EXECUTE
 }
 
 export interface OrderInitiate {
 	ordering: boolean;
+	approved?: boolean;
 	user?: string;
 	contract: string;
 	identifier: string;
@@ -43,9 +46,10 @@ export interface OrderInitiate {
 
 export const defaultOrder: OrderInitiate = {
 	ordering: false,
+	approved: false,
 	contract: '',
 	identifier: '1',
-	direction: OrderDirection.BOOK
+	direction: OrderDirection.APPROVE
 };
 
 export interface OrdersState {
@@ -86,6 +90,54 @@ const commitBuyOrder = (state: WritableDraft<OrdersState>, order: BuyOrder): Wri
 
 	return state;
 };
+
+export interface FetchContractApprovalParameters {
+	contract: string;
+	owner: string;
+	operator: string;
+	provider: Provider;
+}
+
+export const fetchApprovalStatus = createAsyncThunk<boolean, FetchContractApprovalParameters>(
+	'fetch/contract/approval',
+	async ({ contract, owner, operator, provider }) => {
+		const collection = new Contract(contract, ABIs[ABI.EIP721], provider);
+
+		const isApproved: boolean = await collection.isApprovedForAll(owner, operator);
+
+		return isApproved;
+	}
+);
+
+export interface SetContractApprovalParameters {
+	contract: string;
+	operator: string;
+	provider: StaticJsonRpcProvider;
+}
+
+export const setApprovalForAll = createAsyncThunk<true, SetContractApprovalParameters>(
+	'set/contract/approval',
+	async ({ contract, operator, provider }, { rejectWithValue }) => {
+		const collection = new Contract(contract, ABIs[ABI.EIP721], provider.getSigner());
+
+		try {
+			const tx: TransactionResponse = await collection.setApprovalForAll(operator, true);
+
+			try {
+				await tx.wait();
+			} catch (callException: any) {
+				if (callException.code === errors.CALL_EXCEPTION) {
+					return rejectWithValue(['Transaction execution failed', callException]);
+				}
+				throw callException;
+			}
+		} catch (transactionError) {
+			return rejectWithValue(['Method call failed', transactionError]);
+		}
+
+		return true;
+	}
+);
 
 export interface SellOrderData {
 	tokenContractAddress: string;
@@ -203,12 +255,23 @@ export const ordersSlice = createSlice({
 		setCurrentOrder: (state, action: PayloadAction<OrderInitiate>) => {
 			state.currentOrder = action.payload;
 		},
+		updateCurrentOrderDirection: (state, action: PayloadAction<OrderDirection>) => {
+			state.currentOrder.direction = action.payload;
+		},
 		clearOrder: (state) => {
 			state.currentOrder = deepClone(defaultOrder);
 		}
 	},
 	// TODO: Use case outputs
 	extraReducers: (builder) => {
+		builder.addCase(fetchApprovalStatus.fulfilled, (state, action) => {
+			state.currentOrder.approved = action.payload;
+		});
+		builder.addCase(setApprovalForAll.fulfilled, (state) => {
+			state.currentOrder.approved = true;
+			state.currentOrder.direction = OrderDirection.BOOK;
+		});
+
 		builder.addCase(createSellOrder.pending, (_, action) => {
 			clearOrder();
 			console.log(action.payload);
@@ -237,8 +300,17 @@ export const ordersSlice = createSlice({
 	}
 });
 
-export const { resetSellOrders, fillSellOrders, setSellOrder, resetBuyOrders, fillBuyOrders, setBuyOrder, setCurrentOrder, clearOrder } =
-	ordersSlice.actions;
+export const {
+	resetSellOrders,
+	fillSellOrders,
+	setSellOrder,
+	resetBuyOrders,
+	fillBuyOrders,
+	setBuyOrder,
+	setCurrentOrder,
+	updateCurrentOrderDirection,
+	clearOrder
+} = ordersSlice.actions;
 
 export const selectSellOrder = (contract: string, identifier: BigInt) => (state: RootState) =>
 	state.orders.sellOrders[`${contract}-${identifier}-SELL`];
