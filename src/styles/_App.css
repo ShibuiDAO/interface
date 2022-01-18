@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+	body {
+		@apply font-shibui;
+	}
+
 	.unreset {
 		html {
 			box-sizing: content-box;
