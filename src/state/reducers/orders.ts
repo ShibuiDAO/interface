@@ -176,6 +176,41 @@ export const createSellOrder = createAsyncThunk<any, CreateOrderSellParameters>(
 	}
 );
 
+export interface SellOrderCancellationData {
+	tokenContractAddress: string;
+	tokenId: BigNumberish;
+}
+
+export interface CancelOrderSellParameters {
+	chainId: SupportedChainId;
+	library: JsonRpcProvider;
+
+	data: SellOrderCancellationData;
+}
+
+export const cancelSellOrder = createAsyncThunk<true, CancelOrderSellParameters>(
+	'cancel/order/sell',
+	async ({ chainId, library, data }, { rejectWithValue }) => {
+		const exchange = new Contract(ERC721_EXCHANGE[chainId], ABIs[ABI.ERC721_EXCHANGE], library.getSigner());
+		try {
+			const tx: TransactionResponse = await exchange.cancelSellOrder(data.tokenContractAddress, data.tokenId);
+
+			try {
+				await tx.wait();
+			} catch (callException: any) {
+				if (callException.code === errors.CALL_EXCEPTION) {
+					return rejectWithValue(['Transaction execution failed', callException]);
+				}
+				throw callException;
+			}
+		} catch (transactionError) {
+			return rejectWithValue(['Method call failed', transactionError]);
+		}
+
+		return true;
+	}
+);
+
 export interface SellOrderExecutionData {
 	seller: string;
 	tokenContractAddress: string;
@@ -192,7 +227,7 @@ export interface ExecuteOrderSellParameters {
 	data: SellOrderExecutionData;
 }
 
-export const executeSellOrder = createAsyncThunk<any, ExecuteOrderSellParameters>(
+export const executeSellOrder = createAsyncThunk<true, ExecuteOrderSellParameters>(
 	'execute/order/sell',
 	async ({ chainId, library, data }, { rejectWithValue }) => {
 		const exchange = new Contract(ERC721_EXCHANGE[chainId], ABIs[ABI.ERC721_EXCHANGE], library.getSigner());
@@ -282,6 +317,19 @@ export const ordersSlice = createSlice({
 			console.log(action.meta.arg);
 		});
 		builder.addCase(createSellOrder.fulfilled, (_, action) => {
+			console.log(action.payload);
+		});
+
+		builder.addCase(cancelSellOrder.pending, (_, action) => {
+			// clearOrder();
+			console.log(action.payload);
+			console.log(action.meta.arg);
+		});
+		builder.addCase(cancelSellOrder.rejected, (_, action) => {
+			console.log(action.payload);
+			console.log(action.meta.arg);
+		});
+		builder.addCase(cancelSellOrder.fulfilled, (_, action) => {
 			console.log(action.payload);
 		});
 

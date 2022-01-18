@@ -7,7 +7,7 @@ import { Form, Formik } from 'formik';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { createSellOrder } from 'state/reducers/orders';
+import { clearOrder, createSellOrder } from 'state/reducers/orders';
 import * as Yup from 'yup';
 
 export interface SellFormFields {
@@ -39,8 +39,8 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 					expiration: new Date()
 				}}
 				validationSchema={SellFormSchema}
-				onSubmit={(values: SellFormFields) =>
-					void dispatch(
+				onSubmit={(values: SellFormFields) => {
+					dispatch(
 						createSellOrder({
 							chainId,
 							library,
@@ -51,8 +51,9 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 								price: ethers.utils.parseEther(values.price)
 							}
 						})
-					)
-				}
+					);
+					dispatch(clearOrder());
+				}}
 			>
 				{(props) => (
 					<Form>
