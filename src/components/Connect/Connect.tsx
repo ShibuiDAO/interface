@@ -26,7 +26,6 @@ const Connect: React.FC = () => {
 				<Dialog
 					as="div"
 					className="fixed min-h-screen z-40 inset-0 overflow-y-auto m-auto min-w-max"
-					initialFocus={closeButtonRef}
 					onClose={(state) => dispatch(setConnectingStatus(state))}
 				>
 					<div className="flex min-h-screen w-full">
@@ -66,7 +65,7 @@ const Connect: React.FC = () => {
 														<FontAwesomeIcon icon={faTimes} />
 													</button>
 												</Dialog.Title>
-												<div className="mt-2 px-8">
+												<div className="mt-2 px-8 flex justify-center">
 													<MetamaskConnect />
 												</div>
 											</div>

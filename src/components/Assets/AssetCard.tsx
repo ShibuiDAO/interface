@@ -29,7 +29,7 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 	const userBuyCondition = sellOrder && sellOrder.token === identifier && metadata?.owner && account && metadata.owner !== account;
 
 	return (
-		<div className="card card-bordered max-w-[14rem]">
+		<div className="card card-bordered dark:bg-darks-400 dark:border-chain-boba shadow-lg max-w-[14rem]">
 			<figure>
 				<MultiSourceContentDisplay src={metadata.image_final} className="" />
 			</figure>

@@ -46,12 +46,7 @@ const Approve: React.FC = () => {
 	return (
 		<>
 			<Transition.Root show={order.ordering} as={Fragment}>
-				<Dialog
-					as="div"
-					className="fixed min-h-screen z-30 inset-0 overflow-y-auto m-auto min-w-max"
-					initialFocus={closeButtonRef}
-					onClose={() => dispatch(clearOrder())}
-				>
+				<Dialog as="div" className="fixed min-h-screen z-30 inset-0 overflow-y-auto m-auto min-w-max" onClose={() => dispatch(clearOrder())}>
 					<div className="flex min-h-screen w-full">
 						<div className="flex items-end justify-center m-auto text-center">
 							<Transition.Child

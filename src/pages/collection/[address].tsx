@@ -13,21 +13,23 @@ const CollectionDisplay: NextPage = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (!active) dispatch(setConnectingStatus(true));
+		dispatch(setConnectingStatus(!active));
 	}, [active, dispatch]);
 
 	const address = Array.isArray(router.query.address) ? router.query.address[0] : router.query.address;
 	const addressNormalised = address?.toLowerCase();
 
 	return (
-		<div>
+		<>
 			<Offset />
-			<div className="container">
-				<div className="flex flex-wrap align-middle justify-center gap-8">
-					<CollectionAssets address={addressNormalised || ''} />
+			<div className="py-8">
+				<div className="container">
+					<div className="flex flex-wrap align-middle justify-center gap-8">
+						<CollectionAssets address={addressNormalised || ''} />
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
