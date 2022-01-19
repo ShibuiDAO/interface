@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setConnectingStatus } from 'state/reducers/user';
+import { If, Then, Else } from 'react-if';
 
 const Navbar: React.FC = () => {
 	const dispatch = useDispatch();
@@ -28,16 +29,19 @@ const Navbar: React.FC = () => {
 							<div className="right-0 flex items-center static inset-auto ml-6 pr-0">
 								<div className="w-full block ml-6 content-center">
 									<div className="flex space-x-4 justify-end">
-										<button
-											className="px-3 py-2 btn bg-lights-300 hover:bg-lights-400 normal-case text-sm font-medium select-none cursor-pointer rounded-md"
-											onClick={() => dispatch(setConnectingStatus(true))}
-											hidden={active}
-										>
-											Connect wallet
-										</button>
-										<div hidden={!active}>
-											<AccountName />
-										</div>
+										<If condition={active}>
+											<Then>
+												<AccountName className="px-3 py-2 btn bg-lights-300 hover:bg-lights-400 normal-case text-sm font-medium select-none cursor-pointer rounded-md" />
+											</Then>
+											<Else>
+												<button
+													className="px-3 py-2 btn bg-lights-300 hover:bg-lights-400 normal-case text-sm font-medium select-none cursor-pointer rounded-md"
+													onClick={() => dispatch(setConnectingStatus(true))}
+												>
+													Connect wallet
+												</button>
+											</Else>
+										</If>
 									</div>
 								</div>
 							</div>
