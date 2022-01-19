@@ -5,6 +5,14 @@
 @layer base {
 	body {
 		@apply font-shibui;
+
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		scrollbar-width: thin;
+	}
+
+	circles {
+		background-image: url(/assets/misc/background.svg);
 	}
 
 	.unreset {
@@ -314,4 +322,14 @@
 			border: 2px inset;
 		}
 	}
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 10px;
+    @apply bg-darks-200;
+}
+::-webkit-scrollbar-thumb {
+	border-radius: 8px;
+	@apply bg-lights-300;
 }
