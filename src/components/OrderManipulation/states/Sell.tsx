@@ -4,11 +4,11 @@ import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearOrder, selectOrderingStatus } from 'state/reducers/orders';
-import SellForm from './SellForm';
+import SellForm from '../forms/SellForm';
 
 const Sell: React.FC = () => {
 	const dispatch = useDispatch();
-	const order = useSelector(selectOrderingStatus);
+	const order = useSelector(selectOrderingStatus());
 
 	const closeButtonRef = useRef(null);
 
