@@ -3,13 +3,12 @@ import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from '@ethersproject
 import { config, dom } from '@fortawesome/fontawesome-svg-core';
 import { Web3ReactProvider } from '@web3-react/core';
 import { client } from 'client';
-import OrderDisplay from 'components/Assets/Order/OrderDisplay';
 import Footer from 'components/Footer/Footer';
 import Navbar from 'components/Navbar/Navbar';
+import PinnedComponents from 'components/PinnedComponents';
 import type { NextPage } from 'next';
 import PlausibleProvider from 'next-plausible';
 import type { AppProps } from 'next/app';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -17,8 +16,6 @@ import { store } from 'state';
 import 'styles/_App.css';
 
 config.autoAddCss = false;
-
-const Connect = dynamic(() => import('components/Connect/Connect'), { ssr: false });
 
 const getLibrary = (provider: ExternalProvider | JsonRpcFetchFunc) => {
 	return new Web3Provider(provider);
@@ -45,20 +42,19 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
 								</Head>
 
 								<>
-									<Connect />
-									<OrderDisplay />
+									<PinnedComponents>
+										<header>
+											<Navbar />
+										</header>
 
-									<header>
-										<Navbar />
-									</header>
+										<main className="dark:bg-darks-400 dark:text-white min-h-screen">
+											<Component {...pageProps} />
+										</main>
 
-									<main className="dark:bg-darks-400 dark:text-white min-h-screen">
-										<Component {...pageProps} />
-									</main>
-
-									<footer>
-										<Footer />
-									</footer>
+										<footer>
+											<Footer />
+										</footer>
+									</PinnedComponents>
 								</>
 							</Web3ReactProvider>
 						</Provider>
