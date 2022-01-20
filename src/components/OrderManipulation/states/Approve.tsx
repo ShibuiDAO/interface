@@ -1,14 +1,45 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useRef } from 'react';
+import { SupportedChainId } from 'constants/chains';
+import { ERC721_EXCHANGE } from 'constants/contracts';
+import { DEFAULT_CHAIN } from 'constants/misc';
+import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
+import useProviders from 'hooks/useProviders';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearOrder, selectOrderingStatus } from 'state/reducers/orders';
-import SellForm from './SellForm';
+import {
+	clearOrder,
+	fetchApprovalStatus,
+	OrderDirection,
+	selectOrderingStatus,
+	setApprovalForAll,
+	updateCurrentOrderDirection
+} from 'state/reducers/orders';
 
-const Sell: React.FC = () => {
+const Approve: React.FC = () => {
+	const { library, account, chainId } = useActiveWeb3React();
+	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
+
+	const baseProvider = useProviders()[chainIdNormalised];
 	const dispatch = useDispatch();
-	const order = useSelector(selectOrderingStatus);
+	const order = useSelector(selectOrderingStatus());
+
+	useEffect(() => {
+		if (!library || !account) return;
+
+		dispatch(
+			fetchApprovalStatus({
+				contract: order.contract,
+				operator: ERC721_EXCHANGE[chainIdNormalised],
+				owner: account,
+				provider: library || baseProvider
+			})
+		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	if (order.approved === true) dispatch(updateCurrentOrderDirection(OrderDirection.BOOK));
 
 	const closeButtonRef = useRef(null);
 
@@ -38,12 +69,12 @@ const Sell: React.FC = () => {
 								leaveFrom="opacity-100 translate-y-0 sm:scale-100"
 								leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 							>
-								<div className="z-40 inline-block rounded-md text-left overflow-hidden shadow-xl transform transition-all align-middle">
+								<div className="z-40 inline-block text-left overflow-hidden shadow-xl transform transition-all align-middle">
 									<div className="dark:text-white dark:bg-darks-400 border dark:border-lights-200 border-transparent rounded-2xl p-4">
 										<div className="flex items-start">
 											<div className="mt-0 text-left">
 												<Dialog.Title as="span" className="w-full text-lg leading-6 font-bold">
-													Sell NFT
+													Approve Exchange spending
 													<button
 														type="button"
 														className="float-right"
@@ -54,7 +85,20 @@ const Sell: React.FC = () => {
 													</button>
 												</Dialog.Title>
 												<div className="mt-2 px-8">
-													<SellForm contract={order.contract} identifier={order.identifier} />
+													<button
+														disabled={!library}
+														onClick={() => {
+															dispatch(
+																setApprovalForAll({
+																	contract: order.contract,
+																	operator: ERC721_EXCHANGE[chainIdNormalised],
+																	provider: library!
+																})
+															);
+														}}
+													>
+														Approve
+													</button>
 												</div>
 											</div>
 										</div>
@@ -69,4 +113,4 @@ const Sell: React.FC = () => {
 	);
 };
 
-export default Sell;
+export default Approve;

@@ -32,19 +32,23 @@ export interface SimpleBuyOrder {
 export enum OrderDirection {
 	APPROVE,
 	BOOK,
-	EXECUTE
+	CANCEL,
+	EXERCISE
 }
 
-export interface OrderInitiate {
+export interface OrderInitiate<Direction extends OrderDirection = OrderDirection.APPROVE> {
 	ordering: boolean;
 	approved?: boolean;
-	user?: string;
+	seller?: Direction extends OrderDirection.EXERCISE ? string : never;
+	recipient?: Direction extends OrderDirection.EXERCISE ? string : never;
 	contract: string;
 	identifier: string;
+	expiration?: Direction extends OrderDirection.EXERCISE ? string : never;
+	price?: Direction extends OrderDirection.EXERCISE ? string : never;
 	direction: OrderDirection;
 }
 
-export const defaultOrder: OrderInitiate = {
+export const defaultOrder: OrderInitiate<OrderDirection.APPROVE> = {
 	ordering: false,
 	approved: false,
 	contract: '',
@@ -299,52 +303,56 @@ export const ordersSlice = createSlice({
 	},
 	// TODO: Use case outputs
 	extraReducers: (builder) => {
-		builder.addCase(fetchApprovalStatus.fulfilled, (state, action) => {
-			state.currentOrder.approved = action.payload;
-		});
-		builder.addCase(setApprovalForAll.fulfilled, (state) => {
-			state.currentOrder.approved = true;
-			state.currentOrder.direction = OrderDirection.BOOK;
-		});
+		builder
+			.addCase(fetchApprovalStatus.fulfilled, (state, action) => {
+				state.currentOrder.approved = action.payload;
+			})
+			.addCase(setApprovalForAll.fulfilled, (state) => {
+				state.currentOrder.approved = true;
+				state.currentOrder.direction = OrderDirection.BOOK;
+			});
 
-		builder.addCase(createSellOrder.pending, (_, action) => {
-			clearOrder();
-			console.log(action.payload);
-			console.log(action.meta.arg);
-		});
-		builder.addCase(createSellOrder.rejected, (_, action) => {
-			console.log(action.payload);
-			console.log(action.meta.arg);
-		});
-		builder.addCase(createSellOrder.fulfilled, (_, action) => {
-			console.log(action.payload);
-		});
+		builder
+			.addCase(createSellOrder.pending, (_, action) => {
+				clearOrder();
+				console.log(action.payload);
+				console.log(action.meta.arg);
+			})
+			.addCase(createSellOrder.rejected, (_, action) => {
+				console.log(action.payload);
+				console.log(action.meta.arg);
+			})
+			.addCase(createSellOrder.fulfilled, (_, action) => {
+				console.log(action.payload);
+			});
 
-		builder.addCase(cancelSellOrder.pending, (_, action) => {
-			// clearOrder();
-			console.log(action.payload);
-			console.log(action.meta.arg);
-		});
-		builder.addCase(cancelSellOrder.rejected, (_, action) => {
-			console.log(action.payload);
-			console.log(action.meta.arg);
-		});
-		builder.addCase(cancelSellOrder.fulfilled, (_, action) => {
-			console.log(action.payload);
-		});
+		builder
+			.addCase(cancelSellOrder.pending, (_, action) => {
+				clearOrder();
+				console.log(action.payload);
+				console.log(action.meta.arg);
+			})
+			.addCase(cancelSellOrder.rejected, (_, action) => {
+				console.log(action.payload);
+				console.log(action.meta.arg);
+			})
+			.addCase(cancelSellOrder.fulfilled, (_, action) => {
+				console.log(action.payload);
+			});
 
-		builder.addCase(executeSellOrder.pending, (_, action) => {
-			// clearOrder();
-			console.log(action.payload);
-			console.log(action.meta.arg);
-		});
-		builder.addCase(executeSellOrder.rejected, (_, action) => {
-			console.log(action.payload);
-			console.log(action.meta.arg);
-		});
-		builder.addCase(executeSellOrder.fulfilled, (_, action) => {
-			console.log(action.payload);
-		});
+		builder
+			.addCase(executeSellOrder.pending, (_, action) => {
+				clearOrder();
+				console.log(action.payload);
+				console.log(action.meta.arg);
+			})
+			.addCase(executeSellOrder.rejected, (_, action) => {
+				console.log(action.payload);
+				console.log(action.meta.arg);
+			})
+			.addCase(executeSellOrder.fulfilled, (_, action) => {
+				console.log(action.payload);
+			});
 	}
 });
 
@@ -365,6 +373,9 @@ export const selectSellOrder = (contract: string, identifier: BigInt) => (state:
 export const selectBuyOrder = (contract: string, identifier: BigInt) => (state: RootState /* */) =>
 	state.orders.buyOrders[`${contract}-${identifier}-BUY`];
 
-export const selectOrderingStatus = (state: RootState) => state.orders.currentOrder;
+export const selectOrderingStatus =
+	<Direction extends OrderDirection = OrderDirection.APPROVE>() =>
+	(state: RootState) =>
+		state.orders.currentOrder as OrderInitiate<Direction>;
 
 export default ordersSlice.reducer;

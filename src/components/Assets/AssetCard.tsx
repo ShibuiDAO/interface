@@ -1,12 +1,13 @@
 import MultiSourceContentDisplay from 'components/MultiSourceContentDisplay';
+import CurrentOrderAction from 'components/OrderManipulation/CurrentOrderAction';
 import { SupportedChainId } from 'constants/chains';
 import { BigNumber, ethers } from 'ethers';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import Link from 'next/link';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectAssetMetadata } from 'state/reducers/assets';
-import { cancelSellOrder, executeSellOrder, OrderDirection, selectSellOrder, setCurrentOrder } from 'state/reducers/orders';
+import { OrderDirection, selectSellOrder } from 'state/reducers/orders';
 
 export interface AssetProps {
 	chainId: SupportedChainId;
@@ -18,7 +19,6 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 	let { account, library } = useActiveWeb3React();
 	account = account?.toLowerCase() || '';
 
-	const dispatch = useDispatch();
 	const metadata = useSelector(selectAssetMetadata(chainId, contract, identifier));
 	const sellOrder = useSelector(selectSellOrder(contract, identifier));
 
@@ -45,67 +45,48 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 				<div className="px-6 py-2">{sellOrder && <div>{ethers.utils.formatEther(BigNumber.from(sellOrder.price))}Ξ</div>}</div>
 				{ownerSellBookCondition && (
 					<div className="justify-end card-actions mt-2">
-						<button
-							onClick={() =>
-								dispatch(
-									setCurrentOrder({
-										ordering: true,
-										contract,
-										identifier: identifier.toString(),
-										direction: OrderDirection.APPROVE
-									})
-								)
-							}
+						<CurrentOrderAction<OrderDirection.APPROVE>
 							className="btn btn-primary"
+							direction={OrderDirection.APPROVE}
+							data={{
+								contract,
+								identifier: identifier.toString()
+							}}
 						>
 							Sell
-						</button>
+						</CurrentOrderAction>
 					</div>
 				)}
 				{ownerSellCancelCondition && library && (
 					<div className="justify-end card-actions mt-2">
-						<button
-							onClick={() =>
-								dispatch(
-									cancelSellOrder({
-										chainId,
-										library: library!,
-										data: {
-											tokenContractAddress: sellOrder.contract.id,
-											tokenId: BigNumber.from(sellOrder.token)
-										}
-									})
-								)
-							}
+						<CurrentOrderAction<OrderDirection.CANCEL>
 							className="btn btn-primary"
+							direction={OrderDirection.CANCEL}
+							data={{
+								contract: sellOrder.contract.id,
+								identifier: sellOrder.token.toString()
+							}}
 						>
 							Cancel
-						</button>
+						</CurrentOrderAction>
 					</div>
 				)}
 				{userBuyCondition && library && (
 					<div className="justify-end card-actions mt-2">
-						<button
-							onClick={() =>
-								dispatch(
-									executeSellOrder({
-										chainId,
-										library: library!,
-										data: {
-											seller: sellOrder.seller.id,
-											tokenContractAddress: sellOrder.contract.id,
-											tokenId: BigNumber.from(sellOrder.token),
-											expiration: BigNumber.from(sellOrder.expiration),
-											price: BigNumber.from(sellOrder.price),
-											recipient: account!
-										}
-									})
-								)
-							}
+						<CurrentOrderAction<OrderDirection.EXERCISE>
 							className="btn btn-primary"
+							direction={OrderDirection.EXERCISE}
+							data={{
+								seller: sellOrder.seller.id,
+								recipient: account!,
+								contract: sellOrder.contract.id,
+								identifier: sellOrder.token.toString(),
+								expiration: sellOrder.expiration.toString(),
+								price: sellOrder.price.toString()
+							}}
 						>
 							Buy
-						</button>
+						</CurrentOrderAction>
 					</div>
 				)}
 			</div>

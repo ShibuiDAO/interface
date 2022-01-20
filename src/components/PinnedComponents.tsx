@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
-import OrderDisplay from './Assets/Order/OrderDisplay';
+import OrderDisplay from './OrderManipulation/OrderDisplay';
 
 const Connect = dynamic(() => import('components/Connect/Connect'), { ssr: false });
 

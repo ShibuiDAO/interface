@@ -2,11 +2,13 @@ import React from 'react';
 import { Case, Switch } from 'react-if';
 import { useSelector } from 'react-redux';
 import { OrderDirection, selectOrderingStatus } from 'state/reducers/orders';
-import Approve from './Approve';
-import Sell from './Sell';
+import Approve from './states/Approve';
+import Cancel from './states/Cancel';
+import Exercise from './states/Exercise';
+import Sell from './states/Sell';
 
 const OrderDisplay: React.FC = () => {
-	const order = useSelector(selectOrderingStatus);
+	const order = useSelector(selectOrderingStatus());
 
 	return (
 		<Switch>
@@ -15,6 +17,12 @@ const OrderDisplay: React.FC = () => {
 			</Case>
 			<Case condition={order.ordering && order.direction === OrderDirection.BOOK}>
 				<Sell />
+			</Case>
+			<Case condition={order.ordering && order.direction === OrderDirection.CANCEL}>
+				<Cancel />
+			</Case>
+			<Case condition={order.ordering && order.direction === OrderDirection.EXERCISE}>
+				<Exercise />
 			</Case>
 		</Switch>
 	);
