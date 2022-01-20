@@ -3,7 +3,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useMounted from 'hooks/useMounted';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { executeSellOrder, OrderDirection, selectOrderingStatus } from 'state/reducers/orders';
+import { clearOrder, executeSellOrder, OrderDirection, selectOrderingStatus } from 'state/reducers/orders';
 
 const Exercise: React.FC = () => {
 	const { library, account, chainId } = useActiveWeb3React();
@@ -29,6 +29,7 @@ const Exercise: React.FC = () => {
 				}
 			})
 		);
+		dispatch(clearOrder());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

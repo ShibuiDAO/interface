@@ -23,7 +23,7 @@ const Approve: React.FC = () => {
 
 	const baseProvider = useProviders()[chainIdNormalised];
 	const dispatch = useDispatch();
-	const order = useSelector(selectOrderingStatus);
+	const order = useSelector(selectOrderingStatus());
 
 	useEffect(() => {
 		if (!library || !account) return;

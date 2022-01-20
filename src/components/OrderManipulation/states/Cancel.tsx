@@ -3,7 +3,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useMounted from 'hooks/useMounted';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { cancelSellOrder, OrderDirection, selectOrderingStatus } from 'state/reducers/orders';
+import { cancelSellOrder, clearOrder, OrderDirection, selectOrderingStatus } from 'state/reducers/orders';
 
 const Cancel: React.FC = () => {
 	const { library, chainId } = useActiveWeb3React();
@@ -25,6 +25,7 @@ const Cancel: React.FC = () => {
 				}
 			})
 		);
+		dispatch(clearOrder());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
