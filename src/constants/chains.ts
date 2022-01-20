@@ -19,6 +19,16 @@ export const L2_CHAIN_IDS = [SupportedChainId.BOBA, SupportedChainId.BOBA_RINKEB
 
 export type SupportedL2ChainId = typeof L2_CHAIN_IDS[number];
 
+export const MAINNET_RPC_URL = '';
+export const BOBA_MAINNET_RPC_URL = 'https://mainnet.boba.network';
+export const BOBA_MAINNET_READ_RPC_URL = 'https://lightning-replica.boba.network';
+export const BOBA_RINKEBY_RPC_URL = 'https://rinkeby.boba.network/';
+
+export const RPC_URLS: { [K in SupportedChainId]: string } = {
+	[SupportedChainId.BOBA]: BOBA_MAINNET_RPC_URL,
+	[SupportedChainId.BOBA_RINKEBY]: BOBA_RINKEBY_RPC_URL
+};
+
 /**
  * This is used to call the add network RPC
  */

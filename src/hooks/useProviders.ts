@@ -1,8 +1,8 @@
 import { AlchemyProvider, JsonRpcProvider, Provider } from '@ethersproject/providers';
-import { PinnedChainId, SupportedChainId } from 'constants/chains';
+import { BOBA_MAINNET_READ_RPC_URL, BOBA_RINKEBY_RPC_URL, PinnedChainId, SupportedChainId } from 'constants/chains';
 
-const bobaProvider = new JsonRpcProvider('https://lightning-replica.boba.network', SupportedChainId.BOBA);
-const bobaRinkebyProvider = new JsonRpcProvider('https://rinkeby.boba.network/', SupportedChainId.BOBA_RINKEBY);
+const bobaProvider = new JsonRpcProvider(BOBA_MAINNET_READ_RPC_URL, SupportedChainId.BOBA);
+const bobaRinkebyProvider = new JsonRpcProvider(BOBA_RINKEBY_RPC_URL, SupportedChainId.BOBA_RINKEBY);
 
 const mainnetAlchemyProvider = new AlchemyProvider(PinnedChainId.MAINNET, process.env.NEXT_PUBLIC_MAINNET_KEY);
 

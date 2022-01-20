@@ -7,6 +7,7 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectConnectingStatus, setConnectingStatus, setEagerAttempt } from 'state/reducers/user';
 import MetamaskConnect from './MetamaskConnect';
+import WalletConnectConnect from './WalletConnectConnect';
 
 const Connect: React.FC = () => {
 	const dispatch = useDispatch();
@@ -65,8 +66,9 @@ const Connect: React.FC = () => {
 														<FontAwesomeIcon icon={faTimes} />
 													</button>
 												</Dialog.Title>
-												<div className="mt-2 px-8 flex justify-center">
+												<div className="mt-2 px-8">
 													<MetamaskConnect />
+													<WalletConnectConnect />
 												</div>
 											</div>
 										</div>
