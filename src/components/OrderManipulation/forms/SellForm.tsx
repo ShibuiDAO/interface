@@ -7,7 +7,7 @@ import { Form, Formik } from 'formik';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { createSellOrder } from 'state/reducers/orders';
+import { clearOrder, createSellOrder } from 'state/reducers/orders';
 import * as Yup from 'yup';
 
 export interface SellFormFields {
@@ -52,6 +52,7 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 							}
 						})
 					);
+					dispatch(clearOrder());
 				}}
 			>
 				{(props) => (

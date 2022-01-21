@@ -9,6 +9,7 @@ import { ERC721_EXCHANGE } from 'constants/contracts';
 import { BigNumberish, Contract, errors } from 'ethers';
 import { WritableDraft } from 'immer/dist/internal';
 import { RootState } from 'state';
+import { TRANSACTION_THRUNK_PREFIX } from './transactions';
 
 export interface SimpleSellOrder {
 	id: string;
@@ -120,7 +121,7 @@ export interface SetContractApprovalParameters {
 }
 
 export const setApprovalForAll = createAsyncThunk<true, SetContractApprovalParameters>(
-	'set/contract/approval',
+	`${TRANSACTION_THRUNK_PREFIX}set/contract/approval`,
 	async ({ contract, operator, provider }, { rejectWithValue }) => {
 		const collection = new Contract(contract, ABIs[ABI.EIP721], provider.getSigner());
 
@@ -158,7 +159,7 @@ export interface CreateOrderSellParameters {
 }
 
 export const createSellOrder = createAsyncThunk<any, CreateOrderSellParameters>(
-	'create/order/sell',
+	`${TRANSACTION_THRUNK_PREFIX}create/order/sell`,
 	async ({ chainId, library, data }, { rejectWithValue }) => {
 		const exchange = new Contract(ERC721_EXCHANGE[chainId], ABIs[ABI.ERC721_EXCHANGE], library.getSigner());
 		try {
@@ -193,7 +194,7 @@ export interface CancelOrderSellParameters {
 }
 
 export const cancelSellOrder = createAsyncThunk<true, CancelOrderSellParameters>(
-	'cancel/order/sell',
+	`${TRANSACTION_THRUNK_PREFIX}cancel/order/sell`,
 	async ({ chainId, library, data }, { rejectWithValue }) => {
 		const exchange = new Contract(ERC721_EXCHANGE[chainId], ABIs[ABI.ERC721_EXCHANGE], library.getSigner());
 		try {
@@ -232,7 +233,7 @@ export interface ExecuteOrderSellParameters {
 }
 
 export const executeSellOrder = createAsyncThunk<true, ExecuteOrderSellParameters>(
-	'execute/order/sell',
+	`${TRANSACTION_THRUNK_PREFIX}execute/order/sell`,
 	async ({ chainId, library, data }, { rejectWithValue }) => {
 		const exchange = new Contract(ERC721_EXCHANGE[chainId], ABIs[ABI.ERC721_EXCHANGE], library.getSigner());
 		try {
@@ -314,7 +315,6 @@ export const ordersSlice = createSlice({
 
 		builder
 			.addCase(createSellOrder.pending, (_, action) => {
-				clearOrder();
 				console.log(action.payload);
 				console.log(action.meta.arg);
 			})
@@ -328,7 +328,6 @@ export const ordersSlice = createSlice({
 
 		builder
 			.addCase(cancelSellOrder.pending, (_, action) => {
-				clearOrder();
 				console.log(action.payload);
 				console.log(action.meta.arg);
 			})
@@ -342,7 +341,6 @@ export const ordersSlice = createSlice({
 
 		builder
 			.addCase(executeSellOrder.pending, (_, action) => {
-				clearOrder();
 				console.log(action.payload);
 				console.log(action.meta.arg);
 			})
