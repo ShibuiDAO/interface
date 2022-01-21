@@ -13,20 +13,19 @@ const WalletLinkConnect: React.FC = () => {
 	return (
 		<>
 			<div className="m-2 min-w-full">
-				<div className="dark:text-gray-50 border dark:border-gray-600 dark:border-opacity-40 dark:bg-gray-800 transition-colors duration-300 ease-in-out dark:hover:bg-pink-900 dark:hover:border-pink-800 p-4 m-auto rounded-lg w-full flex gap-4">
-					<button
-						className="flex-1"
-						onClick={() => {
-							activate(walletlink, undefined, true).catch(noop);
-						}}
-					>
+				<button
+					className="dark:text-gray-50 border dark:border-gray-600 dark:border-opacity-40 dark:bg-gray-800 transition-colors duration-300 ease-in-out dark:hover:bg-pink-900 dark:hover:border-pink-800 p-4 m-auto rounded-lg w-full flex gap-4"
+					onClick={() => {
+						activate(walletlink, undefined, true).catch(noop);
+					}}
+				>
+					<div className="flex-1">
 						<div className="flex">Coinbase Wallet</div>
-					</button>
-
+					</div>
 					<div className="right-0 flex-none">
 						<img src="/assets/wallets/coinbaseWallet.svg" alt="Coinbase logo." width={24} height={24} />
 					</div>
-				</div>
+				</button>
 			</div>
 		</>
 	);
