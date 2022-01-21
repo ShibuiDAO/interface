@@ -47,7 +47,7 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 							data: {
 								tokenContractAddress: contract,
 								tokenId: identifier,
-								expiration: BigNumber.from(values.expiration.getTime()),
+								expiration: BigNumber.from(values.expiration.getTime() / 1000),
 								price: ethers.utils.parseEther(values.price)
 							}
 						})

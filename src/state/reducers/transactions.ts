@@ -8,6 +8,7 @@ import {
 	isRejected,
 	isRejectedWithValue
 } from '@reduxjs/toolkit';
+import toast from 'react-hot-toast';
 import { AnyAction } from 'redux';
 import { RootState } from 'state';
 
@@ -40,9 +41,11 @@ const transactionsSlice = createSlice({
 			})
 			.addMatcher(isAllOf(isTransactionAction, isAnyOf(isRejected, isRejectedWithValue)), (state, action) => {
 				state.pending = state.pending.filter((tx) => tx !== action.meta.requestId);
+				toast.error('Transaction failed.');
 			})
 			.addMatcher(isAllOf(isTransactionAction, isAnyOf(isFulfilled)), (state, action) => {
 				state.pending = state.pending.filter((tx) => tx !== action.meta.requestId);
+				toast.success('Transaction successfully executed.');
 			});
 	}
 });

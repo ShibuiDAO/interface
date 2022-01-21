@@ -312,45 +312,6 @@ export const ordersSlice = createSlice({
 				state.currentOrder.approved = true;
 				state.currentOrder.direction = OrderDirection.BOOK;
 			});
-
-		builder
-			.addCase(createSellOrder.pending, (_, action) => {
-				console.log(action.payload);
-				console.log(action.meta.arg);
-			})
-			.addCase(createSellOrder.rejected, (_, action) => {
-				console.log(action.payload);
-				console.log(action.meta.arg);
-			})
-			.addCase(createSellOrder.fulfilled, (_, action) => {
-				console.log(action.payload);
-			});
-
-		builder
-			.addCase(cancelSellOrder.pending, (_, action) => {
-				console.log(action.payload);
-				console.log(action.meta.arg);
-			})
-			.addCase(cancelSellOrder.rejected, (_, action) => {
-				console.log(action.payload);
-				console.log(action.meta.arg);
-			})
-			.addCase(cancelSellOrder.fulfilled, (_, action) => {
-				console.log(action.payload);
-			});
-
-		builder
-			.addCase(executeSellOrder.pending, (_, action) => {
-				console.log(action.payload);
-				console.log(action.meta.arg);
-			})
-			.addCase(executeSellOrder.rejected, (_, action) => {
-				console.log(action.payload);
-				console.log(action.meta.arg);
-			})
-			.addCase(executeSellOrder.fulfilled, (_, action) => {
-				console.log(action.payload);
-			});
 	}
 });
 
