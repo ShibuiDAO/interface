@@ -17,10 +17,10 @@ const WalletConnectConnect: React.FC = () => {
 					<button
 						className="flex-1"
 						onClick={() => {
-							activate(walletConnect, undefined, true).catch((error) => {
+							activate(walletConnect, undefined, true).catch((_error) => {
 								// ignore the error if it's a user rejected request
-								if (!(error instanceof UserRejectedRequestError)) {
-									setError(error);
+								if (!(_error instanceof UserRejectedRequestError)) {
+									setError(_error);
 								}
 							});
 						}}

@@ -1,10 +1,9 @@
 import { walletlink } from 'connectors';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
-import { noop } from 'utils/utils';
 
 const WalletLinkConnect: React.FC = () => {
-	const { error, activate } = useActiveWeb3React();
+	const { error, activate, setError } = useActiveWeb3React();
 
 	if (error) {
 		return null;
@@ -17,7 +16,9 @@ const WalletLinkConnect: React.FC = () => {
 					<button
 						className="flex-1"
 						onClick={() => {
-							activate(walletlink, undefined, true).catch(noop);
+							activate(walletlink, undefined, true).catch((_error) => {
+								setError(_error);
+							});
 						}}
 					>
 						<div className="flex">Coinbase Wallet</div>

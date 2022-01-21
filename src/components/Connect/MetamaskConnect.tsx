@@ -11,7 +11,6 @@ const MetamaskConnect: React.FC = () => {
 	// initialize metamask onboarding
 	const onboarding = useRef<MetaMaskOnboarding>();
 	// manage connecting state for injected connector
-	const [_, setConnecting] = useState(false);
 	const triedToEagerConnect = useSelector(selectEagerAttempt);
 
 	useLayoutEffect(() => {
@@ -19,7 +18,6 @@ const MetamaskConnect: React.FC = () => {
 	}, []);
 	useEffect(() => {
 		if (active || error) {
-			setConnecting(false);
 			onboarding.current?.stopOnboarding();
 		}
 	}, [active, error]);
@@ -36,14 +34,11 @@ const MetamaskConnect: React.FC = () => {
 						className="flex-1"
 						onClick={() => {
 							if (!MetaMaskOnboarding.isMetaMaskInstalled()) return onboarding.current?.startOnboarding();
-							setConnecting(true);
 
-							activate(metamask, undefined, true).catch((error) => {
+							activate(metamask, undefined, true).catch((_error) => {
 								// ignore the error if it's a user rejected request
-								if (error instanceof UserRejectedRequestError) {
-									setConnecting(false);
-								} else {
-									setError(error);
+								if (!(_error instanceof UserRejectedRequestError)) {
+									setError(_error);
 								}
 							});
 						}}
