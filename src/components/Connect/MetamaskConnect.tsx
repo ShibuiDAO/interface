@@ -1,10 +1,10 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MetaMaskOnboarding from '@metamask/onboarding';
+import { UserRejectedRequestError } from '@web3-react/injected-connector';
+import { metamask } from 'connectors';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectEagerAttempt } from 'state/reducers/user';
-import { metamask } from 'connectors';
-import { UserRejectedRequestError } from '@web3-react/injected-connector';
 
 const MetamaskConnect: React.FC = () => {
 	const { active, error, activate, setError } = useActiveWeb3React();
