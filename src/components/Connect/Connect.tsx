@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectConnectingStatus, setConnectingStatus, setEagerAttempt } from 'state/reducers/user';
 import MetamaskConnect from './MetamaskConnect';
 import WalletConnectConnect from './WalletConnectConnect';
+import WalletLinkConnect from './WalletLinkConnect';
 
 const Connect: React.FC = () => {
 	const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const Connect: React.FC = () => {
 												<div className="mt-2 px-8">
 													<MetamaskConnect />
 													<WalletConnectConnect />
+													<WalletLinkConnect />
 												</div>
 											</div>
 										</div>
