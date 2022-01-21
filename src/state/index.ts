@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import assetsReducer from './reducers/assets';
 import ordersReducer from './reducers/orders';
+import transactionsReducer from './reducers/transactions';
 import userReducer from './reducers/user';
 
 export const store = configureStore({
 	reducer: {
-		user: userReducer,
 		assets: assetsReducer,
-		orders: ordersReducer
+		orders: ordersReducer,
+		transactions: transactionsReducer,
+		user: userReducer
 	},
 	devTools: true
 });

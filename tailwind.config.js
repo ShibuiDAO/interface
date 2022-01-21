@@ -1,6 +1,6 @@
 module.exports = {
 	mode: 'jit',
-	purge: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
+	purge: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}', './node_modules/tw-elements/dist/js/**/*.js'],
 	darkMode: 'class', // or 'media' or 'class'
 	theme: {
 		container: {
@@ -49,5 +49,5 @@ module.exports = {
 	variants: {
 		extend: {}
 	},
-	plugins: [require('daisyui')]
+	plugins: [require('daisyui'), require('tw-elements/dist/plugin')]
 };
