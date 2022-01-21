@@ -13,25 +13,24 @@ const WalletConnectConnect: React.FC = () => {
 	return (
 		<>
 			<div className="m-2 min-w-full">
-				<div className="dark:text-gray-50 border dark:border-gray-600 dark:border-opacity-40 dark:bg-gray-800 transition-colors duration-300 ease-in-out dark:hover:bg-pink-900 dark:hover:border-pink-800 p-4 m-auto rounded-lg w-full flex gap-4">
-					<button
-						className="flex-1"
-						onClick={() => {
-							activate(walletConnect, undefined, true).catch((error) => {
-								// ignore the error if it's a user rejected request
-								if (!(error instanceof UserRejectedRequestError)) {
-									setError(error);
-								}
-							});
-						}}
-					>
+				<button
+					className="dark:text-gray-50 border dark:border-gray-600 dark:border-opacity-40 dark:bg-gray-800 transition-colors duration-300 ease-in-out dark:hover:bg-pink-900 dark:hover:border-pink-800 p-4 m-auto rounded-lg w-full flex gap-4"
+					onClick={() => {
+						activate(walletConnect, undefined, true).catch((error) => {
+							// ignore the error if it's a user rejected request
+							if (!(error instanceof UserRejectedRequestError)) {
+								setError(error);
+							}
+						});
+					}}
+				>
+					<div className="flex-1">
 						<div className="flex">WalletConnect</div>
-					</button>
-
+					</div>
 					<div className="right-0 flex-none">
 						<img src="/assets/wallets/walletConnect.svg" alt="WalletConnect logo." width={24} height={24} />
 					</div>
-				</div>
+				</button>
 			</div>
 		</>
 	);

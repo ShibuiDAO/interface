@@ -31,32 +31,31 @@ const MetamaskConnect: React.FC = () => {
 	return (
 		<>
 			<div className="m-2 min-w-full">
-				<div className="dark:text-gray-50 border dark:border-gray-600 dark:border-opacity-40 dark:bg-gray-800 transition-colors duration-300 ease-in-out dark:hover:bg-pink-900 dark:hover:border-pink-800 p-4 m-auto rounded-lg w-full flex gap-4">
-					<button
-						className="flex-1"
-						onClick={() => {
-							if (!MetaMaskOnboarding.isMetaMaskInstalled()) return onboarding.current?.startOnboarding();
-							setConnecting(true);
+				<button
+					className="dark:text-gray-50 border dark:border-gray-600 dark:border-opacity-40 dark:bg-gray-800 transition-colors duration-300 ease-in-out dark:hover:bg-pink-900 dark:hover:border-pink-800 p-4 m-auto rounded-lg w-full flex gap-4"
+					onClick={() => {
+						if (!MetaMaskOnboarding.isMetaMaskInstalled()) return onboarding.current?.startOnboarding();
+						setConnecting(true);
 
-							activate(metamask, undefined, true).catch((error) => {
-								// ignore the error if it's a user rejected request
-								if (error instanceof UserRejectedRequestError) {
-									setConnecting(false);
-								} else {
-									setError(error);
-								}
-							});
-						}}
-					>
+						activate(metamask, undefined, true).catch((error) => {
+							// ignore the error if it's a user rejected request
+							if (error instanceof UserRejectedRequestError) {
+								setConnecting(false);
+							} else {
+								setError(error);
+							}
+						});
+					}}
+				>
+					<div className="flex-1">
 						<div className="flex">
 							<span>{MetaMaskOnboarding.isMetaMaskInstalled() ? 'Metamask' : 'Install Metamask'}</span>
 						</div>
-					</button>
-
+					</div>
 					<div className="right-0 flex-none">
 						<img src="/assets/wallets/metamask.png" alt="Metamask wallet logo." width={24} height={24} />
 					</div>
-				</div>
+				</button>
 			</div>
 		</>
 	);
