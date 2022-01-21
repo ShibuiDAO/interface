@@ -7,6 +7,7 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectConnectingStatus, setConnectingStatus, setEagerAttempt } from 'state/reducers/user';
 import MetamaskConnect from './MetamaskConnect';
+import PortisConnect from './PortisConnect';
 import WalletConnectConnect from './WalletConnectConnect';
 import WalletLinkConnect from './WalletLinkConnect';
 
@@ -71,6 +72,7 @@ const Connect: React.FC = () => {
 													<MetamaskConnect />
 													<WalletConnectConnect />
 													<WalletLinkConnect />
+													<PortisConnect />
 												</div>
 											</div>
 										</div>
