@@ -48,6 +48,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "swr": "^1.1.1",
+    "tw-elements": "^1.0.0-alpha9",
     "web3": "^1.6.1",
     "yup": "^0.32.11"
   },
