@@ -1,9 +1,9 @@
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { PortisConnector } from '@web3-react/portis-connector';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
+import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { ALL_SUPPORTED_CHAIN_IDS, CHAIN_INFO, RPC_URLS, SupportedChainId } from 'constants/chains';
 import SHIBUI_LOGO from './public/logo.svg';
-import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 
 export const PORTIS_ID = process.env.NEXT_PUBLIC_PORTIS_ID;
 
