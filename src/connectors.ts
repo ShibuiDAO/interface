@@ -31,6 +31,16 @@ export const torus = new TorusConnector({
 			chainId: SupportedChainId.BOBA,
 			networkName: CHAIN_INFO[SupportedChainId.BOBA].label,
 			blockExplorer: CHAIN_INFO[SupportedChainId.BOBA].explorer
+		},
+		whiteLabel: {
+			theme: {
+				isDark: true,
+				colors: {
+					torusBrand1: '#FDA360P'
+				}
+			},
+			logoDark: './logo.svg',
+			logoLight: './logo.svg'
 		}
 	} as TorusParams
 });
