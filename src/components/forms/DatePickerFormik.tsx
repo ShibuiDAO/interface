@@ -1,11 +1,13 @@
 import { FieldInputProps, useField, useFormikContext } from 'formik';
 import React from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import { createPortal } from 'react-dom';
 
-export interface DatePickerFormikProps extends Pick<FieldInputProps<any>, 'value' | 'onChange'> {
+export interface DatePickerFormikProps
+	extends Pick<FieldInputProps<any>, 'value' | 'onChange'>,
+		Pick<ReactDatePickerProps, 'minDate' | 'minTime' | 'maxTime' | 'showTimeSelect' | 'inline'> {
 	name: string;
 	className?: string;
 }
@@ -24,7 +26,6 @@ const DatePickerFormik: React.FC<DatePickerFormikProps> = ({ ...props }) => {
 				setFieldValue(field.name, val);
 			}}
 			popperContainer={({ children }) => createPortal(children, document.body)}
-			inline={true}
 		/>
 	);
 };

@@ -76,7 +76,15 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 									Expiration
 								</label>
 								<FormFieldInfo message="The date when the SellOrder expires" />
-								<DatePickerFormik name="expiration" className="pt-4" onChange={props.handleChange} value={props.values.expiration} />
+								<DatePickerFormik
+									name="expiration"
+									className="pt-4"
+									onChange={props.handleChange}
+									value={props.values.expiration}
+									minDate={props.initialValues.expiration}
+									showTimeSelect={false}
+									inline={true}
+								/>
 							</div>
 							<div className="pt-4">
 								<button type="submit" className="btn bg-gray-200 hover:bg-gray-400 text-black">
