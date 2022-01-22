@@ -17,7 +17,11 @@ export interface SellFormFields {
 
 const SellFormSchema = Yup.object().shape({
 	price: Yup.string().required(),
-	expiration: Yup.date().required()
+	expiration: Yup.date()
+		.test('date-more-than-now', '', function testDateValidity(value) {
+			return value !== undefined && value.getTime() > new Date().getTime();
+		})
+		.required()
 });
 
 export interface SellFormProps {
