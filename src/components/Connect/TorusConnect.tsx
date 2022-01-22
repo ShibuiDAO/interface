@@ -27,7 +27,7 @@ const TorusConnect: React.FC = () => {
 						<div className="flex">Torus</div>
 					</div>
 					<div className="right-0 flex-none">
-						<img src="/assets/wallets/coinbaseWallet.svg" alt="Coinbase logo." width={24} height={24} />
+						<img src="/assets/wallets/dark-torus.svg" alt="Coinbase logo." width={24} height={24} />
 					</div>
 				</button>
 			</div>
