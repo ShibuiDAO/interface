@@ -1,5 +1,4 @@
 import MultiSourceContentDisplay from 'components/MultiSourceContentDisplay';
-import CurrentOrderAction from 'components/OrderManipulation/CurrentOrderAction';
 import { SupportedChainId } from 'constants/chains';
 import { BigNumber, ethers } from 'ethers';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
@@ -7,7 +6,8 @@ import Link from 'next/link';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectAssetMetadata } from 'state/reducers/assets';
-import { OrderDirection, selectSellOrder } from 'state/reducers/orders';
+import { selectSellOrder } from 'state/reducers/orders';
+import { When } from 'react-if';
 
 export interface AssetProps {
 	chainId: SupportedChainId;
@@ -16,7 +16,7 @@ export interface AssetProps {
 }
 
 const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
-	let { account, library } = useActiveWeb3React();
+	let { account } = useActiveWeb3React();
 	account = account?.toLowerCase() || '';
 
 	const metadata = useSelector(selectAssetMetadata(chainId, contract, identifier));
@@ -24,72 +24,46 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 
 	if (!metadata) return null;
 
-	const ownerSellBookCondition = sellOrder?.token !== identifier && metadata?.owner && account && metadata.owner === account;
-	const ownerSellCancelCondition = sellOrder?.token === identifier && metadata?.owner && account && metadata.owner === account;
-	const userBuyCondition = sellOrder && sellOrder.token === identifier && metadata?.owner && account && metadata.owner !== account;
-
 	return (
-		<div className="card card-bordered dark:bg-darks-400 dark:border-chain-boba shadow-lg max-w-[14rem]">
+		<div className="card card-bordered dark:bg-darks-100 dark:border-darks-100 dark:text-black shadow-lg max-w-[17rem] max-h-[24.4rem]">
 			<figure>
-				<MultiSourceContentDisplay src={metadata.image_final} className="" />
+				<MultiSourceContentDisplay src={metadata.image_final} className="max-w-[17rem] max-h-[17rem]" />
 			</figure>
-			<div className="card-body p-4">
-				<h2 className="card-title mb-1">
+			<div className="card-body m-0 p-3 pt-0 pb-1">
+				<h2 className="card-title m-0 p-1">
 					<Link href={`/collection/${contract}`} passHref={true}>
-						<a href="/" className="text-sm text-chain-boba truncate">
+						<a href="/" className="text-xs truncate">
 							{metadata?.collection && metadata.collection}
 						</a>
 					</Link>
-					<div className="text-base font-semibold truncate">{metadata.name}</div>
+					<div className="text-sm font-semibold truncate">{metadata.name}</div>
 				</h2>
-				<div className="px-6 py-2">{sellOrder && <div>{ethers.utils.formatEther(BigNumber.from(sellOrder.price))}Ξ</div>}</div>
-				{ownerSellBookCondition && (
-					<div className="justify-end card-actions mt-2">
-						<CurrentOrderAction<OrderDirection.APPROVE>
-							className="btn btn-primary"
-							direction={OrderDirection.APPROVE}
-							data={{
-								contract,
-								identifier: identifier.toString()
-							}}
-						>
-							Sell
-						</CurrentOrderAction>
-					</div>
-				)}
-				{ownerSellCancelCondition && library && (
-					<div className="justify-end card-actions mt-2">
-						<CurrentOrderAction<OrderDirection.CANCEL>
-							className="btn btn-primary"
-							direction={OrderDirection.CANCEL}
-							data={{
-								contract: sellOrder.contract.id,
-								identifier: sellOrder.token.toString()
-							}}
-						>
-							Cancel
-						</CurrentOrderAction>
-					</div>
-				)}
-				{userBuyCondition && library && (
-					<div className="justify-end card-actions mt-2">
-						<CurrentOrderAction<OrderDirection.EXERCISE>
-							className="btn btn-primary"
-							direction={OrderDirection.EXERCISE}
-							data={{
-								seller: sellOrder.seller.id,
-								recipient: account!,
-								contract: sellOrder.contract.id,
-								identifier: sellOrder.token.toString(),
-								expiration: sellOrder.expiration.toString(),
-								price: sellOrder.price.toString()
-							}}
-						>
-							Buy
-						</CurrentOrderAction>
-					</div>
-				)}
 			</div>
+			<When condition={sellOrder !== undefined}>
+				<hr />
+				<div className="card-body m-0 p-0">
+					<div className="grid grid-rows-1 grid-cols-2">
+						<span className="pl-3 pb-3 dark:bg-darks-100 dark:text-black">
+							{sellOrder && (
+								<>
+									<span className="text-sm truncate">Price</span>
+									<div className="p-0">
+										<img src="/assets/icons/ether.svg" alt="Ether" className="inline pr-1" />
+										<span className="text-sm font-bold leading-3">
+											{ethers.utils.formatEther(BigNumber.from(sellOrder.price))}
+										</span>
+									</div>
+								</>
+							)}
+						</span>
+						<span className="pl-3 dark:bg-darks-400 dark:text-white">
+							<>
+								<span className="text-sm truncate">Last</span>
+							</>
+						</span>
+					</div>
+				</div>
+			</When>
 		</div>
 	);
 };
