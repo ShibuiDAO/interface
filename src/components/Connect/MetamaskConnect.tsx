@@ -22,7 +22,7 @@ const MetamaskConnect: React.FC = () => {
 		}
 	}, [active, error]);
 
-	if (error || !triedToEagerConnect) {
+	if (!triedToEagerConnect) {
 		return null;
 	}
 

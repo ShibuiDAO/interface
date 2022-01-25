@@ -3,11 +3,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 
 const WalletLinkConnect: React.FC = () => {
-	const { error, activate, setError } = useActiveWeb3React();
-
-	if (error) {
-		return null;
-	}
+	const { activate, setError } = useActiveWeb3React();
 
 	return (
 		<>
