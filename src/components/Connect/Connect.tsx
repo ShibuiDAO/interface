@@ -20,6 +20,7 @@ const Connect: React.FC = () => {
 
 	useEffect(() => {
 		dispatch(setEagerAttempt(triedToEagerConnect));
+		if (active === true) dispatch(setConnectingStatus(false));
 	}, [triedToEagerConnect, active, dispatch]);
 
 	return (
