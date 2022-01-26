@@ -14,7 +14,7 @@ const TorusConnect: React.FC = () => {
 		<>
 			<div className="m-2 min-w-full">
 				<button
-					className="dark:text-gray-50 border dark:border-gray-600 dark:border-opacity-40 dark:bg-gray-800 transition-colors duration-300 ease-in-out dark:hover:bg-pink-900 dark:hover:border-pink-800 p-4 m-auto rounded-lg w-full flex gap-4"
+					className="m-auto flex w-full gap-4 rounded-lg border p-4 transition-colors duration-300 ease-in-out dark:border-gray-600 dark:border-opacity-40 dark:bg-gray-800 dark:text-gray-50 dark:hover:border-pink-800 dark:hover:bg-pink-900"
 					onClick={() => {
 						activate(torus, undefined, true).catch((_error) => {
 							if (_error?.message && typeof _error.message === 'string' && _error.message.includes(TORUS_USER_CLOSED_PROMPT_MESSAGE))

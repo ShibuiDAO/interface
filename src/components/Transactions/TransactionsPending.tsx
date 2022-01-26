@@ -8,9 +8,9 @@ const TransactionsPending: React.FC = () => {
 
 	return (
 		<When condition={pendingTransactions}>
-			<div className="right-8 bottom-8 fixed">
-				<div className="dark:bg-white p-4 rounded-lg shadow-lg">
-					<div className="text-lights-300 spinner-border animate-spin inline-block w-12 h-12 bottom-4 rounded-full" role="status">
+			<div className="fixed right-8 bottom-8">
+				<div className="rounded-lg p-4 shadow-lg dark:bg-white">
+					<div className="spinner-border bottom-4 inline-block h-12 w-12 animate-spin rounded-full text-lights-300" role="status">
 						<div className="hidden">Loading...</div>
 					</div>
 				</div>

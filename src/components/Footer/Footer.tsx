@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
 		<>
 			<div className="border-t-2 dark:border-darks-200 dark:bg-darks-400 dark:text-white">
 				<div className="container">
-					<div className="p-10 footer">
+					<div className="footer p-10">
 						<div>
 							<img src="/wide.svg" alt="ShibuiDAO header wide logo." />
 						</div>

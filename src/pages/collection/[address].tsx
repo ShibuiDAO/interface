@@ -17,7 +17,7 @@ const CollectionDisplay: NextPage = () => {
 			<Offset />
 			<div className="py-8">
 				<div className="container">
-					<div className="flex flex-wrap align-middle justify-center gap-8">
+					<div className="flex flex-wrap justify-center gap-8 align-middle">
 						<CollectionAssets address={addressNormalised || ''} />
 					</div>
 				</div>

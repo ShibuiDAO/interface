@@ -15,7 +15,7 @@ const Index: NextPage = () => {
 			>
 				<div className="container">
 					<div className="hero min-h-screen">
-						<div className="flex-col hero-content lg:flex-col-reverse">
+						<div className="hero-content flex-col lg:flex-col-reverse">
 							<div className="text-left">
 								<h1 className="mb-5 text-5xl font-bold capitalize">View, buy & sell BOBA NFTs</h1>
 								<p className="mb-5">

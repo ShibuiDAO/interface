@@ -12,13 +12,13 @@ const Navbar: React.FC = () => {
 
 	return (
 		<>
-			<nav className="w-full fixed z-20">
-				<div className="border-b-2 dark:border-darks-200 dark:bg-darks-400 dark:text-white font-semibold">
+			<nav className="fixed z-20 w-full">
+				<div className="border-b-2 font-semibold dark:border-darks-200 dark:bg-darks-400 dark:text-white">
 					<div className="container mx-auto px-8 py-2">
-						<div className="relative flex items-center justify-between h-12">
+						<div className="relative flex h-12 items-center justify-between">
 							{/* Left */}
-							<div className="flex-1 flex pl-0 items-stretch justify-start">
-								<div className="flex-shrink-0 flex items-center">
+							<div className="flex flex-1 items-stretch justify-start pl-0">
+								<div className="flex flex-shrink-0 items-center">
 									<Link href="/">
 										<img src="/logo.svg" alt="ShibuiDAO logo." />
 									</Link>
@@ -26,16 +26,16 @@ const Navbar: React.FC = () => {
 							</div>
 
 							{/* Right */}
-							<div className="right-0 flex items-center static inset-auto ml-6 pr-0">
-								<div className="w-full block ml-6 content-center">
-									<div className="flex space-x-4 justify-end">
+							<div className="static inset-auto right-0 ml-6 flex items-center pr-0">
+								<div className="ml-6 block w-full content-center">
+									<div className="flex justify-end space-x-4">
 										<If condition={active}>
 											<Then>
-												<AccountName className="px-3 py-2 btn bg-lights-300 hover:bg-lights-400 normal-case text-sm font-medium select-none cursor-pointer rounded-md" />
+												<AccountName className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400" />
 											</Then>
 											<Else>
 												<button
-													className="px-3 py-2 btn bg-lights-300 hover:bg-lights-400 normal-case text-sm font-medium select-none cursor-pointer rounded-md"
+													className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400"
 													onClick={() => dispatch(setConnectingStatus(true))}
 												>
 													Connect wallet

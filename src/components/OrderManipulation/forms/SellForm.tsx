@@ -63,7 +63,7 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 					<Form>
 						<>
 							<div className="pt-4">
-								<label htmlFor="price" className="font-bold text-white text-lg mb-2">
+								<label htmlFor="price" className="mb-2 text-lg font-bold text-white">
 									Price
 								</label>
 								<FormFieldInfo message="The price in ETH" />
@@ -71,12 +71,12 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 									name="price"
 									onChange={props.handleChange}
 									value={props.values.price}
-									className="block border-b border-dotted border-element-secondary w-full outline-none bg-black text-white"
+									className="border-element-secondary outline-none block w-full border-b border-dotted bg-black text-white"
 								/>
 								<FormFieldError message={props.errors.price} />
 							</div>
 							<div className="pt-4">
-								<label htmlFor="expiration" className="font-bold text-white text-lg">
+								<label htmlFor="expiration" className="text-lg font-bold text-white">
 									Expiration
 								</label>
 								<FormFieldInfo message="The date when the SellOrder expires" />
@@ -91,7 +91,7 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 								/>
 							</div>
 							<div className="pt-4">
-								<button type="submit" className="btn bg-gray-200 hover:bg-gray-400 text-black">
+								<button type="submit" className="btn bg-gray-200 text-black hover:bg-gray-400">
 									List
 								</button>
 							</div>
