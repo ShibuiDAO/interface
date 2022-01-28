@@ -4,7 +4,7 @@ import { TorusConnector } from '@web3-react/torus-connector';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { ALL_SUPPORTED_CHAIN_IDS, CHAIN_INFO, RPC_URLS, SupportedChainId } from 'constants/chains';
-import SHIBUI_LOGO from './public/logo.svg';
+import SHIBUI_LOGO from 'public/logo.svg';
 
 export const metamask = new InjectedConnector({
 	supportedChainIds: ALL_SUPPORTED_CHAIN_IDS
