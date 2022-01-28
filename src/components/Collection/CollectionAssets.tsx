@@ -58,11 +58,15 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 			) : (
 				<>
 					{(((assetsData.erc721Contract as Erc721Contract).tokens as Erc721Token[]) || [])
-						.filter((asset) => asset.identifier.toString().includes(collectionAssetsSearch))
+						.filter((asset) => (asset === undefined ? false : asset.identifier.toString().includes(collectionAssetsSearch)))
 						.sort((a, b) => {
-							const { contractSellOrders } = exchangeData?.account as Account;
-							const orderA = contractSellOrders.find((order) => order.contract.id === a.contract.id && order.token === a.identifier);
-							const orderB = contractSellOrders.find((order) => order.contract.id === b.contract.id && order.token === b.identifier);
+							const contractSellOrders = (exchangeData?.account as Account).contractSellOrders || [];
+							const orderA = contractSellOrders.find((order) =>
+								a === undefined ? false : order.contract.id === a.contract.id && order.token === a.identifier
+							);
+							const orderB = contractSellOrders.find((order) =>
+								b === undefined ? false : order.contract.id === b.contract.id && order.token === b.identifier
+							);
 
 							const aPricePresent = typeof orderA?.price !== 'undefined';
 							const bPricePresent = typeof orderB?.price !== 'undefined';
