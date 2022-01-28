@@ -60,7 +60,7 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 					{(((assetsData.erc721Contract as Erc721Contract).tokens as Erc721Token[]) || [])
 						.filter((asset) => (asset === undefined ? false : asset.identifier.toString().includes(collectionAssetsSearch)))
 						.sort((a, b) => {
-							const contractSellOrders = (exchangeData?.account as Account).contractSellOrders || [];
+							const contractSellOrders = (exchangeData?.account as Account)?.contractSellOrders || [];
 							const orderA = contractSellOrders.find((order) =>
 								a === undefined ? false : order.contract.id === a.contract.id && order.token === a.identifier
 							);
