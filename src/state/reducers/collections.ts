@@ -16,6 +16,7 @@ const initialState: CollectionsState = {
 export interface CollectionInfo {
 	address: string;
 	name: string;
+	totalSupply: string;
 }
 
 export interface ChainedCollectionInfo extends CollectionInfo {
@@ -38,13 +39,18 @@ export interface CollectionInfoSetPayload {
 export const fetchCollectionInfo = createAsyncThunk<ChainedCollectionInfo, FetchCollectionInfoParameters>(
 	'fetch/metadata/collection',
 	async ({ address, contractABI, chainId, provider }, { rejectWithValue }) => {
-		if (!chainId || !contractABI) return rejectWithValue('ChainId or contract not provided.');
+		if (!address || !chainId || !contractABI) return rejectWithValue('ChainId or contract not provided.');
 
-		const info: ChainedCollectionInfo = { chainId, address, name: '' };
+		const info: ChainedCollectionInfo = { chainId, address, name: '', totalSupply: '' };
 		const contract = new Contract(address, ABIs[contractABI], provider);
 
+		await provider.getNetwork();
+
 		try {
-			if (!info.name) info.name = await contract.name();
+			if (info.name === '') info.name = await contract.name();
+		} catch {}
+		try {
+			if (info.totalSupply === '') info.totalSupply = (await contract.totalSupply()).toString();
 		} catch {}
 
 		return info;

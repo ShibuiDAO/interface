@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { EIP721Response } from 'client';
 import { ChainSubgraphSets, generateEIP721CollectionExistsQuery } from 'client/queries';
 import CollectionAssets from 'components/Collection/CollectionAssets';
+import CollectionInfo from 'components/Collection/CollectionInfo';
 import Offset from 'components/Navbar/Offset';
 import { SupportedChainId } from 'constants/chains';
 import { DEFAULT_CHAIN } from 'constants/misc';
@@ -42,6 +43,7 @@ const CollectionDisplay: NextPage = () => {
 			<Offset />
 			<div className="py-8">
 				<div className="container">
+					<CollectionInfo address={addressNormalised || ''} />
 					<div className="flex flex-wrap justify-center gap-8 align-middle">
 						<CollectionAssets address={addressNormalised || ''} />
 					</div>
