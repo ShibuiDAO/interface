@@ -1,6 +1,6 @@
 import { faDiscord, faGithub, faTelegram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GITHUB_LINK, TWITTER_LINK } from 'constants/linkts';
+import { DISCORD_LINK, GITHUB_LINK, TELEGRAM_LINK, TWITTER_LINK } from 'constants/links';
 import React from 'react';
 
 const Footer: React.FC = () => {
@@ -20,10 +20,10 @@ const Footer: React.FC = () => {
 								<a href={GITHUB_LINK} target="_blank" rel="noopener noreferrer">
 									<FontAwesomeIcon icon={faGithub} />
 								</a>
-								<a href="" target="_blank" rel="noopener noreferrer">
+								<a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
 									<FontAwesomeIcon icon={faDiscord} />
 								</a>
-								<a href="" target="_blank" rel="noopener noreferrer">
+								<a href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">
 									<FontAwesomeIcon icon={faTelegram} />
 								</a>
 							</div>
