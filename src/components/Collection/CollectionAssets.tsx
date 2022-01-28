@@ -11,7 +11,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fillBuyOrders, fillSellOrders } from 'state/reducers/orders';
-import { PriceSorting, selectPriceSorting } from 'state/reducers/user';
+import { PriceSorting, selectCollectionAssetsSearch, selectPriceSorting } from 'state/reducers/user';
 
 export interface CollectionAssetsProps {
 	address: string;
@@ -23,6 +23,7 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
 
 	const priceSorting = useSelector(selectPriceSorting);
+	const collectionAssetsSearch = useSelector(selectCollectionAssetsSearch);
 
 	const [EIP721Subgraph, ERC721ExchangeSubgraph] = ChainSubgraphSets[chainIdNormalised];
 
@@ -57,6 +58,7 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 			) : (
 				<>
 					{(((assetsData.erc721Contract as Erc721Contract).tokens as Erc721Token[]) || [])
+						.filter((asset) => asset.identifier.toString().includes(collectionAssetsSearch))
 						.sort((a, b) => {
 							const { contractSellOrders } = exchangeData?.account as Account;
 							const orderA = contractSellOrders.find((order) => order.contract.id === a.contract.id && order.token === a.identifier);
