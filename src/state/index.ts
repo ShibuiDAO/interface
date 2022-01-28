@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import assetsReducer from './reducers/assets';
-import collectionsReducer from './reducers/collections';
-import ordersReducer from './reducers/orders';
-import transactionsReducer from './reducers/transactions';
-import userReducer from './reducers/user';
+import assetsReducer, { assetsSlice } from './reducers/assets';
+import collectionsReducer, { collectionsSlice } from './reducers/collections';
+import ordersReducer, { ordersSlice } from './reducers/orders';
+import transactionsReducer, { transactionsSlice } from './reducers/transactions';
+import userReducer, { userSlice } from './reducers/user';
 
 export const store = configureStore({
 	reducer: {
@@ -13,7 +13,15 @@ export const store = configureStore({
 		transactions: transactionsReducer,
 		user: userReducer
 	},
-	devTools: true
+	devTools: {
+		actionCreators: {
+			...assetsSlice.actions,
+			...collectionsSlice.actions,
+			...ordersSlice.actions,
+			...transactionsSlice.actions,
+			...userSlice.actions
+		}
+	}
 });
 
 export const useStoreDispatch = () => store.dispatch;

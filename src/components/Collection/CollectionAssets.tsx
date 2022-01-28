@@ -9,8 +9,9 @@ import { COLLECTION_REFRESH_INTERVAL, DEFAULT_CHAIN } from 'constants/misc';
 import { BigNumber } from 'ethers';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fillBuyOrders, fillSellOrders } from 'state/reducers/orders';
+import { PriceSorting, selectPriceSorting } from 'state/reducers/user';
 
 export interface CollectionAssetsProps {
 	address: string;
@@ -20,6 +21,8 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 	const dispatch = useDispatch();
 	const { chainId } = useActiveWeb3React();
 	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
+
+	const priceSorting = useSelector(selectPriceSorting);
 
 	const [EIP721Subgraph, ERC721ExchangeSubgraph] = ChainSubgraphSets[chainIdNormalised];
 
@@ -49,11 +52,11 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 
 	return (
 		<>
-			{assetsLoading || !assetsData ? (
+			{assetsLoading || !assetsData || !(assetsData?.erc721Contract as Erc721Contract)?.tokens ? (
 				<span>Loading</span>
 			) : (
 				<>
-					{((assetsData.erc721Contract as Erc721Contract).tokens as Erc721Token[])
+					{(((assetsData.erc721Contract as Erc721Contract).tokens as Erc721Token[]) || [])
 						.sort((a, b) => {
 							const { contractSellOrders } = exchangeData?.account as Account;
 							const orderA = contractSellOrders.find((order) => order.contract.id === a.contract.id && order.token === a.identifier);
@@ -64,7 +67,11 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 
 							return (
 								Number(bPricePresent) - Number(aPricePresent) ||
-								(aPricePresent && BigNumber.from(orderA.price).sub(BigNumber.from(orderB?.price)).div(1000000000000).toNumber()) ||
+								(aPricePresent &&
+									BigNumber.from(priceSorting === PriceSorting.LtH ? orderA.price : orderB?.price)
+										.sub(BigNumber.from(priceSorting === PriceSorting.LtH ? orderB?.price : orderA.price))
+										.div(1000000000000)
+										.toNumber()) ||
 								0
 							);
 						})
