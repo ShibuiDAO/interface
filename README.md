@@ -1,4 +1,9 @@
-# tapioca-marketplace-interface
+# ShibuiNFT-marketplace-interface
+
+## HOW TO RUN 
+
+1. Run Yarn
+2. Run Yarn Dev - Local host will start at localhost:3000
 
 ## Subgraphs
 
