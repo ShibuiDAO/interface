@@ -30,7 +30,33 @@ const CollectionInfo: React.FC<CollectionInfoProps> = ({ address }) => {
 
 	return (
 		<>
-			{info?.name} - {info?.totalSupply}
+			<div className="my-4 text-center">
+				<h1 className="text-4xl font-bold">{info?.name}</h1>
+				{info?.totalSupply && (
+					<div className="mt-7">
+						<span className="inline-block rounded-lg text-xl font-bold dark:bg-lights-100 dark:text-black">
+							<span className="flex gap-12 px-10 pt-3">
+								<span>
+									<span>{info?.totalSupply ?? 'N/A'}</span>
+									<div className="pt-1 pb-4 text-xs dark:text-darks-200">items</div>
+								</span>
+								<span>
+									<span>N/A</span>
+									<div className="pt-1 pb-4 text-xs dark:text-darks-200">owners</div>
+								</span>
+								<span>
+									<span>N/A</span>
+									<div className="pt-1 pb-4 text-xs dark:text-darks-200">floor price</div>
+								</span>
+								<span>
+									<span>N/A</span>
+									<div className="pt-1 pb-4 text-xs dark:text-darks-200">volume</div>
+								</span>
+							</span>
+						</span>
+					</div>
+				)}
+			</div>
 		</>
 	);
 };
