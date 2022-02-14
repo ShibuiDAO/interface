@@ -25,22 +25,22 @@ export interface ExpandedChainedMetadata extends ChainedMetadata {
 	owner: string;
 }
 
-export interface FetchMetadataParameters {
+export interface FetchAssetMetadataParameters {
 	token: Token;
 	chainId: number;
 	contractABI?: ABI;
 	provider: Provider;
 }
 
-export interface MetadataSetPayload {
+export interface AssetMetadataSetPayload {
 	chainId: SupportedChainId;
 	contract: string;
 	identifier: BigInt;
 	data: ExpandedChainedMetadata;
 }
 
-export const fetchMetadata = createAsyncThunk<ExpandedChainedMetadata, FetchMetadataParameters>(
-	'fetch/metadata',
+export const fetchAssetMetadata = createAsyncThunk<ExpandedChainedMetadata, FetchAssetMetadataParameters>(
+	'fetch/metadata/asset',
 	async ({ token, contractABI, chainId, provider }, { rejectWithValue }) => {
 		if (!chainId || !contractABI) return rejectWithValue('ChainId or contract not provided.');
 
@@ -54,10 +54,6 @@ export const fetchMetadata = createAsyncThunk<ExpandedChainedMetadata, FetchMeta
 		} else if (protocol.includes('http') || protocol === 'ipfs:') {
 			[metadata] = await metadataAPI(uri, shouldProxy);
 		}
-
-		try {
-			if (metadata && !token.contract.name) metadata.collection = await contract.name();
-		} catch {}
 
 		return metadata
 			? {
@@ -78,18 +74,18 @@ export const assetsSlice = createSlice({
 	name: 'assets',
 	initialState,
 	reducers: {
-		setMetadata: (state, action: PayloadAction<MetadataSetPayload>) => {
+		setAssetMetadata: (state, action: PayloadAction<AssetMetadataSetPayload>) => {
 			state.metadata[`${action.payload.chainId}-${action.payload.contract}-${action.payload.identifier}`] = action.payload.data;
 		}
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchMetadata.fulfilled, (state, action) => {
+		builder.addCase(fetchAssetMetadata.fulfilled, (state, action) => {
 			state.metadata[`${action.payload.chainId}-${action.payload.contract}-${action.payload.identifier}`] = action.payload;
 		});
 	}
 });
 
-export const { setMetadata } = assetsSlice.actions;
+export const { setAssetMetadata } = assetsSlice.actions;
 
 export const selectAssetMetadata = (chainId: SupportedChainId, contract: string, identifier: BigInt) => (state: RootState) =>
 	state.assets.metadata[`${chainId}-${contract}-${identifier}`];

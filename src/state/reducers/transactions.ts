@@ -26,7 +26,7 @@ const initialState: TransactionsState = {
 	pending: []
 };
 
-const transactionsSlice = createSlice({
+export const transactionsSlice = createSlice({
 	name: 'transactions',
 	initialState,
 	reducers: {

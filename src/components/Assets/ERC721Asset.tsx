@@ -5,7 +5,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useProviders from 'hooks/useProviders';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMetadata, selectAssetMetadata } from 'state/reducers/assets';
+import { fetchAssetMetadata, selectAssetMetadata } from 'state/reducers/assets';
 import AssetCard from './AssetCard';
 
 export interface ERC721AssetProps {
@@ -24,7 +24,7 @@ const ERC721Asset: React.FC<ERC721AssetProps> = ({ token, chainId }) => {
 		if (metadata !== undefined && metadata.owner === token.owner.id) return;
 
 		dispatch(
-			fetchMetadata({
+			fetchAssetMetadata({
 				token: {
 					owner: token.owner.id,
 					identifier: token.identifier,
