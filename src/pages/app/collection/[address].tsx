@@ -46,7 +46,7 @@ const CollectionDisplay: NextPage = () => {
 				<div className="container">
 					<CollectionInfo address={addressNormalised || ''} />
 					<CollectionFilters className="pt-11" />
-					<div className="flex flex-wrap justify-center gap-8 pt-11 align-middle">
+					<div className="flex flex-wrap justify-center gap-4 pt-11 align-middle">
 						<CollectionAssets address={addressNormalised || ''} />
 					</div>
 				</div>
