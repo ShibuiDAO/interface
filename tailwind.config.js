@@ -41,6 +41,9 @@ module.exports = {
 					boba: '#d7fe44'
 				}
 			},
+			fontSize: {
+				xxs: '0.5rem'
+			},
 			fontFamily: {
 				shibui: ["'Sora'", 'sans-serif', 'Helvetica', 'Arial']
 			}

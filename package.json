@@ -3,11 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "yarn meta:package",
+    "prebuild": "yarn meta:package",
+    "prestart": "yarn meta:package",
     "dev": "next dev src",
     "build": "next build src",
     "start": "next start src",
-    "storybook": "start-storybook -p 9009",
-    "build-storybook": "build-storybook",
+    "meta:package": "cpy package.json src/",
+    "storybook:start": "start-storybook -p 9009",
+    "storybook:build": "build-storybook",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src"
   },
   "dependencies": {
@@ -75,6 +79,7 @@
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "autoprefixer": "9",
+    "cpy-cli": "^3.1.1",
     "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",

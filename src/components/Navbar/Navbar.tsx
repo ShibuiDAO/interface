@@ -5,6 +5,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setConnectingStatus } from 'state/reducers/user';
 import { If, Then, Else } from 'react-if';
+import AppBar from './AppBar';
 
 const Navbar: React.FC = () => {
 	const dispatch = useDispatch();
@@ -12,7 +13,8 @@ const Navbar: React.FC = () => {
 
 	return (
 		<>
-			<nav className="fixed z-20 w-full">
+			<AppBar />
+			<header className="sticky top-0 z-20 w-full">
 				<div className="border-b-2 font-semibold dark:border-darks-200 dark:bg-darks-400 dark:text-white">
 					<div className="container mx-auto px-8 py-2">
 						<div className="relative flex h-12 items-center justify-between">
@@ -48,7 +50,7 @@ const Navbar: React.FC = () => {
 						</div>
 					</div>
 				</div>
-			</nav>
+			</header>
 		</>
 	);
 };

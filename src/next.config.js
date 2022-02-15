@@ -1,5 +1,8 @@
-const { withPlausibleProxy } = require('next-plausible')
+const { withPlausibleProxy } = require('next-plausible');
+const { version } = require('./package.json');
 
 module.exports = withPlausibleProxy()({
-  // ...your next js config, if any
-})
+	publicRuntimeConfig: {
+		version: version || '0.0.0'
+	}
+});

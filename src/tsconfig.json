@@ -16,7 +16,7 @@
 		"baseUrl": ".",
 		"rootDir": ".",
 		"skipLibCheck": true,
-		"importsNotUsedAsValues": "remove"
+		"importsNotUsedAsValues": "remove",
 	},
 	"include": ["."],
 	"exclude": ["public/sw.js", "public/workbox*.js", ".next", "out"]

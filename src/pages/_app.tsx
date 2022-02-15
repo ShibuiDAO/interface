@@ -43,17 +43,17 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
 
 								<>
 									<PinnedComponents>
-										<header>
+										<div className="min-h-screen">
 											<Navbar />
-										</header>
 
-										<main className="min-h-screen dark:bg-darks-400 dark:text-white">
-											<Component {...pageProps} />
-										</main>
+											<main className="min-h-screen dark:bg-darks-400 dark:text-white">
+												<Component {...pageProps} />
+											</main>
 
-										<footer>
-											<Footer />
-										</footer>
+											<footer>
+												<Footer />
+											</footer>
+										</div>
 									</PinnedComponents>
 								</>
 							</Web3ReactProvider>
