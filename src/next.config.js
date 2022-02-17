@@ -4,5 +4,13 @@ const { version } = require('./package.json');
 module.exports = withPlausibleProxy()({
 	publicRuntimeConfig: {
 		version: version || '0.0.0'
+	},
+	async rewrites() {
+		return [
+			{
+				source: '/index',
+				destination: '/'
+			}
+		];
 	}
 });
