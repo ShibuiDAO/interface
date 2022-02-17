@@ -6,8 +6,10 @@ import { client } from 'client';
 import Footer from 'components/Footer/Footer';
 import Navbar from 'components/Navbar/Navbar';
 import PinnedComponents from 'components/PinnedComponents';
+import DefaultSeoProps from 'DefaultSeoProps';
 import type { NextPage } from 'next';
 import PlausibleProvider from 'next-plausible';
+import { DefaultSeo } from 'next-seo';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
@@ -30,6 +32,19 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
 						<Provider store={store}>
 							<Web3ReactProvider getLibrary={getLibrary}>
 								<Head>
+									<meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
+									<meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+									<meta httpEquiv="Expires" content="1y" />
+									<meta httpEquiv="Pragma" content="1y" />
+									<meta httpEquiv="Cache-Control" content="1y" />
+
+									<meta httpEquiv="Page-Enter" content="RevealTrans(Duration=2.0,Transition=2)" />
+									<meta httpEquiv="Page-Exit" content="RevealTrans(Duration=3.0,Transition=12)" />
+
+									<link rel="manifest" href="/manifest.json" />
+
+									<link rel="shortcut icon" href="/favicon.ico" />
+
 									{/* This fixes big icons with next-seo since CSS is somehow overwritten*/}
 									<style>{dom.css()}</style>
 
@@ -40,6 +55,7 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
 										rel="stylesheet"
 									/>
 								</Head>
+								<DefaultSeo {...DefaultSeoProps} />
 
 								<>
 									<PinnedComponents>
