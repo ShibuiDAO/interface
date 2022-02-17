@@ -56,11 +56,11 @@ const Asset: React.FC<AssetProps> = ({ chainId, contract, identifier }) => {
 								</>
 							)}
 						</span>
-						<span className="pl-3 dark:bg-darks-400 dark:text-white">
+						{/* <span className="pl-3 dark:bg-darks-400 dark:text-white">
 							<>
 								<span className="truncate text-sm">Last</span>
 							</>
-						</span>
+						</span> */}
 					</div>
 				</div>
 			</When>
