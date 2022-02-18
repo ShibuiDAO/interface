@@ -9,7 +9,7 @@ import { SupportedChainId } from 'constants/chains';
 import { DEFAULT_CHAIN } from 'constants/misc';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useForceConnectMenu from 'hooks/useForceConnectMenu';
-import type { NextPage } from 'next';
+import type { GetStaticPaths, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -53,6 +53,21 @@ const CollectionDisplay: NextPage = () => {
 			</div>
 		</>
 	);
+};
+
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getStaticProps = async () => {
+	return {
+		props: {}
+	};
+};
+
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getStaticPaths: GetStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking'
+	};
 };
 
 export default CollectionDisplay;
