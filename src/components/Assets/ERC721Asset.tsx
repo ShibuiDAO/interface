@@ -6,7 +6,7 @@ import useProviders from 'hooks/useProviders';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAssetMetadata, selectAssetMetadata } from 'state/reducers/assets';
-import AssetCard from './AssetCard';
+import DataAssetCard from './DataAssetCard';
 
 export interface ERC721AssetProps {
 	token: Erc721Token;
@@ -41,7 +41,7 @@ const ERC721Asset: React.FC<ERC721AssetProps> = ({ token, chainId }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <AssetCard chainId={chainId} contract={token.contract.id} identifier={token.identifier} />;
+	return <DataAssetCard chainId={chainId} contract={token.contract.id} identifier={token.identifier} />;
 };
 
 export default ERC721Asset;
