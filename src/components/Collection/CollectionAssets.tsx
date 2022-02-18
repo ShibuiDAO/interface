@@ -6,12 +6,12 @@ import { ChainSubgraphSets, generateEIP721ContractQuery, generateERC721ExchangeQ
 import ERC721Asset from 'components/Assets/ERC721Asset';
 import { SupportedChainId } from 'constants/chains';
 import { COLLECTION_REFRESH_INTERVAL, DEFAULT_CHAIN } from 'constants/misc';
-import { BigNumber } from 'ethers';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fillBuyOrders, fillSellOrders } from 'state/reducers/orders';
-import { PriceSorting, selectCollectionAssetsSearch, selectPriceSorting } from 'state/reducers/user';
+import { selectCollectionAssetsSearch, selectPriceSorting } from 'state/reducers/user';
+import { sortERC721ByPrice } from 'utils/sorting';
 
 export interface CollectionAssetsProps {
 	address: string;
@@ -59,28 +59,7 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 				<>
 					{(((assetsData.erc721Contract as Erc721Contract).tokens as Erc721Token[]) || [])
 						.filter((asset) => (asset === undefined ? false : asset.identifier.toString().includes(collectionAssetsSearch)))
-						.sort((a, b) => {
-							const contractSellOrders = (exchangeData?.account as Account)?.contractSellOrders || [];
-							const orderA = contractSellOrders.find((order) =>
-								a === undefined ? false : order.contract.id === a.contract.id && order.token === a.identifier
-							);
-							const orderB = contractSellOrders.find((order) =>
-								b === undefined ? false : order.contract.id === b.contract.id && order.token === b.identifier
-							);
-
-							const aPricePresent = typeof orderA?.price !== 'undefined';
-							const bPricePresent = typeof orderB?.price !== 'undefined';
-
-							return (
-								Number(bPricePresent) - Number(aPricePresent) ||
-								(aPricePresent &&
-									BigNumber.from(priceSorting === PriceSorting.LtH ? orderA.price : orderB?.price)
-										.sub(BigNumber.from(priceSorting === PriceSorting.LtH ? orderB?.price : orderA.price))
-										.div(1000000000000)
-										.toNumber()) ||
-								0
-							);
-						})
+						.sort(sortERC721ByPrice(priceSorting, exchangeData))
 						.map((token) => (
 							<ERC721Asset token={token} chainId={chainIdNormalised} key={token.id} />
 						))}
