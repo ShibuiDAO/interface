@@ -79,6 +79,6 @@ export const generateERC721ExchangeQuery = (
 `;
 
 export const ChainSubgraphSets: { [K in SupportedChainId]: [EIP721: Subgraph, ERC721Exchange: Subgraph] } = {
-	[SupportedChainId.BOBA]: [Subgraph.BOBA_MAINNET_EIP721, Subgraph.BOBA_RINKEBY_ERC721EXCHANGE],
+	[SupportedChainId.BOBA]: [Subgraph.BOBA_MAINNET_EIP721, Subgraph.BOBA_MAINNET_ERC721EXCHANGE],
 	[SupportedChainId.BOBA_RINKEBY]: [Subgraph.BOBA_RINKEBY_EIP721, Subgraph.BOBA_RINKEBY_ERC721EXCHANGE]
 };

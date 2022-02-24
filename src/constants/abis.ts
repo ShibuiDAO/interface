@@ -123,41 +123,9 @@ export const EIP1155_BASIC_ABI_STRING = EIP1155_BASIC_ABI.toString();
 
 export const ERC721_EXCHANGE_ABI = [
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'buyer',
-				type: 'address'
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'seller',
-				type: 'address'
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'tokenContractAddress',
-				type: 'address'
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256'
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'offer',
-				type: 'uint256'
-			}
-		],
-		name: 'BuyOrderAccepted',
-		type: 'event'
+		inputs: [],
+		stateMutability: 'nonpayable',
+		type: 'constructor'
 	},
 	{
 		anonymous: false,
@@ -197,6 +165,12 @@ export const ERC721_EXCHANGE_ABI = [
 				internalType: 'uint256',
 				name: 'offer',
 				type: 'uint256'
+			},
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'token',
+				type: 'address'
 			}
 		],
 		name: 'BuyOrderBooked',
@@ -231,15 +205,15 @@ export const ERC721_EXCHANGE_ABI = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
+				indexed: false,
 				internalType: 'address',
 				name: 'buyer',
 				type: 'address'
 			},
 			{
-				indexed: false,
+				indexed: true,
 				internalType: 'address',
-				name: 'owner',
+				name: 'seller',
 				type: 'address'
 			},
 			{
@@ -257,79 +231,17 @@ export const ERC721_EXCHANGE_ABI = [
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: 'expiration',
-				type: 'uint256'
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
 				name: 'offer',
 				type: 'uint256'
-			}
-		],
-		name: 'BuyOrderUpdated',
-		type: 'event'
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'tokenContractAddress',
-				type: 'address'
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'executor',
-				type: 'address'
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'newRoyaltiesAmount',
-				type: 'uint256'
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'oldRoyaltiesAmount',
-				type: 'uint256'
-			}
-		],
-		name: 'CollectionRoyaltyFeeAmountUpdated',
-		type: 'event'
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'tokenContractAddress',
-				type: 'address'
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'executor',
-				type: 'address'
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newPayoutAddress',
-				type: 'address'
 			},
 			{
 				indexed: false,
 				internalType: 'address',
-				name: 'oldPayoutAddress',
+				name: 'token',
 				type: 'address'
 			}
 		],
-		name: 'CollectionRoyaltyPayoutAddressUpdated',
+		name: 'BuyOrderExercised',
 		type: 'event'
 	},
 	{
@@ -396,6 +308,12 @@ export const ERC721_EXCHANGE_ABI = [
 				internalType: 'uint256',
 				name: 'price',
 				type: 'uint256'
+			},
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'token',
+				type: 'address'
 			}
 		],
 		name: 'SellOrderBooked',
@@ -464,46 +382,15 @@ export const ERC721_EXCHANGE_ABI = [
 				internalType: 'uint256',
 				name: 'price',
 				type: 'uint256'
-			}
-		],
-		name: 'SellOrderFufilled',
-		type: 'event'
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'seller',
-				type: 'address'
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'tokenContractAddress',
-				type: 'address'
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256'
 			},
 			{
 				indexed: false,
-				internalType: 'uint256',
-				name: 'expiration',
-				type: 'uint256'
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'price',
-				type: 'uint256'
+				internalType: 'address',
+				name: 'token',
+				type: 'address'
 			}
 		],
-		name: 'SellOrderUpdated',
+		name: 'SellOrderExercised',
 		type: 'event'
 	},
 	{
@@ -522,18 +409,28 @@ export const ERC721_EXCHANGE_ABI = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: '__maxRoyaltyPerMille',
-				type: 'uint256'
+				internalType: 'address',
+				name: '_systemFeeWallet',
+				type: 'address'
 			},
 			{
 				internalType: 'uint256',
-				name: '__systemFeePerMille',
+				name: '_systemFeePerMille',
 				type: 'uint256'
 			},
 			{
 				internalType: 'address',
-				name: '__wethAddress',
+				name: '_royaltyEngine',
+				type: 'address'
+			},
+			{
+				internalType: 'address',
+				name: '_orderBook',
+				type: 'address'
+			},
+			{
+				internalType: 'address',
+				name: '_wethAddress',
 				type: 'address'
 			}
 		],
@@ -546,7 +443,7 @@ export const ERC721_EXCHANGE_ABI = [
 		inputs: [
 			{
 				internalType: 'address payable',
-				name: '_bidder',
+				name: '_owner',
 				type: 'address'
 			},
 			{
@@ -568,11 +465,49 @@ export const ERC721_EXCHANGE_ABI = [
 				internalType: 'uint256',
 				name: '_offer',
 				type: 'uint256'
+			},
+			{
+				internalType: 'address',
+				name: '_token',
+				type: 'address'
 			}
 		],
-		name: 'acceptBuyOrder',
+		name: 'bookBuyOrder',
 		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
+		type: 'function'
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_tokenContractAddress',
+				type: 'address'
+			},
+			{
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256'
+			},
+			{
+				internalType: 'uint256',
+				name: '_expiration',
+				type: 'uint256'
+			},
+			{
+				internalType: 'uint256',
+				name: '_price',
+				type: 'uint256'
+			},
+			{
+				internalType: 'address',
+				name: '_token',
+				type: 'address'
+			}
+		],
+		name: 'bookSellOrder',
+		outputs: [],
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
@@ -619,7 +554,7 @@ export const ERC721_EXCHANGE_ABI = [
 		],
 		name: 'cancelBuyOrder',
 		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
@@ -637,14 +572,14 @@ export const ERC721_EXCHANGE_ABI = [
 		],
 		name: 'cancelSellOrder',
 		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
 		inputs: [
 			{
 				internalType: 'address payable',
-				name: '_owner',
+				name: '_bidder',
 				type: 'address'
 			},
 			{
@@ -666,39 +601,16 @@ export const ERC721_EXCHANGE_ABI = [
 				internalType: 'uint256',
 				name: '_offer',
 				type: 'uint256'
-			}
-		],
-		name: 'createBuyOrder',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function'
-	},
-	{
-		inputs: [
+			},
 			{
 				internalType: 'address',
-				name: '_tokenContractAddress',
+				name: '_token',
 				type: 'address'
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256'
-			},
-			{
-				internalType: 'uint256',
-				name: '_expiration',
-				type: 'uint256'
-			},
-			{
-				internalType: 'uint256',
-				name: '_price',
-				type: 'uint256'
 			}
 		],
-		name: 'createSellOrder',
+		name: 'exerciseBuyOrder',
 		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
@@ -729,12 +641,17 @@ export const ERC721_EXCHANGE_ABI = [
 				type: 'uint256'
 			},
 			{
-				internalType: 'address payable',
+				internalType: 'address',
 				name: '_recipient',
+				type: 'address'
+			},
+			{
+				internalType: 'address',
+				name: '_token',
 				type: 'address'
 			}
 		],
-		name: 'executeSellOrder',
+		name: 'exerciseSellOrder',
 		outputs: [],
 		stateMutability: 'payable',
 		type: 'function'
@@ -767,6 +684,11 @@ export const ERC721_EXCHANGE_ABI = [
 						type: 'address'
 					},
 					{
+						internalType: 'address',
+						name: 'token',
+						type: 'address'
+					},
+					{
 						internalType: 'uint256',
 						name: 'expiration',
 						type: 'uint256'
@@ -777,47 +699,9 @@ export const ERC721_EXCHANGE_ABI = [
 						type: 'uint256'
 					}
 				],
-				internalType: 'struct ERC721ExchangeUpgradeable.BuyOrder',
+				internalType: 'struct IERC721Exchange.BuyOrder',
 				name: '',
 				type: 'tuple'
-			}
-		],
-		stateMutability: 'view',
-		type: 'function'
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_tokenContractAddress',
-				type: 'address'
-			}
-		],
-		name: 'getRoyaltyPayoutAddress',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address'
-			}
-		],
-		stateMutability: 'view',
-		type: 'function'
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_tokenContractAddress',
-				type: 'address'
-			}
-		],
-		name: 'getRoyaltyPayoutRate',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256'
 			}
 		],
 		stateMutability: 'view',
@@ -854,11 +738,36 @@ export const ERC721_EXCHANGE_ABI = [
 						internalType: 'uint256',
 						name: 'price',
 						type: 'uint256'
+					},
+					{
+						internalType: 'address',
+						name: 'token',
+						type: 'address'
 					}
 				],
-				internalType: 'struct ERC721ExchangeUpgradeable.SellOrder',
+				internalType: 'struct IERC721Exchange.SellOrder',
 				name: '',
 				type: 'tuple'
+			}
+		],
+		stateMutability: 'view',
+		type: 'function'
+	},
+	{
+		inputs: [],
+		name: 'goTowardsTheSunset',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function'
+	},
+	{
+		inputs: [],
+		name: 'orderBook',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address'
 			}
 		],
 		stateMutability: 'view',
@@ -905,6 +814,19 @@ export const ERC721_EXCHANGE_ABI = [
 		type: 'function'
 	},
 	{
+		inputs: [],
+		name: 'royaltyEngine',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address'
+			}
+		],
+		stateMutability: 'view',
+		type: 'function'
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -937,21 +859,24 @@ export const ERC721_EXCHANGE_ABI = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_tokenContractAddress',
+				name: '_newOrderBook',
 				type: 'address'
-			},
-			{
-				internalType: 'address payable',
-				name: '_payoutAddress',
-				type: 'address'
-			},
-			{
-				internalType: 'uint256',
-				name: '_payoutPerMille',
-				type: 'uint256'
 			}
 		],
-		name: 'setRoyalty',
+		name: 'setOrderBook',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function'
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_newRoyaltyEngine',
+				type: 'address'
+			}
+		],
+		name: 'setRoyaltyEngine',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function'
@@ -983,6 +908,38 @@ export const ERC721_EXCHANGE_ABI = [
 		type: 'function'
 	},
 	{
+		inputs: [],
+		name: 'sunset',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool'
+			}
+		],
+		stateMutability: 'view',
+		type: 'function'
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'interfaceId',
+				type: 'bytes4'
+			}
+		],
+		name: 'supportsInterface',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool'
+			}
+		],
+		stateMutability: 'pure',
+		type: 'function'
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -1003,77 +960,29 @@ export const ERC721_EXCHANGE_ABI = [
 		type: 'function'
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: '_owner',
-				type: 'address'
-			},
-			{
-				internalType: 'address',
-				name: '_tokenContractAddress',
-				type: 'address'
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256'
-			},
-			{
-				internalType: 'uint256',
-				name: '_expiration',
-				type: 'uint256'
-			},
-			{
-				internalType: 'uint256',
-				name: '_offer',
-				type: 'uint256'
-			}
-		],
-		name: 'updateBuyOrder',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function'
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_tokenContractAddress',
-				type: 'address'
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256'
-			},
-			{
-				internalType: 'uint256',
-				name: '_expiration',
-				type: 'uint256'
-			},
-			{
-				internalType: 'uint256',
-				name: '_price',
-				type: 'uint256'
-			}
-		],
-		name: 'updateSellOrder',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function'
-	},
-	{
 		inputs: [],
 		name: 'version',
 		outputs: [
 			{
-				internalType: 'string',
+				internalType: 'uint256',
 				name: '',
-				type: 'string'
+				type: 'uint256'
 			}
 		],
 		stateMutability: 'pure',
+		type: 'function'
+	},
+	{
+		inputs: [],
+		name: 'wETH',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address'
+			}
+		],
+		stateMutability: 'view',
 		type: 'function'
 	},
 	{
