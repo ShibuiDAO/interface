@@ -2092,6 +2092,11 @@
   dependencies:
     graphql "^16.0.1"
 
+"@shibuidao/exchange@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@shibuidao/exchange/-/exchange-1.6.0.tgz#637c13ed894e65c0eaf221b7388b0f158efee02b"
+  integrity sha512-VDoj9Wz1G3XONVCrCB+1++bQ/dBo6asHmow7rqQ1Q3qHbXGrj7JsrZqchzsRcSK25CY2ptP6KdABzMD+TDvjRw==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"

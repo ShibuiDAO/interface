@@ -6,9 +6,11 @@ import { BuyOrder, SellOrder } from '@shibuidao/erc721exchange-types';
 import { ABI, ABIs } from 'constants/abis';
 import { SupportedChainId } from 'constants/chains';
 import { ERC721_EXCHANGE } from 'constants/contracts';
+import { ZERO_ADDRESS } from 'constants/misc';
 import { BigNumberish, Contract, errors } from 'ethers';
 import { WritableDraft } from 'immer/dist/internal';
 import { RootState } from 'state';
+import { exchangeContract } from 'utils/contracts';
 import { TRANSACTION_THRUNK_PREFIX } from './transactions';
 
 export interface SimpleSellOrder {
@@ -161,9 +163,15 @@ export interface CreateOrderSellParameters {
 export const createSellOrder = createAsyncThunk<any, CreateOrderSellParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}create/order/sell`,
 	async ({ chainId, library, data }, { rejectWithValue }) => {
-		const exchange = new Contract(ERC721_EXCHANGE[chainId], ABIs[ABI.ERC721_EXCHANGE], library.getSigner());
+		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], library.getSigner());
 		try {
-			const tx: TransactionResponse = await exchange.createSellOrder(data.tokenContractAddress, data.tokenId, data.expiration, data.price);
+			const tx: TransactionResponse = await exchange.bookSellOrder(
+				data.tokenContractAddress,
+				data.tokenId,
+				data.expiration,
+				data.price,
+				ZERO_ADDRESS
+			);
 
 			try {
 				await tx.wait();
@@ -196,7 +204,7 @@ export interface CancelOrderSellParameters {
 export const cancelSellOrder = createAsyncThunk<true, CancelOrderSellParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}cancel/order/sell`,
 	async ({ chainId, library, data }, { rejectWithValue }) => {
-		const exchange = new Contract(ERC721_EXCHANGE[chainId], ABIs[ABI.ERC721_EXCHANGE], library.getSigner());
+		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], library.getSigner());
 		try {
 			const tx: TransactionResponse = await exchange.cancelSellOrder(data.tokenContractAddress, data.tokenId);
 
@@ -235,15 +243,16 @@ export interface ExecuteOrderSellParameters {
 export const executeSellOrder = createAsyncThunk<true, ExecuteOrderSellParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}execute/order/sell`,
 	async ({ chainId, library, data }, { rejectWithValue }) => {
-		const exchange = new Contract(ERC721_EXCHANGE[chainId], ABIs[ABI.ERC721_EXCHANGE], library.getSigner());
+		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], library.getSigner());
 		try {
-			const tx: TransactionResponse = await exchange.executeSellOrder(
+			const tx: TransactionResponse = await exchange.exerciseSellOrder(
 				data.seller,
 				data.tokenContractAddress,
 				data.tokenId,
 				data.expiration,
 				data.price,
 				data.recipient,
+				ZERO_ADDRESS,
 				{ value: data.price }
 			);
 
