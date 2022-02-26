@@ -3,7 +3,7 @@ import { EIP721Response } from 'client';
 import { ChainSubgraphSets, generateEIP721CollectionExistsQuery } from 'client/queries';
 import CollectionAssets from 'components/Collection/CollectionAssets';
 import CollectionFilters from 'components/Collection/CollectionFilters';
-import CollectionInfo from 'components/Collection/CollectionInfo';
+import CollectionSpecificsInfo from 'components/Collection/CollectionSpecificsInfo';
 import Offset from 'components/Navbar/Offset';
 import { SupportedChainId } from 'constants/chains';
 import { DEFAULT_CHAIN } from 'constants/misc';
@@ -44,7 +44,7 @@ const CollectionDisplay: NextPage = () => {
 			<Offset />
 			<div className="py-8 pb-20">
 				<div className="container">
-					<CollectionInfo address={addressNormalised || ''} />
+					<CollectionSpecificsInfo address={addressNormalised || ''} />
 					<CollectionFilters className="pt-11" />
 					<div className="flex flex-wrap justify-center gap-4 pt-11 align-middle">
 						<CollectionAssets address={addressNormalised || ''} />

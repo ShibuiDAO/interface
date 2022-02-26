@@ -1,4 +1,4 @@
-import MultiSourceContentDisplay from 'components/MultiSourceContentDisplay';
+import ProtectedMultiSourceContentDisplay from 'components/ProtectedMultiSourceContentDisplay';
 import Link from 'next/link';
 import React from 'react';
 import { When } from 'react-if';
@@ -17,11 +17,11 @@ const AssetCard: React.FC<AssetCardProps> = ({ contract, collection, name, image
 	return (
 		<div className="card-bordered card max-h-[24.4rem] max-w-[17rem] shadow-lg dark:border-darks-100 dark:bg-darks-100 dark:text-black">
 			<figure>
-				<MultiSourceContentDisplay src={image} className="max-h-[17rem] max-w-[17rem]" />
+				<ProtectedMultiSourceContentDisplay src={image} className="max-h-[17rem] max-w-[17rem]" />
 			</figure>
 			<div className="card-body m-0 p-3 pt-0 pb-1">
 				<h2 className="card-title m-0 p-1">
-					<Link href={`/collection/${contract}`} passHref={true}>
+					<Link href={`/app/collection/${contract}`} passHref={true}>
 						<a href="/" className="truncate text-xs">
 							{collection || null}
 						</a>

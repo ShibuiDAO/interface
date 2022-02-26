@@ -12,5 +12,14 @@ module.exports = withPlausibleProxy()({
 				destination: '/'
 			}
 		];
+	},
+	async redirects() {
+		return [
+			{
+				source: '/app/collection',
+				destination: '/app/collections',
+				permanent: true
+			}
+		];
 	}
 });

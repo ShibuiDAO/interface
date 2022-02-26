@@ -9,9 +9,11 @@ export interface MultiSourceContentDisplayProps {
 	src: string;
 	className?: string;
 	alt?: string;
+	fallback?: string;
 }
 
-const MultiSourceContentDisplay: React.FC<MultiSourceContentDisplayProps> = ({ src: uri, className, alt }) => {
+const MultiSourceContentDisplay: React.FC<MultiSourceContentDisplayProps> = ({ src: uri, className, alt, fallback }) => {
+	fallback ??= FALLBACK;
 	[uri] = quirkIPFSHash(uri, false);
 	const uriStructure = new URL(uri);
 
@@ -19,11 +21,7 @@ const MultiSourceContentDisplay: React.FC<MultiSourceContentDisplayProps> = ({ s
 	[uri] = quirkIPFSGateway(uri, false);
 	[uri] = quirkSVGImage(uri, uriStructure);
 
-	return (
-		<>
-			<img src={uri} className={className} alt={alt} loading="lazy" onError={(ev: any) => (ev.target.src = FALLBACK)} />
-		</>
-	);
+	return <img src={uri} className={className} alt={alt} loading="lazy" onError={(ev: any) => (ev.target.src = fallback)} />;
 };
 
 export default MultiSourceContentDisplay;

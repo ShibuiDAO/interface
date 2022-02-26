@@ -7,11 +7,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCollectionInfo, selectCollectionInfo } from 'state/reducers/collections';
 
-export interface CollectionInfoProps {
+export interface CollectionSpecificsInfoProps {
 	address: string;
 }
 
-const CollectionInfo: React.FC<CollectionInfoProps> = ({ address }) => {
+const CollectionSpecificsInfo: React.FC<CollectionSpecificsInfoProps> = ({ address }) => {
 	const { chainId, library, account } = useActiveWeb3React();
 	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
 	const baseProvider = useProviders()[chainId as SupportedChainId];
@@ -61,4 +61,4 @@ const CollectionInfo: React.FC<CollectionInfoProps> = ({ address }) => {
 	);
 };
 
-export default CollectionInfo;
+export default CollectionSpecificsInfo;

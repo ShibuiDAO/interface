@@ -1,6 +1,6 @@
 import { ApolloProvider } from '@apollo/client';
 import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from '@ethersproject/providers';
-import { config, dom } from '@fortawesome/fontawesome-svg-core';
+import { config } from '@fortawesome/fontawesome-svg-core';
 import { Web3ReactProvider } from '@web3-react/core';
 import { client } from 'client';
 import Footer from 'components/Footer/Footer';
@@ -44,16 +44,6 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
 									<link rel="manifest" href="/manifest.json" />
 
 									<link rel="shortcut icon" href="/favicon.ico" />
-
-									{/* This fixes big icons with next-seo since CSS is somehow overwritten*/}
-									<style>{dom.css()}</style>
-
-									<link rel="preconnect" href="https://fonts.googleapis.com" />
-									<link rel="preconnect" href="https://fonts.gstatic.com" />
-									<link
-										href="https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700;800&display=swap"
-										rel="stylesheet"
-									/>
 								</Head>
 								<DefaultSeo {...DefaultSeoProps} />
 

@@ -38,6 +38,15 @@ export const generateEIP721CollectionExistsQuery = (chainId: SupportedChainId) =
 	}
 `;
 
+export const generateEIP721ContractsQuery = (chainId: SupportedChainId, paging_by = 999, paging_from = 0) => gql`
+	query GetChainId${chainId}EIP721Contracts {
+		erc721Contracts(first: ${paging_by}, skip: ${paging_from}) {
+			id
+			supportsMetadata
+		}
+	}
+`;
+
 export const generateERC721ExchangeQuery = (
 	chainId: SupportedChainId,
 	paging_by = 999,
