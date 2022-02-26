@@ -4,10 +4,12 @@ import Link from 'next/link';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setConnectingStatus } from 'state/reducers/user';
-import { If, Then, Else } from 'react-if';
+import { If, Then, Else, Switch, Case, Default } from 'react-if';
 import AppBar from './AppBar';
+import { useRouter } from 'next/router';
 
 const Navbar: React.FC = () => {
+	const router = useRouter();
 	const dispatch = useDispatch();
 	const { active } = useActiveWeb3React();
 
@@ -31,19 +33,30 @@ const Navbar: React.FC = () => {
 							<div className="static inset-auto right-0 ml-6 flex items-center pr-0">
 								<div className="ml-6 block w-full content-center">
 									<div className="flex justify-end space-x-4">
-										<If condition={active}>
-											<Then>
-												<AccountName className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400" />
-											</Then>
-											<Else>
-												<button
-													className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400"
-													onClick={() => dispatch(setConnectingStatus(true))}
-												>
-													Connect wallet
-												</button>
-											</Else>
-										</If>
+										<Switch>
+											<Case condition={!router.pathname.startsWith('/app')}>
+												<Link href={'/app'}>
+													<div className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400">
+														Launch app
+													</div>
+												</Link>
+											</Case>
+											<Default>
+												<If condition={active}>
+													<Then>
+														<AccountName className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400" />
+													</Then>
+													<Else>
+														<button
+															className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400"
+															onClick={() => dispatch(setConnectingStatus(true))}
+														>
+															Connect wallet
+														</button>
+													</Else>
+												</If>
+											</Default>
+										</Switch>
 									</div>
 								</div>
 							</div>

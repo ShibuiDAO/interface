@@ -10,6 +10,10 @@ module.exports = withPlausibleProxy()({
 			{
 				source: '/index',
 				destination: '/'
+			},
+			{
+				source: '/app',
+				destination: '/app/collections'
 			}
 		];
 	},

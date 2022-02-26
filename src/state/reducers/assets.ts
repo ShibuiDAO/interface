@@ -46,14 +46,22 @@ export const fetchAssetMetadata = createAsyncThunk<ExpandedChainedMetadata, Fetc
 
 		const contract = new Contract(token.contract.id, ABIs[contractABI], provider);
 		const contractURI: string = await contract[uriMethods[contractABI]](token.identifier);
-		let metadata: BaseMetadata | undefined = undefined;
+		let metadata: BaseMetadata = { name: '', image_final: '' };
 		const [uri, protocol, shouldProxy] = quirkURIQuirks(contractURI);
 
 		if (protocol === 'data:') {
-			[metadata] = await metadataBase64(uri);
+			const [_metadata] = await metadataBase64(uri);
+			if (_metadata) metadata = _metadata;
 		} else if (protocol.includes('http') || protocol === 'ipfs:') {
-			[metadata] = await metadataAPI(uri, shouldProxy);
+			const [_metadata] = await metadataAPI(uri, shouldProxy);
+			if (_metadata) metadata = _metadata;
 		}
+
+		await provider.getNetwork();
+
+		try {
+			if (!metadata.collection) metadata.collection = await contract.name();
+		} catch {}
 
 		return metadata
 			? {
