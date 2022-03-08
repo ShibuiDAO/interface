@@ -15,7 +15,7 @@ export interface DataCollectionCardProps {
 const DataCollectionCard: React.FC<DataCollectionCardProps> = ({ address }) => {
 	const { chainId, library, account } = useActiveWeb3React();
 	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
-	const baseProvider = useProviders()[chainId as SupportedChainId];
+	const baseProvider = useProviders()[chainIdNormalised as SupportedChainId];
 	const dispatch = useDispatch();
 
 	const info = useSelector(selectCollectionInfo(chainIdNormalised, address));

@@ -16,7 +16,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ image, name, contract }
 					<div className="grid grid-cols-2 grid-rows-1">
 						<figure className="m-auto p-2 pr-5">
 							<ProtectedMultiSourceContentDisplay
-								src={image || 'http://t.t'}
+								src={image || ''}
 								fallback="/logo_inverted_spaced.svg"
 								className="max-h-[7.25rem] min-w-[7.25rem] max-w-[7.25rem] rounded-full dark:bg-darks-400"
 							/>
