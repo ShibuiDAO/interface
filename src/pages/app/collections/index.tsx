@@ -10,7 +10,7 @@ import { NextPage } from 'next';
 import React from 'react';
 import { Else, If } from 'react-if';
 
-const CollectionsList: NextPage = () => {
+const CollectionsListPage: NextPage = () => {
 	const { chainId } = useActiveWeb3React();
 	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
 	const [EIP721Subgraph] = ChainSubgraphSets[chainIdNormalised];
@@ -46,4 +46,4 @@ const CollectionsList: NextPage = () => {
 	);
 };
 
-export default CollectionsList;
+export default CollectionsListPage;

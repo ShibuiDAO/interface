@@ -18,7 +18,7 @@ const ERC721Asset: React.FC<ERC721AssetProps> = ({ token, chainId }) => {
 	const baseProvider = useProviders()[chainId as SupportedChainId];
 	const dispatch = useDispatch();
 
-	const metadata = useSelector(selectAssetMetadata(chainId, token.contract.id, token.identifier));
+	const metadata = useSelector(selectAssetMetadata(chainId, token.contract?.id, token.identifier));
 
 	useEffect(() => {
 		if (metadata !== undefined && metadata.owner === token.owner.id) return;
@@ -26,11 +26,11 @@ const ERC721Asset: React.FC<ERC721AssetProps> = ({ token, chainId }) => {
 		dispatch(
 			fetchAssetMetadata({
 				token: {
-					owner: token.owner.id,
+					owner: token.owner?.id,
 					identifier: token.identifier,
 					contract: {
-						id: token.contract.id,
-						name: token.contract.name || undefined
+						id: token.contract?.id,
+						name: token.contract?.name || undefined
 					}
 				},
 				chainId,

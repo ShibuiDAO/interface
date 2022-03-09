@@ -13,7 +13,7 @@ import type { GetStaticPaths, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const CollectionDisplay: NextPage = () => {
+const CollectionDisplayPage: NextPage = () => {
 	const router = useRouter();
 	useForceConnectMenu();
 
@@ -70,4 +70,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	};
 };
 
-export default CollectionDisplay;
+export default CollectionDisplayPage;

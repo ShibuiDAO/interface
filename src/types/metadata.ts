@@ -8,6 +8,7 @@ export interface BaseMetadata {
 
 	image?: string;
 	image_url?: string; // ETH-ZUNK
+	image_data?: string; // TuringMonsters
 
 	image_final: string;
 }

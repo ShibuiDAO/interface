@@ -6,7 +6,7 @@ import { GetStaticProps, NextPage } from 'next';
 import path from 'path';
 import React from 'react';
 
-const Index: NextPage = () => {
+const IndexPage: NextPage = () => {
 	return (
 		<>
 			<div
@@ -54,4 +54,4 @@ export const getStaticProps: GetStaticProps = async () => {
 	return { props: {} };
 };
 
-export default Index;
+export default IndexPage;

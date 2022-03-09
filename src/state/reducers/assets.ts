@@ -71,7 +71,7 @@ export const fetchAssetMetadata = createAsyncThunk<ExpandedChainedMetadata, Fetc
 					contract: token.contract.id,
 					identifier: token.identifier,
 					collection: metadata.collection || token.contract.name || `Unidentified contract ${token.contract.id}`,
-					image_final: metadata.image || metadata.image_url || '',
+					image_final: metadata.image || metadata.image_url || metadata.image_data || '',
 					chainId
 			  }
 			: rejectWithValue('No metadata present');

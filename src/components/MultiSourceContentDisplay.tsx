@@ -15,7 +15,10 @@ const MultiSourceContentDisplay: React.FC<MultiSourceContentDisplayProps> = ({ s
 	fallback ??= MULTI_SOURCE_CONTENT_DISPLAY_IMG_FALLBACK;
 	uri = uri === '' ? MULTI_SOURCE_CONTENT_DISPLAY_URI_FALLBACK : uri;
 	[uri] = quirkIPFSHash(uri, false);
-	const uriStructure = new URL(uri);
+	let uriStructure = new URL(MULTI_SOURCE_CONTENT_DISPLAY_URI_FALLBACK);
+	try {
+		uriStructure = new URL(uri);
+	} catch {}
 
 	if (uriStructure.protocol === 'ipfs:') uri = resolveIPFS(uri);
 	[uri] = quirkIPFSGateway(uri, false);

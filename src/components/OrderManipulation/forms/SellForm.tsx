@@ -8,21 +8,12 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { clearOrder, createSellOrder } from 'state/reducers/orders';
-import * as Yup from 'yup';
+import { SellFormSchema } from 'utils/schemas';
 
 export interface SellFormFields {
 	price: string;
 	expiration: Date;
 }
-
-const SellFormSchema = Yup.object().shape({
-	price: Yup.string().required(),
-	expiration: Yup.date()
-		.test('date-more-than-now', '', function testDateValidity(value) {
-			return value !== undefined && value.getTime() > new Date().getTime();
-		})
-		.required()
-});
 
 export interface SellFormProps {
 	contract: string;
