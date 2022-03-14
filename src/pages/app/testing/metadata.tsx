@@ -6,7 +6,10 @@ import { DEFAULT_CHAIN } from 'constants/misc';
 import { Form, Formik } from 'formik';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import { NextPage } from 'next';
+import Highlight, { defaultProps } from 'prism-react-renderer';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectAssetMetadata } from 'state/reducers/assets';
 import { MetadataTestingParametersFormSchema } from 'utils/schemas';
 
 const TestingMetadataPage: NextPage = () => {
@@ -14,6 +17,7 @@ const TestingMetadataPage: NextPage = () => {
 	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
 
 	const [token, setToken] = useState<{ contract: string; asset: string } | null>(null);
+	const metadata = useSelector(selectAssetMetadata(chainIdNormalised, token?.contract || '', (token?.asset || '') as unknown as BigInt));
 
 	return (
 		<>
@@ -75,6 +79,23 @@ const TestingMetadataPage: NextPage = () => {
 							}
 							chainId={chainIdNormalised}
 						/>
+					)}
+				</div>
+				<div className="w-full min-w-full justify-center py-4">
+					{token && metadata && (
+						<Highlight {...defaultProps} code={JSON.stringify(metadata, null, 2)} language="json">
+							{({ className, style, tokens, getLineProps, getTokenProps }) => (
+								<pre className={`${className} m-4 overflow-scroll rounded-xl p-4`} style={style}>
+									{tokens.map((line, i) => (
+										<div {...getLineProps({ line, key: i })}>
+											{line.map((token, key) => (
+												<span {...getTokenProps({ token, key })} />
+											))}
+										</div>
+									))}
+								</pre>
+							)}
+						</Highlight>
 					)}
 				</div>
 			</div>
