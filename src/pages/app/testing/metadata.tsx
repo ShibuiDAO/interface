@@ -18,50 +18,52 @@ const TestingMetadataPage: NextPage = () => {
 	return (
 		<>
 			<Offset />
-			<div>
-				<div>
-					<Formik
-						initialValues={{
-							contract: '',
-							asset: ''
-						}}
-						validationSchema={MetadataTestingParametersFormSchema}
-						onSubmit={(data: { contract: string; asset: string }) => {
-							setToken(data);
-						}}
-					>
-						{(props) => (
-							<Form>
-								<>
-									<div>
-										<input
-											type="text"
-											name="contract"
-											value={props.values.contract}
-											placeholder="Contract"
-											onChange={props.handleChange}
-											className="dark:bg-darks-100 dark:text-black"
-										/>
-										<input
-											type="text"
-											name="asset"
-											value={props.values.asset}
-											placeholder="Asset"
-											onChange={props.handleChange}
-											className="dark:bg-darks-100 dark:text-black"
-										/>
-									</div>
-									<div className="pt-4">
-										<button type="submit" className="btn bg-gray-200 text-black hover:bg-gray-400">
-											Fetch
-										</button>
-									</div>
-								</>
-							</Form>
-						)}
-					</Formik>
+			<div className="py-4">
+				<div className="flex w-full min-w-full justify-center">
+					<div className="mx-auto">
+						<Formik
+							initialValues={{
+								contract: '',
+								asset: ''
+							}}
+							validationSchema={MetadataTestingParametersFormSchema}
+							onSubmit={(data: { contract: string; asset: string }) => {
+								setToken(data);
+							}}
+						>
+							{(props) => (
+								<Form>
+									<>
+										<div>
+											<input
+												type="text"
+												name="contract"
+												value={props.values.contract}
+												placeholder="Contract"
+												onChange={props.handleChange}
+												className="mx-2 rounded-xl p-2 py-3 dark:bg-darks-100 dark:text-black"
+											/>
+											<input
+												type="text"
+												name="asset"
+												value={props.values.asset}
+												placeholder="Asset"
+												onChange={props.handleChange}
+												className="mx-2 rounded-xl p-2 py-3 dark:bg-darks-100 dark:text-black"
+											/>
+										</div>
+										<div className="flex w-full min-w-full justify-center pt-4">
+											<button type="submit" className="btn bg-gray-200 text-black hover:bg-gray-400">
+												Fetch
+											</button>
+										</div>
+									</>
+								</Form>
+							)}
+						</Formik>
+					</div>
 				</div>
-				<div>
+				<div className="flex w-full min-w-full justify-center py-4">
 					{token && (
 						<ERC721Asset
 							token={
