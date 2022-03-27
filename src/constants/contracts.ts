@@ -7,3 +7,11 @@ export const ERC721_EXCHANGE: { [K in SupportedChainId]: `0x${string}` } = {
 	[SupportedChainId.BOBA]: BOBA_MAINNET_ERC721_EXCHANGE,
 	[SupportedChainId.BOBA_RINKEBY]: BOBA_RINKEBY_ERC721_EXCHANGE
 };
+
+const BOBA_MAINNET_L2_NFT_BRIDGE = '0xE791c5A8aC5299bb946226d6E4864022c982371b';
+const BOBA_RINKEBY_L2_NFT_BRIDGE = '0x9b175c83d6238cB4a48E6f3C025D43E35b04391f';
+
+export const L2_NFT_BRIDGE: { [K in SupportedChainId]: `0x${string}` } = {
+	[SupportedChainId.BOBA]: BOBA_MAINNET_L2_NFT_BRIDGE,
+	[SupportedChainId.BOBA_RINKEBY]: BOBA_RINKEBY_L2_NFT_BRIDGE
+};

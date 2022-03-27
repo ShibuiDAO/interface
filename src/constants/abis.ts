@@ -995,23 +995,364 @@ export const ERC721_EXCHANGE_ABI = [
 ];
 export const ERC721_EXCHANGE_ABI_STRING = ERC721_EXCHANGE_ABI.toString();
 
+export const L2_NFT_BRIDGE_ABI = [
+	{ type: 'constructor', stateMutability: 'nonpayable', inputs: [] },
+	{
+		type: 'event',
+		name: 'DepositFailed',
+		inputs: [
+			{
+				type: 'address',
+				name: '_l1Token',
+				internalType: 'address',
+				indexed: true
+			},
+			{
+				type: 'address',
+				name: '_l2Token',
+				internalType: 'address',
+				indexed: true
+			},
+			{
+				type: 'address',
+				name: '_from',
+				internalType: 'address',
+				indexed: true
+			},
+			{
+				type: 'address',
+				name: '_to',
+				internalType: 'address',
+				indexed: false
+			},
+			{
+				type: 'uint256',
+				name: '_tokenId',
+				internalType: 'uint256',
+				indexed: false
+			},
+			{
+				type: 'bytes',
+				name: '_data',
+				internalType: 'bytes',
+				indexed: false
+			}
+		],
+		anonymous: false
+	},
+	{
+		type: 'event',
+		name: 'DepositFinalized',
+		inputs: [
+			{
+				type: 'address',
+				name: '_l1Token',
+				internalType: 'address',
+				indexed: true
+			},
+			{
+				type: 'address',
+				name: '_l2Token',
+				internalType: 'address',
+				indexed: true
+			},
+			{
+				type: 'address',
+				name: '_from',
+				internalType: 'address',
+				indexed: true
+			},
+			{
+				type: 'address',
+				name: '_to',
+				internalType: 'address',
+				indexed: false
+			},
+			{
+				type: 'uint256',
+				name: '_tokenId',
+				internalType: 'uint256',
+				indexed: false
+			},
+			{
+				type: 'bytes',
+				name: '_data',
+				internalType: 'bytes',
+				indexed: false
+			}
+		],
+		anonymous: false
+	},
+	{
+		type: 'event',
+		name: 'Paused',
+		inputs: [
+			{
+				type: 'address',
+				name: 'account',
+				internalType: 'address',
+				indexed: false
+			}
+		],
+		anonymous: false
+	},
+	{
+		type: 'event',
+		name: 'Unpaused',
+		inputs: [
+			{
+				type: 'address',
+				name: 'account',
+				internalType: 'address',
+				indexed: false
+			}
+		],
+		anonymous: false
+	},
+	{
+		type: 'event',
+		name: 'WithdrawalInitiated',
+		inputs: [
+			{
+				type: 'address',
+				name: '_l1Token',
+				internalType: 'address',
+				indexed: true
+			},
+			{
+				type: 'address',
+				name: '_l2Token',
+				internalType: 'address',
+				indexed: true
+			},
+			{
+				type: 'address',
+				name: '_from',
+				internalType: 'address',
+				indexed: true
+			},
+			{
+				type: 'address',
+				name: '_to',
+				internalType: 'address',
+				indexed: false
+			},
+			{
+				type: 'uint256',
+				name: '_tokenId',
+				internalType: 'uint256',
+				indexed: false
+			},
+			{
+				type: 'bytes',
+				name: '_data',
+				internalType: 'bytes',
+				indexed: false
+			}
+		],
+		anonymous: false
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'configureExtraGasRelay',
+		inputs: [{ type: 'uint256', name: '_extraGasRelay', internalType: 'uint256' }]
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'configureGas',
+		inputs: [{ type: 'uint32', name: '_exitL1Gas', internalType: 'uint32' }]
+	},
+	{
+		type: 'function',
+		stateMutability: 'view',
+		outputs: [{ type: 'uint32', name: '', internalType: 'uint32' }],
+		name: 'exitL1Gas',
+		inputs: []
+	},
+	{
+		type: 'function',
+		stateMutability: 'view',
+		outputs: [{ type: 'address', name: '', internalType: 'address' }],
+		name: 'exits',
+		inputs: [
+			{ type: 'address', name: '', internalType: 'address' },
+			{ type: 'uint256', name: '', internalType: 'uint256' }
+		]
+	},
+	{
+		type: 'function',
+		stateMutability: 'view',
+		outputs: [{ type: 'uint256', name: '', internalType: 'uint256' }],
+		name: 'extraGasRelay',
+		inputs: []
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'finalizeDeposit',
+		inputs: [
+			{ type: 'address', name: '_l1Contract', internalType: 'address' },
+			{ type: 'address', name: '_l2Contract', internalType: 'address' },
+			{ type: 'address', name: '_from', internalType: 'address' },
+			{ type: 'address', name: '_to', internalType: 'address' },
+			{ type: 'uint256', name: '_tokenId', internalType: 'uint256' },
+			{ type: 'bytes', name: '_data', internalType: 'bytes' }
+		]
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'initialize',
+		inputs: [
+			{
+				type: 'address',
+				name: '_l2CrossDomainMessenger',
+				internalType: 'address'
+			},
+			{ type: 'address', name: '_l1NFTBridge', internalType: 'address' }
+		]
+	},
+	{
+		type: 'function',
+		stateMutability: 'view',
+		outputs: [{ type: 'address', name: '', internalType: 'address' }],
+		name: 'l1NFTBridge',
+		inputs: []
+	},
+	{
+		type: 'function',
+		stateMutability: 'view',
+		outputs: [{ type: 'address', name: '', internalType: 'address' }],
+		name: 'messenger',
+		inputs: []
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [{ type: 'bytes4', name: '', internalType: 'bytes4' }],
+		name: 'onERC721Received',
+		inputs: [
+			{ type: 'address', name: '', internalType: 'address' },
+			{ type: 'address', name: '', internalType: 'address' },
+			{ type: 'uint256', name: '', internalType: 'uint256' },
+			{ type: 'bytes', name: '', internalType: 'bytes' }
+		]
+	},
+	{
+		type: 'function',
+		stateMutability: 'view',
+		outputs: [{ type: 'address', name: '', internalType: 'address' }],
+		name: 'owner',
+		inputs: []
+	},
+	{
+		type: 'function',
+		stateMutability: 'view',
+		outputs: [
+			{ type: 'address', name: 'l1Contract', internalType: 'address' },
+			{ type: 'address', name: 'l2Contract', internalType: 'address' },
+			{
+				type: 'uint8',
+				name: 'baseNetwork',
+				internalType: 'enum L2NFTBridge.Network'
+			}
+		],
+		name: 'pairNFTInfo',
+		inputs: [{ type: 'address', name: '', internalType: 'address' }]
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'pause',
+		inputs: []
+	},
+	{
+		type: 'function',
+		stateMutability: 'view',
+		outputs: [{ type: 'bool', name: '', internalType: 'bool' }],
+		name: 'paused',
+		inputs: []
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'registerNFTPair',
+		inputs: [
+			{ type: 'address', name: '_l1Contract', internalType: 'address' },
+			{ type: 'address', name: '_l2Contract', internalType: 'address' },
+			{ type: 'string', name: '_baseNetwork', internalType: 'string' }
+		]
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'transferOwnership',
+		inputs: [{ type: 'address', name: '_newOwner', internalType: 'address' }]
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'unpause',
+		inputs: []
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'withdraw',
+		inputs: [
+			{ type: 'address', name: '_l2Contract', internalType: 'address' },
+			{ type: 'uint256', name: '_tokenId', internalType: 'uint256' },
+			{ type: 'uint32', name: '_l1Gas', internalType: 'uint32' },
+			{ type: 'bytes', name: '_data', internalType: 'bytes' }
+		]
+	},
+	{
+		type: 'function',
+		stateMutability: 'nonpayable',
+		outputs: [],
+		name: 'withdrawTo',
+		inputs: [
+			{ type: 'address', name: '_l2Contract', internalType: 'address' },
+			{ type: 'address', name: '_to', internalType: 'address' },
+			{ type: 'uint256', name: '_tokenId', internalType: 'uint256' },
+			{ type: 'uint32', name: '_l1Gas', internalType: 'uint32' },
+			{ type: 'bytes', name: '_data', internalType: 'bytes' }
+		]
+	}
+];
+export const L2_NFT_BRIDGE_ABI_STRING = L2_NFT_BRIDGE_ABI.toString();
+
 export enum ABI {
 	Base,
 	EIP721,
 	ERC721_EXCHANGE,
-	EIP1155
+	EIP1155,
+	L2_NFT_BRIDGE
 }
 
 export const ABIs: { [K in ABI]: ContractInterface } = {
 	[ABI.Base]: TOKEN_BASE_ABI,
 	[ABI.EIP721]: EIP721_BASIC_ABI,
 	[ABI.ERC721_EXCHANGE]: ERC721_EXCHANGE_ABI,
-	[ABI.EIP1155]: EIP1155_BASIC_ABI
+	[ABI.EIP1155]: EIP1155_BASIC_ABI,
+	[ABI.L2_NFT_BRIDGE]: L2_NFT_BRIDGE_ABI
 };
 
 export const uriMethods: { [K in ABI]: 'tokenURI' | 'uri' | '' } = {
 	[ABI.Base]: '',
 	[ABI.EIP721]: 'tokenURI',
 	[ABI.ERC721_EXCHANGE]: '',
-	[ABI.EIP1155]: 'uri'
+	[ABI.EIP1155]: 'uri',
+	[ABI.L2_NFT_BRIDGE]: ''
 };
