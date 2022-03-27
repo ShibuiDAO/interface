@@ -1,5 +1,6 @@
 import { ABI } from 'constants/abis';
 import { SupportedChainId } from 'constants/chains';
+import customLogos from 'constants/customLogos';
 import { DEFAULT_CHAIN } from 'constants/misc';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useProviders from 'hooks/useProviders';
@@ -29,7 +30,9 @@ const DataCollectionCard: React.FC<DataCollectionCardProps> = ({ address }) => {
 			})
 		);
 
-	return <CollectionCard contract={address} name={info?.name} />;
+	return (
+		<CollectionCard contract={address} name={info?.name} image={`/assets/collections/${customLogos[chainIdNormalised][address.toLowerCase()]}`} />
+	);
 };
 
 export default DataCollectionCard;

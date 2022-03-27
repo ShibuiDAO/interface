@@ -9,6 +9,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import { NextPage } from 'next';
 import React from 'react';
 import { Else, If } from 'react-if';
+import { filterExlusions } from 'utils/filtering';
 
 const CollectionsListPage: NextPage = () => {
 	const { chainId } = useActiveWeb3React();
@@ -33,9 +34,9 @@ const CollectionsListPage: NextPage = () => {
 						<If condition={!collectionsData || !collectionsData.erc721Contracts}>
 							<Else>
 								{collectionsData?.erc721Contracts
-									? collectionsData!.erc721Contracts.map((collection) => (
-											<DataCollectionCard key={collection.id} address={collection.id} />
-									  ))
+									? collectionsData!.erc721Contracts
+											.filter(filterExlusions(chainIdNormalised))
+											.map((collection) => <DataCollectionCard key={collection.id} address={collection.id} />)
 									: null}
 							</Else>
 						</If>
