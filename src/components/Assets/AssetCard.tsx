@@ -11,11 +11,16 @@ export interface AssetCardProps {
 	validOrder?: boolean;
 	currentSellPrice?: string;
 	pastSellPrice?: string;
+	owned: boolean;
 }
 
-const AssetCard: React.FC<AssetCardProps> = ({ contract, collection, name, image, validOrder, currentSellPrice, pastSellPrice }) => {
+const AssetCard: React.FC<AssetCardProps> = ({ contract, collection, name, image, validOrder, currentSellPrice, pastSellPrice, owned }) => {
 	return (
-		<div className="card-bordered card max-h-[24.4rem] max-w-[17rem] shadow-lg dark:border-darks-100 dark:bg-darks-100 dark:text-black">
+		<div
+			className={`card-bordered card max-h-[24.4rem] max-w-[17rem] shadow-lg ${
+				owned ? 'dark:border-chain-boba' : 'dark:border-darks-100'
+			} dark:bg-darks-100 dark:text-black`}
+		>
 			<figure>
 				<ProtectedMultiSourceContentDisplay src={image} className="max-h-[17rem] max-w-[17rem]" />
 			</figure>

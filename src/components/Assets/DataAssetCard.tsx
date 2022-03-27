@@ -22,6 +22,8 @@ const DataAssetCard: React.FC<DataAssetCardProps> = ({ chainId, contract, identi
 
 	if (!metadata) return null;
 
+	const isOwned = Boolean(metadata?.owner && account && metadata.owner === account);
+
 	return (
 		<AssetCard
 			contract={contract}
@@ -30,6 +32,7 @@ const DataAssetCard: React.FC<DataAssetCardProps> = ({ chainId, contract, identi
 			image={metadata.image_final}
 			validOrder={sellOrder !== undefined}
 			currentSellPrice={sellOrder?.price ? ethers.utils.formatEther(BigNumber.from(sellOrder.price)) : undefined}
+			owned={isOwned}
 		/>
 	);
 };
