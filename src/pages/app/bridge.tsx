@@ -29,7 +29,7 @@ const TestingMetadataPage: NextPage = () => {
 											tokenId: '',
 											l1Receiver: ''
 										}}
-										validationSchema={BridgeFormSchema}
+											validationSchema={BridgeFormSchema(chainIdNormalised, readonlyProvider)}
 										onSubmit={(data) => alert(data)}
 									>
 										{(props) => (

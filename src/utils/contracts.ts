@@ -1,4 +1,4 @@
-import { JsonRpcSigner } from '@ethersproject/providers';
+import { JsonRpcSigner, Provider } from '@ethersproject/providers';
 import type { ERC721ExchangeUpgradeable } from '@shibuidao/exchange';
 import { ABI, ABIs } from 'constants/abis';
 import { SupportedChainId } from 'constants/chains';
@@ -10,6 +10,6 @@ export function exchangeContract(address: string, signer: JsonRpcSigner): ERC721
 	return new Contract(address, ABIs[ABI.ERC721_EXCHANGE], signer) as ERC721ExchangeUpgradeable;
 }
 
-export function l2NFTBridgeContract(chainId: SupportedChainId, signer: JsonRpcSigner): L2NFTBridge {
-	return new Contract(L2_NFT_BRIDGE[chainId], ABIs[ABI.L2_NFT_BRIDGE], signer) as unknown as L2NFTBridge;
+export function l2NFTBridgeContract(chainId: SupportedChainId, signerOrProvider: JsonRpcSigner | Provider): L2NFTBridge {
+	return new Contract(L2_NFT_BRIDGE[chainId], ABIs[ABI.L2_NFT_BRIDGE], signerOrProvider) as unknown as L2NFTBridge;
 }
