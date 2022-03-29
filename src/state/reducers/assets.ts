@@ -42,7 +42,7 @@ export interface AssetMetadataSetPayload {
 	data: ExpandedChainedMetadata;
 }
 
-export const fetchAssetMetadata = createAsyncThunk<ExpandedChainedMetadata, FetchAssetMetadataParameters>(
+export const fetchAssetMetadataTxr = createAsyncThunk<ExpandedChainedMetadata, FetchAssetMetadataParameters>(
 	'fetch/metadata/asset',
 	async ({ token, contractABI, chainId, provider }, { rejectWithValue, getState }) => {
 		if (!chainId || !contractABI) return rejectWithValue('ChainId or contract not provided.');
@@ -95,7 +95,7 @@ export const assetsSlice = createSlice({
 		}
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchAssetMetadata.fulfilled, (state, action) => {
+		builder.addCase(fetchAssetMetadataTxr.fulfilled, (state, action) => {
 			state.metadata[`${action.payload.chainId}-${action.payload.contract}-${action.payload.identifier}`] = action.payload;
 			if (action.payload.rawContractName && action.payload.contract)
 				state.contractNames[action.payload.contract] = action.payload.rawContractName;

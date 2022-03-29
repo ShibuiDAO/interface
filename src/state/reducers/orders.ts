@@ -1,5 +1,5 @@
 import type { Provider } from '@ethersproject/providers';
-import { JsonRpcProvider, StaticJsonRpcProvider, TransactionResponse } from '@ethersproject/providers';
+import { JsonRpcProvider, TransactionResponse } from '@ethersproject/providers';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { deepClone } from '@sapphire/utilities';
 import { BuyOrder, SellOrder } from '@shibuidao/erc721exchange-types';
@@ -11,6 +11,7 @@ import { BigNumberish, Contract, errors } from 'ethers';
 import { WritableDraft } from 'immer/dist/internal';
 import { RootState } from 'state';
 import { exchangeContract } from 'utils/contracts';
+import { setApprovalForAllTxw } from './approvals';
 import { TRANSACTION_THRUNK_PREFIX } from './transactions';
 
 export interface SimpleSellOrder {
@@ -100,51 +101,21 @@ const commitBuyOrder = (state: WritableDraft<OrdersState>, order: BuyOrder): Wri
 	return state;
 };
 
-export interface FetchContractApprovalParameters {
+export interface FetchContractOrderApprovalParameters {
 	contract: string;
 	owner: string;
 	operator: string;
 	provider: Provider;
 }
 
-export const fetchApprovalStatus = createAsyncThunk<boolean, FetchContractApprovalParameters>(
-	'fetch/contract/approval',
+export const fetchCurrentOrderApprovalStatusTxr = createAsyncThunk<boolean, FetchContractOrderApprovalParameters>(
+	'fetch/order/approval',
 	async ({ contract, owner, operator, provider }) => {
 		const collection = new Contract(contract, ABIs[ABI.EIP721], provider);
 
 		const isApproved: boolean = await collection.isApprovedForAll(owner, operator);
 
 		return isApproved;
-	}
-);
-
-export interface SetContractApprovalParameters {
-	contract: string;
-	operator: string;
-	provider: StaticJsonRpcProvider;
-}
-
-export const setApprovalForAll = createAsyncThunk<true, SetContractApprovalParameters>(
-	`${TRANSACTION_THRUNK_PREFIX}set/contract/approval`,
-	async ({ contract, operator, provider }, { rejectWithValue }) => {
-		const collection = new Contract(contract, ABIs[ABI.EIP721], provider.getSigner());
-
-		try {
-			const tx: TransactionResponse = await collection.setApprovalForAll(operator, true);
-
-			try {
-				await tx.wait();
-			} catch (callException: any) {
-				if (callException.code === errors.CALL_EXCEPTION) {
-					return rejectWithValue(['Transaction execution failed', callException]);
-				}
-				throw callException;
-			}
-		} catch (transactionError) {
-			return rejectWithValue(['Method call failed', transactionError]);
-		}
-
-		return true;
 	}
 );
 
@@ -162,7 +133,7 @@ export interface CreateOrderSellParameters {
 	data: SellOrderData;
 }
 
-export const createSellOrder = createAsyncThunk<any, CreateOrderSellParameters>(
+export const createSellOrderTxw = createAsyncThunk<any, CreateOrderSellParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}create/order/sell`,
 	async ({ chainId, library, data }, { rejectWithValue }) => {
 		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], library.getSigner());
@@ -203,7 +174,7 @@ export interface CancelOrderSellParameters {
 	data: SellOrderCancellationData;
 }
 
-export const cancelSellOrder = createAsyncThunk<true, CancelOrderSellParameters>(
+export const cancelSellOrderTxw = createAsyncThunk<true, CancelOrderSellParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}cancel/order/sell`,
 	async ({ chainId, library, data }, { rejectWithValue }) => {
 		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], library.getSigner());
@@ -242,7 +213,7 @@ export interface ExecuteOrderSellParameters {
 	data: SellOrderExecutionData;
 }
 
-export const executeSellOrder = createAsyncThunk<true, ExecuteOrderSellParameters>(
+export const executeSellOrderTxw = createAsyncThunk<true, ExecuteOrderSellParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}execute/order/sell`,
 	async ({ chainId, library, data }, { rejectWithValue }) => {
 		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], library.getSigner());
@@ -316,12 +287,14 @@ export const ordersSlice = createSlice({
 	// TODO: Use case outputs
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchApprovalStatus.fulfilled, (state, action) => {
+			.addCase(fetchCurrentOrderApprovalStatusTxr.fulfilled, (state, action) => {
 				state.currentOrder.approved = action.payload;
 			})
-			.addCase(setApprovalForAll.fulfilled, (state) => {
-				state.currentOrder.approved = true;
-				state.currentOrder.direction = OrderDirection.BOOK;
+			.addCase(setApprovalForAllTxw.fulfilled, (state, action) => {
+				if (action.meta.arg.contract === state.currentOrder.contract) {
+					state.currentOrder.approved = true;
+					state.currentOrder.direction = OrderDirection.BOOK;
+				}
 			});
 	}
 });

@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import approvalsReducer, { approvalsSlice } from './reducers/approvals';
 import assetsReducer, { assetsSlice } from './reducers/assets';
 import collectionsReducer, { collectionsSlice } from './reducers/collections';
 import ordersReducer, { ordersSlice } from './reducers/orders';
@@ -7,6 +8,7 @@ import userReducer, { userSlice } from './reducers/user';
 
 export const store = configureStore({
 	reducer: {
+		approvals: approvalsReducer,
 		assets: assetsReducer,
 		collections: collectionsReducer,
 		orders: ordersReducer,
@@ -15,6 +17,7 @@ export const store = configureStore({
 	},
 	devTools: {
 		actionCreators: {
+			...approvalsSlice.actions,
 			...assetsSlice.actions,
 			...collectionsSlice.actions,
 			...ordersSlice.actions,

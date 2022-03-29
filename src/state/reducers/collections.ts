@@ -36,7 +36,7 @@ export interface CollectionInfoSetPayload {
 	data: ChainedCollectionInfo;
 }
 
-export const fetchCollectionInfo = createAsyncThunk<ChainedCollectionInfo, FetchCollectionInfoParameters>(
+export const fetchCollectionInfoTxr = createAsyncThunk<ChainedCollectionInfo, FetchCollectionInfoParameters>(
 	'fetch/metadata/collection',
 	async ({ address, contractABI, chainId, provider }, { rejectWithValue }) => {
 		if (!address || !chainId || !contractABI) return rejectWithValue('ChainId or contract not provided.');
@@ -66,7 +66,7 @@ export const collectionsSlice = createSlice({
 		}
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchCollectionInfo.fulfilled, (state, action) => {
+		builder.addCase(fetchCollectionInfoTxr.fulfilled, (state, action) => {
 			state.info[`${action.payload.chainId}-${action.payload.address}`] = action.payload;
 		});
 	}

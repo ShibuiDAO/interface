@@ -5,7 +5,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useProviders from 'hooks/useProviders';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCollectionInfo, selectCollectionInfo } from 'state/reducers/collections';
+import { fetchCollectionInfoTxr, selectCollectionInfo } from 'state/reducers/collections';
 
 export interface CollectionSpecificsInfoProps {
 	address: string;
@@ -20,7 +20,7 @@ const CollectionSpecificsInfo: React.FC<CollectionSpecificsInfoProps> = ({ addre
 	const info = useSelector(selectCollectionInfo(chainIdNormalised, address));
 	if (!info)
 		dispatch(
-			fetchCollectionInfo({
+			fetchCollectionInfoTxr({
 				address,
 				chainId: chainIdNormalised,
 				provider: account && library ? library : baseProvider,
