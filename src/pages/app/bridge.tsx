@@ -3,6 +3,7 @@ import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FormFieldError from 'components/forms/FormFieldError';
 import FormFieldInfo from 'components/forms/FormFieldInfo';
+import Offset from 'components/Navbar/Offset';
 import { SupportedChainId } from 'constants/chains';
 import { DEFAULT_CHAIN } from 'constants/misc';
 import { Form, Formik } from 'formik';
@@ -10,6 +11,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useForceConnectMenu from 'hooks/useForceConnectMenu';
 import useProviders from 'hooks/useProviders';
 import { NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 import React from 'react';
 import { When } from 'react-if';
 import { BridgeFormSchema } from 'utils/schemas';
@@ -24,6 +26,8 @@ const TestingMetadataPage: NextPage = () => {
 
 	return (
 		<>
+			<NextSeo title="Bridge" openGraph={{ title: 'ShibuiNFT Bridge' }} />
+			<Offset />
 			<div
 				style={{
 					backgroundImage: 'url(/assets/misc/background.svg)',
@@ -38,14 +42,14 @@ const TestingMetadataPage: NextPage = () => {
 									<div className="">
 										<div className="grid grid-cols-3 gap-8 text-center">
 											<div className="flex flex-row items-center justify-center">
-												<img className="inline h-10 object-contain" src="/assets/chains/boba.svg" />
+												<img className="inline h-10 object-contain" src="/assets/chains/boba.svg" alt="Boba L2 logo" />
 												<span className="pl-2">Boba</span>
 											</div>
 											<div className="flex flex-row items-center justify-center">
 												<FontAwesomeIcon icon={faArrowRightLong} />
 											</div>
 											<div className="flex flex-row items-center justify-center">
-												<img className="inline h-10 object-contain" src="/assets/chains/mainnet.svg" />
+												<img className="inline h-10 object-contain" src="/assets/chains/ethereum.svg" alt="Ethereum logo" />
 												<span className="pl-2">Ethereum</span>
 											</div>
 										</div>
