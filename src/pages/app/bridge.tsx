@@ -34,14 +34,20 @@ const TestingMetadataPage: NextPage = () => {
 					<div className="flex min-h-[100vh] w-full flex-row items-center justify-center">
 						<div className="rounded-2xl border p-4 dark:border-lights-100 dark:bg-darks-400 dark:text-white">
 							<div className="p-4">
-								<div className="rounded-xl border p-4 dark:border-lights-200 dark:bg-lights-300">
+								<div className="rounded-xl border p-4 font-bold dark:border-lights-300 dark:bg-lights-200 dark:text-black">
 									<div className="">
 										<div className="grid grid-cols-3 gap-8 text-center">
-											<div>Boba</div>
+											<div className="flex flex-row items-center justify-center">
+												<img className="inline h-10 object-contain" src="/assets/chains/boba.svg" />
+												<span className="pl-2">Boba</span>
+											</div>
 											<div className="flex flex-row items-center justify-center">
 												<FontAwesomeIcon icon={faArrowRightLong} />
 											</div>
-											<div>Ethereum</div>
+											<div className="flex flex-row items-center justify-center">
+												<img className="inline h-10 object-contain" src="/assets/chains/mainnet.svg" />
+												<span className="pl-2">Ethereum</span>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -70,7 +76,7 @@ const TestingMetadataPage: NextPage = () => {
 																	type="text"
 																	onChange={props.handleChange}
 																	value={props.values.l2Contract}
-																	className="border-element-secondary outline-none block w-full rounded-lg border-b border-dotted bg-darks-200 px-2 text-white"
+																	className="border-element-secondary outline-none block w-full rounded-lg border-b border-dotted bg-darks-200 px-2 py-1 text-white"
 																/>
 																<FormFieldError message={props.errors.l2Contract} />
 															</div>
@@ -84,7 +90,7 @@ const TestingMetadataPage: NextPage = () => {
 																	type="text"
 																	onChange={props.handleChange}
 																	value={props.values.tokenId}
-																	className="border-element-secondary outline-none block w-full rounded-lg border-b border-dotted bg-darks-200 px-2 pl-1 text-white"
+																	className="border-element-secondary outline-none block w-full rounded-lg border-b border-dotted bg-darks-200 px-2 py-1 text-white"
 																/>
 																<FormFieldError message={props.errors.tokenId} />
 															</div>
@@ -98,14 +104,17 @@ const TestingMetadataPage: NextPage = () => {
 																	type="text"
 																	onChange={props.handleChange}
 																	value={props.values.l1Receiver}
-																	className="border-element-secondary outline-none block w-full rounded-lg border-b border-dotted bg-darks-200 px-2 pl-1 text-white"
+																	className="border-element-secondary outline-none block w-full rounded-lg border-b border-dotted bg-darks-200 px-2 py-1 text-white"
 																/>
 																<FormFieldError message={props.errors.l1Receiver} />
 															</div>
 														</div>
 														<div className="mt-4">
 															<When condition={Boolean(account)}>
-																<button type="submit" className="btn bg-gray-200 text-black hover:bg-gray-400">
+																<button
+																	type="submit"
+																	className="btn w-full bg-lights-300 text-black hover:bg-lights-400 hover:text-white"
+																>
 																	Bridge
 																</button>
 															</When>
