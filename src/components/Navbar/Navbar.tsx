@@ -1,17 +1,18 @@
+import { UnsupportedChainIdError } from '@web3-react/core';
 import AccountName from 'components/Account/AccountName';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import Link from 'next/link';
 import React from 'react';
+import { If, Then, Else, Case, Default, Switch } from 'react-if';
 import { useDispatch } from 'react-redux';
 import { setConnectingStatus } from 'state/reducers/user';
-import { If, Then, Else, Switch, Case, Default } from 'react-if';
 import AppBar from './AppBar';
 import { useRouter } from 'next/router';
 
 const Navbar: React.FC = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const { active } = useActiveWeb3React();
+	const { active, error } = useActiveWeb3React();
 
 	return (
 		<>
@@ -34,6 +35,14 @@ const Navbar: React.FC = () => {
 								<div className="ml-6 block w-full content-center">
 									<div className="flex justify-end space-x-4">
 										<Switch>
+											<Case condition={error instanceof UnsupportedChainIdError}>
+												<button
+													className="btn cursor-pointer select-none rounded-md bg-lights-500 px-6 py-2 text-sm font-medium normal-case hover:bg-lights-500"
+													onClick={() => dispatch(setConnectingStatus(true))}
+												>
+													Wrong Network
+												</button>
+											</Case>
 											<Case condition={!router.pathname.startsWith('/app')}>
 												<Link href={'/app'}>
 													<div className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400">

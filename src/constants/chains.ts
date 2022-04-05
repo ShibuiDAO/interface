@@ -1,3 +1,5 @@
+import bobaLogoUrl from 'public/assets/chains/boba.svg';
+
 export enum SupportedChainId {
 	BOBA = 288,
 	BOBA_RINKEBY = 28
@@ -50,6 +52,7 @@ interface BaseChainInfo {
 	readonly networkType: NetworkType;
 	readonly blockWaitMsBeforeWarning?: number;
 	readonly explorer: string;
+	readonly logoUrl: string;
 	readonly label: string;
 	readonly addNetworkInfo: AddNetworkInfo;
 }
@@ -71,6 +74,7 @@ export const CHAIN_INFO: ChainInfoMap = {
 		networkType: NetworkType.L2,
 		// blockWaitMsBeforeWarning: ms`25m`,
 		explorer: 'https://blockexplorer.boba.network/',
+		logoUrl: bobaLogoUrl,
 		label: 'Boba L2',
 		addNetworkInfo: {
 			nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
@@ -81,6 +85,7 @@ export const CHAIN_INFO: ChainInfoMap = {
 		networkType: NetworkType.L2,
 		// blockWaitMsBeforeWarning: ms`25m`,
 		explorer: 'https://blockexplorer.rinkeby.boba.network/',
+		logoUrl: bobaLogoUrl,
 		label: 'Boba L2 Rinkeby',
 		addNetworkInfo: {
 			nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
