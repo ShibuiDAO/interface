@@ -9,10 +9,12 @@ export interface CollectionCardProps {
 }
 
 const CollectionCard: React.FC<CollectionCardProps> = ({ image, name, contract }) => {
+	const collectionName = name ?? '???';
+	const lineClamp = collectionName?.length > 15 ? 'line-clamp-2' : 'line-clamp-3';
 	return (
 		<Link href={`/app/collection/${contract}`} passHref={true}>
 			<a href="/">
-				<div className="card-bordered card card-side my-1 max-h-[8.875rem] min-h-[8.875rem] min-w-[23rem] max-w-[23rem] shadow-lg hover:translate-x-2 hover:translate-y-2 hover:transform-gpu dark:border-darks-100 dark:bg-darks-100 dark:text-black">
+				<div className="card-bordered card card-side my-1 max-h-[8.875rem] min-h-[8.875rem] min-w-[23rem] max-w-[23rem] shadow-lg  dark:border-darks-100 dark:bg-darks-100 dark:text-black">
 					<div className="grid grid-cols-2 grid-rows-1">
 						<figure className="m-auto p-2 pr-5">
 							<ProtectedMultiSourceContentDisplay
@@ -22,7 +24,8 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ image, name, contract }
 							/>
 						</figure>
 						<div className="py-7">
-							<h2 className="text-xl font-bold">{name || '???'}</h2>
+							<h2 className="text-xl font-bold">{collectionName}</h2>
+							<p className={lineClamp}>very long long description that can go oversized of the card</p>
 						</div>
 					</div>
 				</div>

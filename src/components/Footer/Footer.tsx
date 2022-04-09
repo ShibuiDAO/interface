@@ -6,20 +6,11 @@ import React from 'react';
 const Footer: React.FC = () => {
 	return (
 		<>
-			<div className="border-t-2 py-24 dark:border-darks-200 dark:bg-darks-400 dark:text-white">
+			<div className="py-24 dark:border-darks-200 dark:bg-darks-400 dark:text-white">
 				<div className="container">
 					<div className="footer p-10">
 						<div>
 							<img src="/wide.svg" alt="ShibuiDAO header wide logo." />
-						</div>
-						<div>
-							<span className="footer-title">Developer</span>
-							<a href={GITHUB_LINK} className="link-hover link">
-								Github
-							</a>
-							<a href="https://docs.shibuidao.com" className="link-hover link">
-								Documentation
-							</a>
 						</div>
 						<div className="md:place-self-center md:justify-self-end">
 							<div className="flex gap-4 text-4xl">

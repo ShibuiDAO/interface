@@ -32,6 +32,7 @@
     "@sapphire/utilities": "^3.3.0",
     "@shibuidao/erc721exchange-types": "^1.0.3",
     "@subgraphs/eip721-matic": "^1.0.1",
+    "@tailwindcss/line-clamp": "^0.3.1",
     "@toruslabs/torus-embed": "^1.20.4",
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",

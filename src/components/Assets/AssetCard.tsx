@@ -51,7 +51,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ contract, collection, name, image
 							<span className="pl-3 dark:bg-darks-400 dark:text-white">
 								<span className="truncate text-sm">Last</span>
 								<div className="p-0">
-									<img src="/assets/icons/ether.svg" alt="Ether" className="inline pr-1" />
+									<img src="/assets/icons/ether_white.svg" alt="Ether" className="inline pr-1" />
 									<span className="text-sm font-bold leading-3">{pastSellPrice}</span>
 								</div>
 							</span>
