@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
 		<>
 			<AppBar />
 			<header className="sticky top-0 z-20 w-full">
-				<div className="font-semibold dark:border-darks-200 dark:bg-darks-400 dark:text-white">
+				<div className="border-b-2 font-semibold dark:border-darks-200 dark:bg-darks-400 dark:text-white">
 					<div className="container mx-auto px-8 py-2">
 						<div className="relative flex h-12 items-center justify-between">
 							{/* Left */}

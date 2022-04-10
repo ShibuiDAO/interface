@@ -10,7 +10,10 @@ export interface CollectionCardProps {
 
 const CollectionCard: React.FC<CollectionCardProps> = ({ image, name, contract }) => {
 	const collectionName = name ?? '???';
-	const lineClamp = collectionName?.length > 15 ? 'line-clamp-2' : 'line-clamp-3';
+
+	// TODO: Enable this once FE-59 is complete
+	// const lineClamp = collectionName?.length > 15 ? 'line-clamp-2' : 'line-clamp-3';
+
 	return (
 		<Link href={`/app/collection/${contract}`} passHref={true}>
 			<a href="/">
@@ -25,7 +28,8 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ image, name, contract }
 						</figure>
 						<div className="py-7">
 							<h2 className="text-xl font-bold">{collectionName}</h2>
-							<p className={lineClamp}>very long long description that can go oversized of the card</p>
+							{/* TODO: Enable this once FE-59 is complete */}
+							{/* <p className={lineClamp}>very long long description that can go oversized of the card</p> */}
 						</div>
 					</div>
 				</div>
