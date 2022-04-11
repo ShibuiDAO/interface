@@ -54,6 +54,26 @@ const CollectionSpecificsInfo: React.FC<CollectionSpecificsInfoProps> = ({ addre
 								</span>
 							</span>
 						</span>
+						{/* TODO: Enable this once FE-59 is complete */}
+						{/* <div className="m-auto mt-3 w-96 text-left">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+							<div className="mt-3 flex justify-center">
+								<div className="flex gap-4 text-4xl">
+									<a href={TWITTER_LINK} target="_blank" rel="noopener noreferrer">
+										<FontAwesomeIcon icon={faTwitter} size="xs" />
+									</a>
+									<a href={GITHUB_LINK} target="_blank" rel="noopener noreferrer">
+										<FontAwesomeIcon icon={faGithub} size="xs" />
+									</a>
+									<a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
+										<FontAwesomeIcon icon={faDiscord} size="xs" />
+									</a>
+									<a href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">
+										<FontAwesomeIcon icon={faTelegram} size="xs" />
+									</a>
+								</div>
+							</div>
+						</div> */}
 					</div>
 				)}
 			</div>

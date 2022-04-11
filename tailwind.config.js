@@ -52,5 +52,5 @@ module.exports = {
 	variants: {
 		extend: {}
 	},
-	plugins: [require('daisyui'), require('tw-elements/dist/plugin')]
+	plugins: [require('@tailwindcss/line-clamp'), require('daisyui'), require('tw-elements/dist/plugin')]
 };

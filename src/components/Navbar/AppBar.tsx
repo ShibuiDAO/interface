@@ -4,6 +4,9 @@ import React from 'react';
 
 const { publicRuntimeConfig } = getConfig();
 
+/**
+ * This component is outside of the design specified in the Figma file. It's main purpose is for debugging with users.
+ */
 const AppBar: React.FC = () => {
 	const router = useRouter();
 

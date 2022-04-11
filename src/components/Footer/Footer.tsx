@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
 						<div>
 							<img src="/wide.svg" alt="ShibuiDAO header wide logo." />
 						</div>
-						<div>
+						{/* <div>
 							<span className="footer-title">Developer</span>
 							<a href={GITHUB_LINK} className="link-hover link">
 								Github
@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
 							<a href="https://docs.shibuidao.com" className="link-hover link">
 								Documentation
 							</a>
-						</div>
+						</div> */}
 						<div className="md:place-self-center md:justify-self-end">
 							<div className="flex gap-4 text-4xl">
 								<a href={TWITTER_LINK} target="_blank" rel="noopener noreferrer">
