@@ -1,6 +1,6 @@
 {
   "name": "@shibuidao/interface",
-  "version": "0.1.2",
+  "version": "0.1.2b",
   "private": true,
   "scripts": {
     "predev": "yarn meta:package",
