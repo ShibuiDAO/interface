@@ -41,6 +41,7 @@ export enum OrderDirection {
 }
 
 export interface OrderInitiate<Direction extends OrderDirection = OrderDirection.APPROVE> {
+	title?: string;
 	ordering: boolean;
 	approved?: boolean;
 	seller?: Direction extends OrderDirection.EXERCISE ? string : never;
