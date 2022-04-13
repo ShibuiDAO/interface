@@ -33,6 +33,7 @@ export interface SimpleBuyOrder {
 }
 
 export enum OrderDirection {
+	DISPLAY,
 	APPROVE,
 	BOOK,
 	CANCEL,
