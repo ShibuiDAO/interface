@@ -17,7 +17,7 @@ export interface AssetCardProps {
 const AssetCard: React.FC<AssetCardProps> = ({ contract, collection, name, image, validOrder, currentSellPrice, pastSellPrice, owned }) => {
 	return (
 		<div
-			className={`card-bordered card max-h-[24.4rem] max-w-[17rem] shadow-lg ${
+			className={`card-bordered card max-h-[24.4rem] max-w-[17rem] rounded-md shadow-lg ${
 				owned ? 'dark:border-chain-boba' : 'dark:border-darks-100'
 			} dark:bg-darks-100 dark:text-black`}
 		>

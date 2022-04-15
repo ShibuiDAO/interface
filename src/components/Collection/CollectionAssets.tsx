@@ -3,7 +3,7 @@ import { Account } from '@shibuidao/erc721exchange-types';
 import type { Erc721Contract, Erc721Token } from '@subgraphs/eip721-matic';
 import type { EIP721Response, ERC721ExchangeResponse } from 'client';
 import { ChainSubgraphSets, generateEIP721ContractQuery, generateERC721ExchangeQuery } from 'client/queries';
-import ERC721ActiveAsset from 'components/Assets/ERC721ActiveAsset';
+import ERC721Asset from 'components/Assets/ERC721Asset';
 import { SupportedChainId } from 'constants/chains';
 import { COLLECTION_REFRESH_INTERVAL, DEFAULT_CHAIN } from 'constants/misc';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
@@ -61,7 +61,7 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 						.filter((asset) => (asset === undefined ? false : asset.identifier.toString().includes(collectionAssetsSearch)))
 						.sort(sortERC721ByPrice(priceSorting, exchangeData))
 						.map((token) => (
-							<ERC721ActiveAsset token={token} chainId={chainIdNormalised} key={token.id} />
+							<ERC721Asset token={token} chainId={chainIdNormalised} key={token.id} />
 						))}
 				</>
 			)}
