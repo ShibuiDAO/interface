@@ -27,12 +27,15 @@ const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 
 	const [EIP721Subgraph, ERC721ExchangeSubgraph] = ChainSubgraphSets[chainIdNormalised];
 
-	const { data: assetsData, loading: assetsLoading } = useQuery<EIP721Response<'erc721Contract'>>(generateEIP721ContractQuery(chainIdNormalised), {
-		variables: { contract: address },
-		context: { subgraph: EIP721Subgraph },
-		fetchPolicy: 'no-cache',
-		pollInterval: COLLECTION_REFRESH_INTERVAL
-	});
+	const { data: assetsData, loading: assetsLoading } = useQuery<EIP721Response<'erc721Contract'>>(
+		/* */ generateEIP721ContractQuery(chainIdNormalised),
+		{
+			variables: { contract: address },
+			context: { subgraph: EIP721Subgraph },
+			fetchPolicy: 'no-cache',
+			pollInterval: COLLECTION_REFRESH_INTERVAL
+		}
+	);
 
 	const { data: exchangeData, loading: exchangeLoading } = useQuery<ERC721ExchangeResponse<'account'>>(
 		generateERC721ExchangeQuery(chainIdNormalised),

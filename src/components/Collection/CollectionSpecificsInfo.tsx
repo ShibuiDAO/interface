@@ -31,7 +31,7 @@ const CollectionSpecificsInfo: React.FC<CollectionSpecificsInfoProps> = ({ addre
 	return (
 		<>
 			<div className="my-4 text-center">
-				<h1 className="text-4xl font-bold">{info?.name}</h1>
+				<h1 className="text-4xl font-bold">{info?.name || ''}</h1>
 				{info?.totalSupply && (
 					<div className="mt-7">
 						<span className="inline-block rounded-lg text-xl font-bold dark:bg-lights-100 dark:text-black">

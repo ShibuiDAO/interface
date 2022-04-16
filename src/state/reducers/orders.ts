@@ -344,7 +344,7 @@ export const selectBuyOrder = (contract: string, identifier: BigInt) => (state: 
 	state.orders.buyOrders[`${contract}-${identifier}-BUY`];
 
 export const selectOrderingStatus =
-	<Direction extends OrderDirection = OrderDirection.APPROVE>() =>
+	<Direction extends OrderDirection = OrderDirection.DISPLAY>() =>
 	(state: RootState) =>
 		state.orders.currentOrder as OrderInitiate<Direction>;
 
