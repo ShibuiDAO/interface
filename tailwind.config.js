@@ -33,6 +33,9 @@ module.exports = {
 					300: '#1E1F23',
 					400: '#191B1F'
 				},
+				special: {
+					link: '#9BB7FF'
+				},
 				chain: {
 					ethereum: '#627eea',
 					polygon: '#8247e5',

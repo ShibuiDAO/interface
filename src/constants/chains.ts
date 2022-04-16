@@ -70,7 +70,7 @@ export const CHAIN_INFO: ChainInfoMap = {
 	[SupportedChainId.BOBA]: {
 		networkType: NetworkType.L2,
 		// blockWaitMsBeforeWarning: ms`25m`,
-		explorer: 'https://blockexplorer.boba.network/',
+		explorer: 'https://blockexplorer.boba.network',
 		label: 'Boba L2',
 		addNetworkInfo: {
 			nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
@@ -80,7 +80,7 @@ export const CHAIN_INFO: ChainInfoMap = {
 	[SupportedChainId.BOBA_RINKEBY]: {
 		networkType: NetworkType.L2,
 		// blockWaitMsBeforeWarning: ms`25m`,
-		explorer: 'https://blockexplorer.rinkeby.boba.network/',
+		explorer: 'https://blockexplorer.rinkeby.boba.network',
 		label: 'Boba L2 Rinkeby',
 		addNetworkInfo: {
 			nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
