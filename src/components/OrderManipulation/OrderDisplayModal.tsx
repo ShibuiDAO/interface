@@ -7,7 +7,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAssetMetadata } from 'state/reducers/assets';
 import { selectCollectionInfo } from 'state/reducers/collections';
-import { clearOrder, selectOrderingStatus } from 'state/reducers/orders';
+import { clearOrder, OrderDirection, selectOrderingStatus, updateCurrentOrderDirection } from 'state/reducers/orders';
 import { ExplorerType, formatExplorerLink, shortenHex } from 'utils/utils';
 import OrderActionsDisplay from './OrderActionsDisplay';
 
@@ -20,6 +20,8 @@ const OrderDisplayModal: React.FC = () => {
 	const info = useSelector(selectCollectionInfo(chainIdNormalised, order.contract));
 	const metadata = useSelector(selectAssetMetadata(chainIdNormalised, order.contract, order.identifier as unknown as bigint));
 
+	if (order.direction === OrderDirection.DISPLAY) dispatch(updateCurrentOrderDirection(OrderDirection.APPROVE));
+
 	return (
 		<>
 			<GenericModal
@@ -28,13 +30,13 @@ const OrderDisplayModal: React.FC = () => {
 				modalTitle={order.title || ''}
 				onTitleCloseClick={() => dispatch(clearOrder())}
 			>
-				<div className="p-12">
+				<div className="p-6">
 					<div className="grid grid-cols-2 gap-12">
 						<div>
 							<ProtectedMultiSourceContentDisplay
 								src={metadata?.image_final || ''}
 								fallback="/logo_inverted_spaced.svg"
-								className="max-h-[23rem] min-h-[23rem] min-w-[23rem] max-w-[23rem]"
+								className="max-h-[23rem] min-h-[23rem] min-w-[23rem] max-w-[23rem] rounded-lg border dark:border-lights-100"
 							/>
 						</div>
 						<div className="flex flex-col">
@@ -53,8 +55,11 @@ const OrderDisplayModal: React.FC = () => {
 									</a>
 								</div>
 							</div>
-							<div>
-								<OrderActionsDisplay />
+							<div className="mt-7 h-full rounded-lg border dark:border-lights-100">
+								<div className="p-5">
+									ffff
+									<OrderActionsDisplay />
+								</div>
 							</div>
 						</div>
 					</div>
