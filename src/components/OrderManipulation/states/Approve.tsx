@@ -32,20 +32,25 @@ const Approve: React.FC = () => {
 	if (order.approved === true) dispatch(updateCurrentOrderDirection(OrderDirection.BOOK));
 
 	return (
-		<button
-			disabled={!library}
-			onClick={() => {
-				dispatch(
-					setApprovalForAll({
-						contract: order.contract,
-						operator: ERC721_EXCHANGE[chainIdNormalised],
-						provider: library!
-					})
-				);
-			}}
-		>
-			Approve
-		</button>
+		<div className="flex h-full min-h-full w-full content-center items-center justify-center">
+			<div className="m-auto">
+				<button
+					disabled={!library}
+					onClick={() => {
+						dispatch(
+							setApprovalForAll({
+								contract: order.contract,
+								operator: ERC721_EXCHANGE[chainIdNormalised],
+								provider: library!
+							})
+						);
+					}}
+					className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400"
+				>
+					Approve
+				</button>
+			</div>
+		</div>
 	);
 };
 
