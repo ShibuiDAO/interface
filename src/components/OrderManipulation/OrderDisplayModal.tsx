@@ -56,7 +56,7 @@ const OrderDisplayModal: React.FC = () => {
 								</div>
 							</div>
 							<div className="mt-7 h-full rounded-lg border dark:border-lights-100">
-								<div className="min-h-full min-w-full p-5">
+								<div className="h-full min-h-full min-w-full">
 									<OrderActionsDisplay />
 								</div>
 							</div>
