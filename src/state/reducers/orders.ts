@@ -33,6 +33,7 @@ export interface SimpleBuyOrder {
 }
 
 export enum OrderDirection {
+	DISPLAY,
 	APPROVE,
 	BOOK,
 	CANCEL,
@@ -40,6 +41,7 @@ export enum OrderDirection {
 }
 
 export interface OrderInitiate<Direction extends OrderDirection = OrderDirection.APPROVE> {
+	title?: string;
 	ordering: boolean;
 	approved?: boolean;
 	seller?: Direction extends OrderDirection.EXERCISE ? string : never;
@@ -342,7 +344,7 @@ export const selectBuyOrder = (contract: string, identifier: BigInt) => (state: 
 	state.orders.buyOrders[`${contract}-${identifier}-BUY`];
 
 export const selectOrderingStatus =
-	<Direction extends OrderDirection = OrderDirection.APPROVE>() =>
+	<Direction extends OrderDirection = OrderDirection.DISPLAY>() =>
 	(state: RootState) =>
 		state.orders.currentOrder as OrderInitiate<Direction>;
 

@@ -31,7 +31,11 @@ module.exports = {
 					100: '#FFFFFF',
 					200: '#3A3D40',
 					300: '#1E1F23',
-					400: '#191B1F'
+					400: '#191B1F',
+					full: '#000000'
+				},
+				special: {
+					link: '#9BB7FF'
 				},
 				chain: {
 					ethereum: '#627eea',

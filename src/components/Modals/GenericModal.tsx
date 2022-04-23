@@ -39,13 +39,13 @@ const GenericModal: React.FC<GenericModalProps> = ({ show, onDialogClose, modalT
 							leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 						>
 							<div className="z-50 inline-block transform overflow-hidden text-left align-middle shadow-xl transition-all">
-								<div className="rounded-2xl border border-transparent p-4 dark:border-lights-300 dark:bg-darks-400 dark:text-white">
+								<div className="rounded-2xl border border-transparent p-6 dark:border-lights-300 dark:bg-darks-full dark:text-white">
 									<div className="flex items-start">
 										<div className="mt-0 text-left">
 											<Dialog.Title as="span" className="w-full text-lg font-bold leading-6">
 												{modalTitle}
 												<button type="button" className="float-right" onClick={onTitleCloseClick} ref={closeButtonRef}>
-													<FontAwesomeIcon icon={faTimes} />
+													<FontAwesomeIcon icon={faTimes} size="2x" />
 												</button>
 											</Dialog.Title>
 											<div className="mt-2 px-8">{children}</div>

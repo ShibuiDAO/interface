@@ -9,7 +9,12 @@ export interface EthInputFormikProps extends Pick<FieldInputProps<any>, 'value' 
 const EthInputFormik: React.FC<EthInputFormikProps> = ({ ...props }) => {
 	const [field] = useField(props);
 
-	return <input type="text" {...props} {...field} />;
+	return (
+		<div>
+			<img src="/assets/icons/ether_white.svg" alt="Ether" className="inline pr-1" />
+			<input type="text" {...props} {...field} />
+		</div>
+	);
 };
 
 export default EthInputFormik;

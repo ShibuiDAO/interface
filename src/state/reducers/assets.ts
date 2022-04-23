@@ -10,10 +10,12 @@ import { quirkURIQuirks } from 'utils/quirks/uri';
 import type { RootState } from '../index';
 
 export interface AssetsState {
+	contractNames: Record<string, string>;
 	metadata: { [K: string]: ExpandedChainedMetadata | undefined };
 }
 
 const initialState: AssetsState = {
+	contractNames: {},
 	metadata: {}
 };
 
@@ -23,6 +25,7 @@ export interface ChainedMetadata extends BaseMetadata {
 
 export interface ExpandedChainedMetadata extends ChainedMetadata {
 	owner: string;
+	rawContractName?: string;
 }
 
 export interface FetchAssetMetadataParameters {
@@ -41,9 +44,10 @@ export interface AssetMetadataSetPayload {
 
 export const fetchAssetMetadata = createAsyncThunk<ExpandedChainedMetadata, FetchAssetMetadataParameters>(
 	'fetch/metadata/asset',
-	async ({ token, contractABI, chainId, provider }, { rejectWithValue }) => {
+	async ({ token, contractABI, chainId, provider }, { rejectWithValue, getState }) => {
 		if (!chainId || !contractABI) return rejectWithValue('ChainId or contract not provided.');
 
+		const state = getState() as RootState;
 		const contract = new Contract(token.contract.id, ABIs[contractABI], provider);
 		const contractURI: string = await contract[uriMethods[contractABI]](token.identifier);
 		let metadata: BaseMetadata = { name: '', image_final: '' };
@@ -59,8 +63,12 @@ export const fetchAssetMetadata = createAsyncThunk<ExpandedChainedMetadata, Fetc
 
 		await provider.getNetwork();
 
+		if (state.assets.contractNames[token.contract.id]) metadata.collection = state.assets.contractNames[token.contract.id];
 		try {
-			if (!metadata.collection) metadata.collection = await contract.name();
+			if (!metadata.collection && !state.assets.contractNames[token.contract.id]) {
+				metadata.collection = await contract.name();
+				state.assets.contractNames[token.contract.id] = metadata.collection!;
+			}
 		} catch {}
 
 		return metadata
@@ -89,6 +97,8 @@ export const assetsSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(fetchAssetMetadata.fulfilled, (state, action) => {
 			state.metadata[`${action.payload.chainId}-${action.payload.contract}-${action.payload.identifier}`] = action.payload;
+			if (action.payload.rawContractName && action.payload.contract)
+				state.contractNames[action.payload.contract] = action.payload.rawContractName;
 		});
 	}
 });

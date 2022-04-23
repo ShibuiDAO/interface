@@ -11,7 +11,7 @@ import customLogos from 'constants/customLogos';
 import { DEFAULT_CHAIN } from 'constants/misc';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useForceConnectMenu from 'hooks/useForceConnectMenu';
-import type { GetStaticPaths, NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -20,7 +20,7 @@ const CollectionDisplayPage: NextPage = () => {
 	useForceConnectMenu();
 
 	const address = Array.isArray(router.query.address) ? router.query.address[0] : router.query.address;
-	const addressNormalised = address?.toLowerCase();
+	const addressNormalised = (address || '').toLowerCase();
 
 	const { chainId } = useActiveWeb3React();
 	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
@@ -48,7 +48,7 @@ const CollectionDisplayPage: NextPage = () => {
 				<img src={'/assets/background/collection-bg.jpeg'} alt="Collections cover" className="h-48 w-full object-cover" />
 				<figure className="absolute -translate-x-2/4 translate-y-0 p-2 pr-5" style={{ bottom: '-60px', left: '50%' }}>
 					<ProtectedMultiSourceContentDisplay
-						src={`/assets/collections/${customLogos[chainIdNormalised][address!.toLowerCase()]}` || ''}
+						src={`/assets/collections/${customLogos[chainIdNormalised][addressNormalised]}` || ''}
 						fallback="/logo_inverted_spaced.svg"
 						className="max-h-[7.25rem] min-w-[7.25rem] max-w-[7.25rem] rounded-full dark:bg-darks-400"
 					/>
@@ -65,21 +65,6 @@ const CollectionDisplayPage: NextPage = () => {
 			</div>
 		</>
 	);
-};
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticProps = async () => {
-	return {
-		props: {}
-	};
-};
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticPaths: GetStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: 'blocking'
-	};
 };
 
 export default CollectionDisplayPage;

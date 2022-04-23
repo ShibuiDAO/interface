@@ -7,7 +7,7 @@ import Cancel from './states/Cancel';
 import Exercise from './states/Exercise';
 import Sell from './states/Sell';
 
-const OrderDisplay: React.FC = () => {
+const OrderActionsDisplay: React.FC = () => {
 	const order = useSelector(selectOrderingStatus());
 
 	return (
@@ -28,4 +28,4 @@ const OrderDisplay: React.FC = () => {
 	);
 };
 
-export default OrderDisplay;
+export default OrderActionsDisplay;

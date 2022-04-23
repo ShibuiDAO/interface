@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import OrderDisplay from './OrderManipulation/OrderDisplay';
+import OrderDisplayModal from './OrderManipulation/OrderDisplayModal';
 import TransactionsPending from './Transactions/TransactionsPending';
 
 const Connect = dynamic(() => import('components/Connect/Connect'), { ssr: false });
@@ -11,7 +11,7 @@ const PinnedComponents: React.FC = (props) => {
 		<>
 			<Toaster position="top-right" />
 			<Connect />
-			<OrderDisplay />
+			<OrderDisplayModal />
 			<TransactionsPending />
 			<>{props.children}</>
 		</>
