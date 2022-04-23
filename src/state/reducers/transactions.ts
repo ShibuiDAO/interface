@@ -42,6 +42,7 @@ export const transactionsSlice = createSlice({
 			.addMatcher(isAllOf(isTransactionAction, isAnyOf(isRejected, isRejectedWithValue)), (state, action) => {
 				state.pending = state.pending.filter((tx) => tx !== action.meta.requestId);
 				toast.error('Transaction failed.');
+				console.error(action.payload);
 			})
 			.addMatcher(isAllOf(isTransactionAction, isAnyOf(isFulfilled)), (state, action) => {
 				state.pending = state.pending.filter((tx) => tx !== action.meta.requestId);

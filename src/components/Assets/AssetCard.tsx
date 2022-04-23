@@ -12,9 +12,20 @@ export interface AssetCardProps {
 	currentSellPrice?: string;
 	pastSellPrice?: string;
 	ownerAction?: () => void;
+	userBuyAction?: () => void;
 }
 
-const AssetCard: React.FC<AssetCardProps> = ({ contract, collection, name, image, validOrder, currentSellPrice, pastSellPrice, ownerAction }) => {
+const AssetCard: React.FC<AssetCardProps> = ({
+	contract,
+	collection,
+	name,
+	image,
+	validOrder,
+	currentSellPrice,
+	pastSellPrice,
+	ownerAction,
+	userBuyAction
+}) => {
 	return (
 		<div className="card-bordered card max-h-[24.4rem] max-w-[17rem] rounded-md shadow-lg dark:border-darks-100 dark:bg-darks-100 dark:text-black">
 			<figure>
@@ -43,7 +54,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ contract, collection, name, image
 								</div>
 							</span>
 						)}
-						{pastSellPrice && (
+						{pastSellPrice && !Boolean(userBuyAction) && (
 							<span className="py-3 pl-3 dark:bg-darks-400 dark:text-white">
 								<span className="truncate text-sm">Last</span>
 								<div className="p-0">
@@ -51,6 +62,11 @@ const AssetCard: React.FC<AssetCardProps> = ({ contract, collection, name, image
 									<span className="text-sm font-bold leading-3">{pastSellPrice}</span>
 								</div>
 							</span>
+						)}
+						{Boolean(userBuyAction) && validOrder && (
+							<button className="dark:bg-lights-300 dark:text-white" onClick={userBuyAction}>
+								<div className="truncate text-center text-sm">Buy</div>
+							</button>
 						)}
 					</div>
 				</div>
