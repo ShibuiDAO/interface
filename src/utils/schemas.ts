@@ -2,9 +2,9 @@ import * as Yup from 'yup';
 
 export const SellFormSchema = Yup.object().shape({
 	price: Yup.string().required(),
-	expiration: Yup.date()
-		.test('date-more-than-now', '', function testDateValidity(value) {
-			return value !== undefined && value.getTime() > new Date().getTime();
+	expiration: Yup.string()
+		.test('string-valid-number', '', function testExpirationStringAsValidNumber(value) {
+			return value !== undefined && !isNaN(parseInt(value, 10)) && Number(value) > 0;
 		})
 		.required()
 });

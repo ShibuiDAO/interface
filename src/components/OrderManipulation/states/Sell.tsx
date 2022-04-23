@@ -6,7 +6,13 @@ import SellForm from '../forms/SellForm';
 const Sell: React.FC = () => {
 	const order = useSelector(selectOrderingStatus());
 
-	return <SellForm contract={order.contract} identifier={order.identifier} />;
+	return (
+		<>
+			<div className="min-h-full p-5 dark:bg-darks-400">
+				<SellForm contract={order.contract} identifier={order.identifier} />
+			</div>
+		</>
+	);
 };
 
 export default Sell;

@@ -55,7 +55,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ contract, collection, name, image
 					</div>
 				</div>
 			</When>
-			<When condition={Boolean(ownerAction)}>
+			<When condition={Boolean(ownerAction) && !validOrder}>
 				<hr />
 				<button className="card-body m-0 p-0" onClick={ownerAction}>
 					<span className="w-full py-3 dark:bg-lights-300 dark:text-white">
