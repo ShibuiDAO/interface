@@ -5,7 +5,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAssetMetadata } from 'state/reducers/assets';
-import { executeSellOrder, OrderDirection, selectSellOrder, setCurrentOrder, SimpleSellOrder } from 'state/reducers/orders';
+import { executeSellOrderTxw, OrderDirection, selectSellOrder, setCurrentOrder, SimpleSellOrder } from 'state/reducers/orders';
 import AssetCard from './AssetCard';
 
 export interface DataAssetCardProps {
@@ -37,7 +37,7 @@ const DataAssetCard: React.FC<DataAssetCardProps> = ({ chainId, contract, identi
 	};
 	const exerciseFunction = (order: SimpleSellOrder, chainId_: SupportedChainId, library_: JsonRpcProvider, account_: string) => () => {
 		dispatch(
-			executeSellOrder({
+			executeSellOrderTxw({
 				chainId: chainId_,
 				library: library_,
 				data: {
