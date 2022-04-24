@@ -6,6 +6,7 @@ import { DEFAULT_CHAIN } from 'constants/misc';
 import { Form, Formik } from 'formik';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import { NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -21,6 +22,7 @@ const TestingMetadataPage: NextPage = () => {
 
 	return (
 		<>
+			<NextSeo title="Metadata Preview" openGraph={{ title: 'ShibuiNFT Metadata Preview' }} />
 			<Offset />
 			<div className="py-4">
 				<div className="flex w-full min-w-full justify-center">

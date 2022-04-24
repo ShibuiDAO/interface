@@ -3,7 +3,7 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useMounted from 'hooks/useMounted';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearOrder, executeSellOrder, OrderDirection, selectOrderingStatus } from 'state/reducers/orders';
+import { clearOrder, executeSellOrderTxw, OrderDirection, selectOrderingStatus } from 'state/reducers/orders';
 
 const Exercise: React.FC = () => {
 	const { library, account, chainId } = useActiveWeb3React();
@@ -16,7 +16,7 @@ const Exercise: React.FC = () => {
 		if (!mounted || !chainId || !library) return;
 
 		dispatch(
-			executeSellOrder({
+			executeSellOrderTxw({
 				chainId,
 				library: library!,
 				data: {

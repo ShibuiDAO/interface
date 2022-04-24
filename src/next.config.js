@@ -14,6 +14,10 @@ module.exports = withPlausibleProxy()({
 			{
 				source: '/app',
 				destination: '/app/collections'
+			},
+			{
+				source: '/app/collections/index',
+				destination: '/app/collections'
 			}
 		];
 	},

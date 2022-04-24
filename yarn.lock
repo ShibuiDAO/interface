@@ -2479,10 +2479,10 @@
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-3.3.0.tgz#62ff0a52cd86bd6169a94b2f217d72da6772a3cd"
   integrity sha512-wWESfB03elALhci3GjcacRh8pnK89Qe5AEKCQplKyTCKabWl64SAFw52hQBth2fMmJStgK1fr87aGhRZAB8DNA==
 
-"@shibuidao/boba-nft-bridge@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@shibuidao/boba-nft-bridge/-/boba-nft-bridge-1.1.0.tgz#d27627b752bf7d942035bcdb79b472574b6b60d5"
-  integrity sha512-tiFzOUhv6Mvc6FHjQRnaB3mjR5hn3Mle+Oj6wa3yq0Rn1VGH5/i/MJww4bVfOORMFu/uSjvxVy52vFPn+x7xvA==
+"@shibuidao/boba-nft-bridge@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@shibuidao/boba-nft-bridge/-/boba-nft-bridge-1.1.1.tgz#557889dbd08587059dfbbdab2a3b3bbe64cf608d"
+  integrity sha512-rgb4u+YBEloct/W3HhxgBZcJ3ENO+pVff9Eya2fZntxb7Rl/vyU4UAK03uO9TMPDUoufNb0CDTtQ9BBno3eM0A==
   dependencies:
     "@typechain/ethers-v5" "^10.0.0"
     ethers "^5.6.2"

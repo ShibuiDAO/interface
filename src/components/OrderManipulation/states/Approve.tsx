@@ -5,7 +5,8 @@ import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useProviders from 'hooks/useProviders';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchApprovalStatus, OrderDirection, selectOrderingStatus, setApprovalForAll, updateCurrentOrderDirection } from 'state/reducers/orders';
+import { setApprovalForAllTxw } from 'state/reducers/approvals';
+import { fetchCurrentOrderApprovalStatusTxr, OrderDirection, selectOrderingStatus, updateCurrentOrderDirection } from 'state/reducers/orders';
 
 const Approve: React.FC = () => {
 	const { library, account, chainId } = useActiveWeb3React();
@@ -19,7 +20,7 @@ const Approve: React.FC = () => {
 		if (!library || !account) return;
 
 		dispatch(
-			fetchApprovalStatus({
+			fetchCurrentOrderApprovalStatusTxr({
 				contract: order.contract,
 				operator: ERC721_EXCHANGE[chainIdNormalised],
 				owner: account,
@@ -36,9 +37,11 @@ const Approve: React.FC = () => {
 			disabled={!library}
 			onClick={() => {
 				dispatch(
-					setApprovalForAll({
+					setApprovalForAllTxw({
 						contract: order.contract,
+						user: account!,
 						operator: ERC721_EXCHANGE[chainIdNormalised],
+						approval: true,
 						provider: library!
 					})
 				);

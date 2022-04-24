@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { clearOrder, createSellOrder } from 'state/reducers/orders';
+import { clearOrder, createSellOrderTxw } from 'state/reducers/orders';
 import { SellFormSchema } from 'utils/schemas';
 
 export interface SellFormFields {
@@ -35,7 +35,7 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 				validationSchema={SellFormSchema}
 				onSubmit={(values: SellFormFields) => {
 					dispatch(
-						createSellOrder({
+						createSellOrderTxw({
 							chainId,
 							library,
 							data: {
