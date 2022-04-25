@@ -30,6 +30,7 @@
     "@metamask/onboarding": "^1.0.1",
     "@reduxjs/toolkit": "^1.7.2",
     "@sapphire/utilities": "^3.3.0",
+    "@sentry/nextjs": "^6.19.6",
     "@shibuidao/erc721exchange-types": "^1.0.3",
     "@subgraphs/eip721-matic": "^1.0.1",
     "@tailwindcss/line-clamp": "^0.3.1",

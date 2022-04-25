@@ -1,7 +1,8 @@
 const { withPlausibleProxy } = require('next-plausible');
 const { version } = require('./package.json');
+const { withSentryConfig } = require('@sentry/nextjs');
 
-module.exports = withPlausibleProxy()({
+const config = {
 	publicRuntimeConfig: {
 		version: version || '0.0.0'
 	},
@@ -25,5 +26,17 @@ module.exports = withPlausibleProxy()({
 				permanent: true
 			}
 		];
+	},
+	sentry: {
+		widenClientFileUpload: true
 	}
-});
+};
+
+const sentryWebpackPluginOptions = {
+	silent: true
+};
+
+const configWithPlausible = withPlausibleProxy()(config);
+// @ts-expect-error
+const configWithPlausibleAndSentry = withSentryConfig(configWithPlausible, sentryWebpackPluginOptions);
+module.exports = configWithPlausibleAndSentry;
