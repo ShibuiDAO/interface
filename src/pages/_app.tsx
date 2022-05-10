@@ -1,7 +1,5 @@
 import { ApolloProvider } from '@apollo/client';
-import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from '@ethersproject/providers';
 import { config } from '@fortawesome/fontawesome-svg-core';
-import { Web3ReactProvider } from '@web3-react/core';
 import { client } from 'client';
 import Footer from 'components/Footer/Footer';
 import Navbar from 'components/Navbar/Navbar';
@@ -15,22 +13,28 @@ import Head from 'next/head';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from 'state';
+import { WagmiProvider } from 'wagmi';
+import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
+import { chains, wagmiClient } from 'core/wallet';
+
 import 'styles/_App.css';
+import '@rainbow-me/rainbowkit/styles.css';
 
 config.autoAddCss = false;
 
-const getLibrary = (provider: ExternalProvider | JsonRpcFetchFunc) => {
-	return new Web3Provider(provider);
-};
-
 const App: NextPage<AppProps> = ({ Component, pageProps }) => {
 	return (
-		<>
-			<React.StrictMode>
-				<PlausibleProvider domain="shibuinft.com">
-					<ApolloProvider client={client}>
-						<Provider store={store}>
-							<Web3ReactProvider getLibrary={getLibrary}>
+		<React.StrictMode>
+			<WagmiProvider client={wagmiClient}>
+				<RainbowKitProvider
+					chains={chains}
+					showRecentTransactions={true}
+					coolMode={true}
+					theme={darkTheme({ accentColor: '#FDA360', accentColorForeground: '#000' })}
+				>
+					<PlausibleProvider domain="shibuinft.com">
+						<ApolloProvider client={client}>
+							<Provider store={store}>
 								<Head>
 									<meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
 									<meta httpEquiv="X-UA-Compatible" content="ie=edge" />
@@ -62,12 +66,12 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
 										</div>
 									</PinnedComponents>
 								</>
-							</Web3ReactProvider>
-						</Provider>
-					</ApolloProvider>
-				</PlausibleProvider>
-			</React.StrictMode>
-		</>
+							</Provider>
+						</ApolloProvider>
+					</PlausibleProvider>
+				</RainbowKitProvider>
+			</WagmiProvider>
+		</React.StrictMode>
 	);
 };
 

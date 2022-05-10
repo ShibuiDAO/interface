@@ -1,17 +1,12 @@
-import AccountName from 'components/Account/AccountName';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { setConnectingStatus } from 'state/reducers/user';
-import { If, Then, Else, Switch, Case, Default } from 'react-if';
-import AppBar from './AppBar';
 import { useRouter } from 'next/router';
+import React from 'react';
+import { Case, Default, Switch } from 'react-if';
+import AppBar from './AppBar';
 
 const Navbar: React.FC = () => {
 	const router = useRouter();
-	const dispatch = useDispatch();
-	const { active } = useActiveWeb3React();
 
 	return (
 		<>
@@ -42,19 +37,7 @@ const Navbar: React.FC = () => {
 												</Link>
 											</Case>
 											<Default>
-												<If condition={active}>
-													<Then>
-														<AccountName className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400" />
-													</Then>
-													<Else>
-														<button
-															className="btn cursor-pointer select-none rounded-md bg-lights-300 px-3 py-2 text-sm font-medium normal-case hover:bg-lights-400"
-															onClick={() => dispatch(setConnectingStatus(true))}
-														>
-															Connect wallet
-														</button>
-													</Else>
-												</If>
+												<ConnectButton />
 											</Default>
 										</Switch>
 									</div>

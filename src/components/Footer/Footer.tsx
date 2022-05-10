@@ -24,15 +24,19 @@ const Footer: React.FC = () => {
 						<div className="md:place-self-center md:justify-self-end">
 							<div className="flex gap-4 text-4xl">
 								<a href={TWITTER_LINK} target="_blank" rel="noopener noreferrer">
+									{/* @ts-expect-error This is quite odd */}
 									<FontAwesomeIcon icon={faTwitter} />
 								</a>
 								<a href={GITHUB_LINK} target="_blank" rel="noopener noreferrer">
+									{/* @ts-expect-error This is quite odd */}
 									<FontAwesomeIcon icon={faGithub} />
 								</a>
 								<a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
+									{/* @ts-expect-error This is quite odd */}
 									<FontAwesomeIcon icon={faDiscord} />
 								</a>
 								<a href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">
+									{/* @ts-expect-error This is quite odd */}
 									<FontAwesomeIcon icon={faTelegram} />
 								</a>
 							</div>

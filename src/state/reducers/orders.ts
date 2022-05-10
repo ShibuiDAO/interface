@@ -1,5 +1,5 @@
 import type { Provider } from '@ethersproject/providers';
-import { JsonRpcProvider, StaticJsonRpcProvider, TransactionResponse } from '@ethersproject/providers';
+import { TransactionResponse } from '@ethersproject/providers';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { deepClone } from '@sapphire/utilities';
 import { BuyOrder, SellOrder } from '@shibuidao/erc721exchange-types';
@@ -7,7 +7,7 @@ import { ABI, ABIs } from 'constants/abis';
 import { SupportedChainId } from 'constants/chains';
 import { ERC721_EXCHANGE } from 'constants/contracts';
 import { ZERO_ADDRESS } from 'constants/misc';
-import { BigNumberish, Contract, errors } from 'ethers';
+import { BigNumberish, Contract, errors, Signer } from 'ethers';
 import { WritableDraft } from 'immer/dist/internal';
 import { RootState } from 'state';
 import { exchangeContract } from 'utils/contracts';
@@ -121,13 +121,13 @@ export const fetchApprovalStatus = createAsyncThunk<boolean, FetchContractApprov
 export interface SetContractApprovalParameters {
 	contract: string;
 	operator: string;
-	provider: StaticJsonRpcProvider;
+	signer: Signer;
 }
 
 export const setApprovalForAll = createAsyncThunk<true, SetContractApprovalParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}set/contract/approval`,
-	async ({ contract, operator, provider }, { rejectWithValue }) => {
-		const collection = new Contract(contract, ABIs[ABI.EIP721], provider.getSigner());
+	async ({ contract, operator, signer }, { rejectWithValue }) => {
+		const collection = new Contract(contract, ABIs[ABI.EIP721], signer);
 
 		try {
 			const tx: TransactionResponse = await collection.setApprovalForAll(operator, true);
@@ -157,15 +157,15 @@ export interface SellOrderData {
 
 export interface CreateOrderSellParameters {
 	chainId: SupportedChainId;
-	library: JsonRpcProvider;
+	signer: Signer;
 
 	data: SellOrderData;
 }
 
 export const createSellOrder = createAsyncThunk<any, CreateOrderSellParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}create/order/sell`,
-	async ({ chainId, library, data }, { rejectWithValue }) => {
-		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], library.getSigner());
+	async ({ chainId, signer, data }, { rejectWithValue }) => {
+		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], signer);
 		try {
 			const tx: TransactionResponse = await exchange.bookSellOrder(
 				data.tokenContractAddress,
@@ -198,15 +198,15 @@ export interface SellOrderCancellationData {
 
 export interface CancelOrderSellParameters {
 	chainId: SupportedChainId;
-	library: JsonRpcProvider;
+	signer: Signer;
 
 	data: SellOrderCancellationData;
 }
 
 export const cancelSellOrder = createAsyncThunk<true, CancelOrderSellParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}cancel/order/sell`,
-	async ({ chainId, library, data }, { rejectWithValue }) => {
-		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], library.getSigner());
+	async ({ chainId, signer, data }, { rejectWithValue }) => {
+		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], signer);
 		try {
 			const tx: TransactionResponse = await exchange.cancelSellOrder(data.tokenContractAddress, data.tokenId);
 
@@ -237,15 +237,15 @@ export interface SellOrderExecutionData {
 
 export interface ExecuteOrderSellParameters {
 	chainId: SupportedChainId;
-	library: JsonRpcProvider;
+	signer: Signer;
 
 	data: SellOrderExecutionData;
 }
 
 export const executeSellOrder = createAsyncThunk<true, ExecuteOrderSellParameters>(
 	`${TRANSACTION_THRUNK_PREFIX}execute/order/sell`,
-	async ({ chainId, library, data }, { rejectWithValue }) => {
-		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], library.getSigner());
+	async ({ chainId, signer, data }, { rejectWithValue }) => {
+		const exchange = exchangeContract(ERC721_EXCHANGE[chainId], signer);
 		try {
 			const tx: TransactionResponse = await exchange.exerciseSellOrder(
 				data.seller,

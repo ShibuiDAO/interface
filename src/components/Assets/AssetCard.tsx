@@ -27,6 +27,7 @@ const AssetCard: React.FC<AssetCardProps> = ({
 	userBuyAction
 }) => {
 	return (
+		// eslint-disable-next-line prettier/prettier
 		<div className="card-bordered card max-h-[24.4rem] max-w-[17rem] rounded-md shadow-lg dark:border-darks-100 dark:bg-darks-100 dark:text-black">
 			<figure>
 				<ProtectedMultiSourceContentDisplay src={image} className="max-h-[17rem] max-w-[17rem]" />

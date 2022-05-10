@@ -21,19 +21,23 @@ const IndexPage: NextPage = () => {
 							<div className="text-left">
 								<h1 className="mb-5 text-5xl font-bold capitalize">View, buy & sell BOBA NFTs</h1>
 								<p className="mb-5">
-									Shibui marketplace is a BOBA-only NFT marketplace with super low fees and governed by the community.
+									Shibui marketplace is a BOBA-native NFT marketplace with super low fees and governed by the community.
 								</p>
 								<div className="mb-5 flex gap-4">
 									<a href={TWITTER_LINK} target="_blank" rel="noopener noreferrer">
+										{/* @ts-expect-error This is quite odd */}
 										<FontAwesomeIcon icon={faTwitter} />
 									</a>
 									<a href={GITHUB_LINK} target="_blank" rel="noopener noreferrer">
+										{/* @ts-expect-error This is quite odd */}
 										<FontAwesomeIcon icon={faGithub} />
 									</a>
 									<a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
+										{/* @ts-expect-error This is quite odd */}
 										<FontAwesomeIcon icon={faDiscord} />
 									</a>
 									<a href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">
+										{/* @ts-expect-error This is quite odd */}
 										<FontAwesomeIcon icon={faTelegram} />
 									</a>
 								</div>

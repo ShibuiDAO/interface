@@ -6,7 +6,6 @@ import { ChainSubgraphSets, generateEIP721ContractQuery, generateERC721ExchangeQ
 import ERC721Asset from 'components/Assets/ERC721Asset';
 import { SupportedChainId } from 'constants/chains';
 import { COLLECTION_REFRESH_INTERVAL, DEFAULT_CHAIN } from 'constants/misc';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fillBuyOrders, fillSellOrders } from 'state/reducers/orders';
@@ -19,8 +18,8 @@ export interface CollectionAssetsProps {
 
 const CollectionAssets: React.FC<CollectionAssetsProps> = ({ address }) => {
 	const dispatch = useDispatch();
-	const { chainId } = useActiveWeb3React();
-	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
+
+	const chainIdNormalised: SupportedChainId = DEFAULT_CHAIN;
 
 	const priceSorting = useSelector(selectPriceSorting);
 	const collectionAssetsSearch = useSelector(selectCollectionAssetsSearch);

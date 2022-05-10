@@ -2,7 +2,6 @@ import GenericModal from 'components/Modals/GenericModal';
 import ProtectedMultiSourceContentDisplay from 'components/ProtectedMultiSourceContentDisplay';
 import { SupportedChainId } from 'constants/chains';
 import { DEFAULT_CHAIN } from 'constants/misc';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAssetMetadata } from 'state/reducers/assets';
@@ -12,8 +11,7 @@ import { ExplorerType, formatExplorerLink, shortenHex } from 'utils/utils';
 import OrderActionsDisplay from './OrderActionsDisplay';
 
 const OrderDisplayModal: React.FC = () => {
-	const { chainId } = useActiveWeb3React();
-	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
+	const chainIdNormalised: SupportedChainId = DEFAULT_CHAIN;
 	const dispatch = useDispatch();
 	const order = useSelector(selectOrderingStatus());
 

@@ -5,15 +5,13 @@ import DataCollectionCard from 'components/Collection/DataCollectionCard';
 import Offset from 'components/Navbar/Offset';
 import { SupportedChainId } from 'constants/chains';
 import { COLLECTION_REFRESH_INTERVAL, DEFAULT_CHAIN } from 'constants/misc';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import { NextPage } from 'next';
 import React from 'react';
 import { Else, If } from 'react-if';
 import { filterExlusions } from 'utils/filtering';
 
 const CollectionsListPage: NextPage = () => {
-	const { chainId } = useActiveWeb3React();
-	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
+	const chainIdNormalised: SupportedChainId = DEFAULT_CHAIN;
 	const [EIP721Subgraph] = ChainSubgraphSets[chainIdNormalised];
 
 	const { data: collectionsData } = useQuery<EIP721Response<'erc721Contracts'>>(generateEIP721ContractsQuery(chainIdNormalised), {

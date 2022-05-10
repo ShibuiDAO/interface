@@ -9,21 +9,17 @@ import ProtectedMultiSourceContentDisplay from 'components/ProtectedMultiSourceC
 import { SupportedChainId } from 'constants/chains';
 import customLogos from 'constants/customLogos';
 import { DEFAULT_CHAIN } from 'constants/misc';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
-import useForceConnectMenu from 'hooks/useForceConnectMenu';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
 const CollectionDisplayPage: NextPage = () => {
 	const router = useRouter();
-	useForceConnectMenu();
 
 	const address = Array.isArray(router.query.address) ? router.query.address[0] : router.query.address;
 	const addressNormalised = (address || '').toLowerCase();
 
-	const { chainId } = useActiveWeb3React();
-	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
+	const chainIdNormalised: SupportedChainId = DEFAULT_CHAIN;
 
 	const [EIP721Subgraph] = ChainSubgraphSets[chainIdNormalised];
 

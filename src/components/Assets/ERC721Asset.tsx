@@ -1,7 +1,6 @@
 import type { Erc721Token } from '@subgraphs/eip721-matic';
 import { ABI } from 'constants/abis';
 import { SupportedChainId } from 'constants/chains';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useProviders from 'hooks/useProviders';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +13,6 @@ export interface ERC721AssetProps {
 }
 
 const ERC721Asset: React.FC<ERC721AssetProps> = ({ token, chainId }) => {
-	const { library, account } = useActiveWeb3React();
 	const baseProvider = useProviders()[chainId as SupportedChainId];
 	const dispatch = useDispatch();
 
@@ -34,7 +32,7 @@ const ERC721Asset: React.FC<ERC721AssetProps> = ({ token, chainId }) => {
 					}
 				},
 				chainId,
-				provider: account && library ? library : baseProvider,
+				provider: baseProvider,
 				contractABI: ABI.EIP721
 			})
 		);

@@ -2,7 +2,6 @@ import { ABI } from 'constants/abis';
 import { SupportedChainId } from 'constants/chains';
 import customLogos from 'constants/customLogos';
 import { DEFAULT_CHAIN } from 'constants/misc';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import useProviders from 'hooks/useProviders';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,8 +13,8 @@ export interface DataCollectionCardProps {
 }
 
 const DataCollectionCard: React.FC<DataCollectionCardProps> = ({ address }) => {
-	const { chainId, library, account } = useActiveWeb3React();
-	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
+	const chainIdNormalised: SupportedChainId = DEFAULT_CHAIN;
+
 	const baseProvider = useProviders()[chainIdNormalised as SupportedChainId];
 	const dispatch = useDispatch();
 
@@ -25,7 +24,7 @@ const DataCollectionCard: React.FC<DataCollectionCardProps> = ({ address }) => {
 			fetchCollectionInfo({
 				address,
 				chainId: chainIdNormalised,
-				provider: account && library ? library : baseProvider,
+				provider: baseProvider,
 				contractABI: ABI.EIP721
 			})
 		);

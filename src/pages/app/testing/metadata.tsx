@@ -4,7 +4,6 @@ import Offset from 'components/Navbar/Offset';
 import { SupportedChainId } from 'constants/chains';
 import { DEFAULT_CHAIN } from 'constants/misc';
 import { Form, Formik } from 'formik';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import { NextPage } from 'next';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import React, { useState } from 'react';
@@ -13,8 +12,7 @@ import { selectAssetMetadata } from 'state/reducers/assets';
 import { MetadataTestingParametersFormSchema } from 'utils/schemas';
 
 const TestingMetadataPage: NextPage = () => {
-	const { chainId } = useActiveWeb3React();
-	const chainIdNormalised: SupportedChainId = chainId || DEFAULT_CHAIN;
+	const chainIdNormalised: SupportedChainId = DEFAULT_CHAIN;
 
 	const [token, setToken] = useState<{ contract: string; asset: string } | null>(null);
 	const metadata = useSelector(selectAssetMetadata(chainIdNormalised, token?.contract || '', (token?.asset || '') as unknown as BigInt));

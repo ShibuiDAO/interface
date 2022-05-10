@@ -45,6 +45,7 @@ const GenericModal: React.FC<GenericModalProps> = ({ show, onDialogClose, modalT
 											<Dialog.Title as="span" className="w-full text-lg font-bold leading-6">
 												{modalTitle}
 												<button type="button" className="float-right" onClick={onTitleCloseClick} ref={closeButtonRef}>
+													{/* @ts-expect-error This is quite odd */}
 													<FontAwesomeIcon icon={faTimes} size="2x" />
 												</button>
 											</Dialog.Title>

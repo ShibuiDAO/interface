@@ -17,6 +17,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ image, name, contract }
 	return (
 		<Link href={`/app/collection/${contract}`} passHref={true}>
 			<a href="/">
+				{/* eslint-disable-next-line prettier/prettier */}
 				<div className="card-bordered card card-side my-1 max-h-[8.875rem] min-h-[8.875rem] min-w-[23rem] max-w-[23rem] shadow-lg  dark:border-darks-100 dark:bg-darks-100 dark:text-black">
 					<div className="grid grid-cols-2 grid-rows-1">
 						<figure className="m-auto p-2 pr-5">

@@ -1,13 +1,15 @@
 import EthInputFormik from 'components/forms/EthInputFormik';
 import FormFieldError from 'components/forms/FormFieldError';
 import SimpleDaysInputFormik from 'components/forms/SimpleDaysInputFormik';
+import { SupportedChainId } from 'constants/chains';
+import { DEFAULT_CHAIN } from 'constants/misc';
 import { BigNumber, BigNumberish, ethers } from 'ethers';
 import { Form, Formik } from 'formik';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { clearOrder, createSellOrder } from 'state/reducers/orders';
 import { SellFormSchema } from 'utils/schemas';
+import { useSigner } from 'wagmi';
 
 export interface SellFormFields {
 	price: string;
@@ -20,10 +22,13 @@ export interface SellFormProps {
 }
 
 const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
-	const { chainId, library } = useActiveWeb3React();
+	const { data: signer } = useSigner();
+
+	const chainIdNormalised: SupportedChainId = DEFAULT_CHAIN;
+
 	const dispatch = useDispatch();
 
-	if (!chainId || !library) return null;
+	if (!signer) return null;
 
 	return (
 		<>
@@ -36,8 +41,8 @@ const SellForm: React.FC<SellFormProps> = ({ contract, identifier }) => {
 				onSubmit={(values: SellFormFields) => {
 					dispatch(
 						createSellOrder({
-							chainId,
-							library,
+							chainId: chainIdNormalised,
+							signer,
 							data: {
 								tokenContractAddress: contract,
 								tokenId: identifier,

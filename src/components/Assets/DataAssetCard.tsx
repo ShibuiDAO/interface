@@ -1,11 +1,10 @@
-import { JsonRpcProvider } from '@ethersproject/providers';
 import { SupportedChainId } from 'constants/chains';
-import { BigNumber, ethers } from 'ethers';
-import { useActiveWeb3React } from 'hooks/useActiveWeb3React';
+import { BigNumber, ethers, Signer } from 'ethers';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAssetMetadata } from 'state/reducers/assets';
 import { executeSellOrder, OrderDirection, selectSellOrder, setCurrentOrder, SimpleSellOrder } from 'state/reducers/orders';
+import { useAccount, useSigner } from 'wagmi';
 import AssetCard from './AssetCard';
 
 export interface DataAssetCardProps {
@@ -15,8 +14,10 @@ export interface DataAssetCardProps {
 }
 
 const DataAssetCard: React.FC<DataAssetCardProps> = ({ chainId, contract, identifier }) => {
-	let { account, library } = useActiveWeb3React();
-	account = account?.toLowerCase() || '';
+	const { data: account } = useAccount();
+	const { data: signer } = useSigner();
+
+	const accountFormatted = account?.address?.toLowerCase() || '';
 	const dispatch = useDispatch();
 
 	const metadata = useSelector(selectAssetMetadata(chainId, contract, identifier));
@@ -24,7 +25,7 @@ const DataAssetCard: React.FC<DataAssetCardProps> = ({ chainId, contract, identi
 
 	if (!metadata) return null;
 
-	const isOwned = Boolean(metadata?.owner && account && metadata.owner === account);
+	const isOwned = Boolean(metadata?.owner && accountFormatted && metadata.owner === accountFormatted);
 	const orderFunction = (contract_: string, identifier_: string) => () => {
 		dispatch(
 			setCurrentOrder({
@@ -35,11 +36,11 @@ const DataAssetCard: React.FC<DataAssetCardProps> = ({ chainId, contract, identi
 			})
 		);
 	};
-	const exerciseFunction = (order: SimpleSellOrder, chainId_: SupportedChainId, library_: JsonRpcProvider, account_: string) => () => {
+	const exerciseFunction = (order: SimpleSellOrder, chainId_: SupportedChainId, signer_: Signer, account_: string) => () => {
 		dispatch(
 			executeSellOrder({
 				chainId: chainId_,
-				library: library_,
+				signer: signer_,
 				data: {
 					seller: order.seller.id,
 					tokenContractAddress: order.contract.id,
@@ -61,10 +62,10 @@ const DataAssetCard: React.FC<DataAssetCardProps> = ({ chainId, contract, identi
 				image={metadata.image_final}
 				validOrder={sellOrder !== undefined}
 				currentSellPrice={sellOrder?.price ? ethers.utils.formatEther(BigNumber.from(sellOrder.price)) : undefined}
-				ownerAction={isOwned && library ? orderFunction(contract, identifier.toString()) : undefined}
+				ownerAction={isOwned && signer ? orderFunction(contract, identifier.toString()) : undefined}
 				userBuyAction={
-					!isOwned && sellOrder && library && chainId && account
-						? exerciseFunction(sellOrder, chainId as SupportedChainId, library, account)
+					!isOwned && sellOrder && signer && chainId && account
+						? exerciseFunction(sellOrder, chainId as SupportedChainId, signer, accountFormatted)
 						: undefined
 				}
 			/>

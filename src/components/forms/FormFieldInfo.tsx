@@ -12,6 +12,7 @@ const FormFieldInfo: React.FC<FormFieldInfoProps> = ({ message, iconClassName })
 	return (
 		<span className="pl-2">
 			<Tooltip title={message}>
+				{/* @ts-expect-error This is quite odd */}
 				<FontAwesomeIcon icon={faInfoCircle} className={iconClassName} />
 			</Tooltip>
 		</span>
